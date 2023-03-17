@@ -7,7 +7,7 @@ import {
     IconFile3d,
     IconLogout,
   } from '@tabler/icons-react';
-import { DsLogo } from '../components/Dslogo';
+import { DsLogo } from './misc/Dslogo';
 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
@@ -73,7 +73,7 @@ const data = [
   ];
 
 
-function SidBar() {
+function SideBar({ opened}) {
     const { classes, cx } = useStyles();
     const [active, setActive] = useState('Players');
     const links = data.map((item) => (
@@ -95,22 +95,18 @@ function SidBar() {
 
   
     return (
-    <Navbar  width={{ sm: 300 }} p="md">
-          <Navbar.Section grow>
-            <Group className={classes.header} position="apart">
-              <DsLogo size={50} />
-            </Group>
-            {links}
-          </Navbar.Section>
-    
-          <Navbar.Section className={classes.footer}>
-            <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-              <IconLogout className={classes.linkIcon} stroke={1.5} />
-              <span>Logout</span>
-            </a>
-          </Navbar.Section>
-        </Navbar>
+
+      <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 220, lg: 350 }}>
+        <Navbar.Section grow>{links}</Navbar.Section>
+
+        <Navbar.Section className={classes.footer}>
+          <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Logout</span>
+          </a>
+        </Navbar.Section>
+      </Navbar>
     );
   }
 
-  export{SidBar}
+  export{SideBar}

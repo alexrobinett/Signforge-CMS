@@ -6,7 +6,7 @@ import {
 const useStyles = createStyles((theme) => ({
     Logo: {
       // subscribe to color scheme changes right in your styles
-      fontSize: '2rem',
+      fontSize: '1.5rem',
       fontWeight: '600'
     },
 
@@ -30,8 +30,8 @@ function DsLogo() {
         align="center"
         direction="row"
         wrap="wrap">
-             <span className={classes.Logo}>Digi-Sign</span>
-            <IconDeviceTv className={classes.linkIcon}  stroke={2} size={36}/>
+             <span className={classes.Logo}>ScreenSpace</span>
+            <IconDeviceTv className={classes.linkIcon}  stroke={2} size={30}/>
         </Flex>
         
   

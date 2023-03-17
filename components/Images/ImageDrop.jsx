@@ -37,7 +37,7 @@ function ImageDropZone() {
         onDrop={() => {}}
         className={classes.dropzone}
         radius="md"
-        accept={[MIME_TYPES.pdf]}
+        accept={[MIME_TYPES.png]}
         maxSize={30 * 1024 ** 2}
       >
         <div style={{ pointerEvents: 'none' }}>
@@ -67,8 +67,7 @@ function ImageDropZone() {
             <Dropzone.Idle>Upload resume</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
-            are less than 30mb in size.
+            Drag&apos;n&apos;drop images Files here to upload. We can only Accept transparent PNG
           </Text>
         </div>
       </Dropzone>
