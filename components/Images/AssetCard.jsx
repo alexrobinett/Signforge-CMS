@@ -1,6 +1,6 @@
-import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, useMantineTheme} from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
-import { IconTrashFilled } from '@tabler/icons-react';
+import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
 import { apiClient } from '../../api/api';
 import { useState } from 'react';
 
@@ -18,24 +18,34 @@ async function updateImageName(id, name) {
   }
   
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" radius="md" height={isMobile ? 200 : 250} withBorder>
     <Card.Section>
       <Image
         src={asset.imageURL}
         height={isMobile ? 200 : 250}
         alt=""
+        mt={10}
         fit="scale-down"
       />
     </Card.Section>
-
-    <Group position="apart" mt="md" mb="xs">
+    <Group  mt="sm" mb="xs" >
       {editing ? (
+        <>
+        <Group noWrap spacing={0}>
         <TextInput
           value={asset.fileName}
           onChange={(event) =>
             updateImageName(asset._id, event.target.value)
           }
+          mr={0}
         />
+        <Button px={4} ml={0}
+        onClick={() => setEditing(!editing)}
+        >
+        <IconCheck/>
+      </Button>
+      </Group>
+      </>
       ) : (
         <Text
           weight={500}
@@ -46,25 +56,29 @@ async function updateImageName(id, name) {
         </Text>
       )}
     </Group>
-
-    <Group position="center" spacing="xl" grow="true">
+    <Divider my="" />
+    <Group position="apart" spacing="lg" grow="true">
         <Button
         onClick={() => setEditing(!editing)}
         variant="light"
         color="blue"
         radius="md"
+       
       >
         {editing ? 'Done' : 'Edit'}
       </Button>
-      <Button
+
+      {editing? (<Button
         onClick={() => deleteImage(asset.id)}
         variant="outline"
         color='red'
         radius="md"
-        size="sm"
+       
+        
       >
         <IconTrashFilled size={20} />
-      </Button>
+      </Button>): null}
+      
       
     </Group>
   </Card>

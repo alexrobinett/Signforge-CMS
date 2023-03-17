@@ -24,7 +24,7 @@ function App() {
           padding="md"
           navbarOffsetBreakpoint="sm"
           asideOffsetBreakpoint="sm"
-          header={<AppHeader handleOpen={ handleOpen} {...opened}/>}
+          header={<AppHeader handleOpen={ handleOpen} {...opened} />}
           navbar={ <SideBar opened={opened} /> }
           styles={(theme) => ({
             main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },

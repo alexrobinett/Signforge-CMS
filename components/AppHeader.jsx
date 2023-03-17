@@ -18,7 +18,7 @@ function AppHeader({handleOpen,opened}){
   const theme = useMantineTheme();
 
     return(
-        <Header height={{ base: 40, md: 60 }} p="md" color={theme.colors.blue[4]}>
+        <Header height={{ base: 40, md: 60 }} p="md" bg="blue.6">
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger

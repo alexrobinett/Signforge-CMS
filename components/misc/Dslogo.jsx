@@ -7,12 +7,13 @@ const useStyles = createStyles((theme) => ({
     Logo: {
       // subscribe to color scheme changes right in your styles
       fontSize: '1.5rem',
-      fontWeight: '600'
+      fontWeight: '600',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[2]
     },
 
   linkIcon: {
     ref: getStylesRef('icon'),
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[2],
     marginRight: theme.spacing.sm,
   },
 
