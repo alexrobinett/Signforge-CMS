@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiClient } from '../../api/api';
-import { Col, Grid, Text, } from '@mantine/core';
+import { Col, Grid, Text, Loader, Group} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
 
@@ -30,19 +30,11 @@ function ImageGallery() {
 
 
 
-  async function deleteImage(id) {
-    try {
-      await apiClient.delete(`/images/${id}`);
-      fetchImages();
-    } catch (error) {
-      console.error('Error deleting image:', error);
-    }
-  }
-  const [editing, setEditing] = useState(false);
+
   
   if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
+    return (<Group pt={50} position="center"><Loader size="xl" variant="dots" /></Group>
+    )}
 
   return (
     <Grid gutter="lg" justify="start" style={{ margin: '0.5rem' }}>

@@ -7,6 +7,7 @@ import {
     Anchor,
     Group,
     rem,
+    Flex
   } from '@mantine/core';
   import {
     IconCreditCard,
@@ -19,6 +20,7 @@ import {
     IconCashBanknote,
     IconCoin,
   } from '@tabler/icons-react';
+
   
   const mockdata = [
     { title: 'Credit cards', icon: IconCreditCard, color: 'violet' },
@@ -73,17 +75,21 @@ function CardBadgeEX() {
     ));
   
     return (
-      <Card withBorder radius="md" className={classes.card}>
-        <Group position="apart">
-          <Text className={classes.title}>Services</Text>
-          <Anchor size="xs" color="dimmed" sx={{ lineHeight: 1 }}>
-            + 21 other services
-          </Anchor>
-        </Group>
-        <SimpleGrid cols={3} mt="md">
-          {items}
-        </SimpleGrid>
-      </Card>
+      <>
+      <Flex
+      mih={50}
+      gap="md"
+      justify="center"
+      align="flex-start"
+      direction="row"
+      >     
+        <div style={{ width: '500px', height: '300px', padding: '0', overflow: 'hidden'}}>
+        <iframe scrolling="no" src="https://alexrobinett.github.io/C-Store-Digital-Ad-Spot/" style={{border:'20px solid black', width: '1920px', height: '1060px',transform: 'scale(0.25)', transformOrigin: '0 0', overflow: 'hidden'}}></iframe>
+        </div>
+      </Flex>
+      
+      
+      </>
     );
   }
 

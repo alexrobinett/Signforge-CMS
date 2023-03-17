@@ -32,7 +32,7 @@ function App() {
         >
         <Routes>
           <Route path='/assets' element={<ImagePage />} />
-          <Route path='/' element={<CardBadgeEX/>} />
+          <Route path='/demo' element={<CardBadgeEX/>} />
           {/* <Route path='/players' element={} /> */}
         </Routes>
 

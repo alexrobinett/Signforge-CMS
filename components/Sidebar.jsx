@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { createStyles, Navbar, Group, Code, getStylesRef, rem, Text } from '@mantine/core';
+import { createStyles, Navbar, getStylesRef, rem, Text } from '@mantine/core';
 import {
     Icon2fa,
-    IconDatabaseImport,
     IconDeviceTv,
     IconFile3d,
     IconLogout,
   } from '@tabler/icons-react';
-import { DsLogo } from './misc/Dslogo';
 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
@@ -67,9 +65,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
+    { link: '/', label: 'Dashboard', icon: IconFile3d },
     { link: '/players', label: 'Players', icon: IconDeviceTv },
-    { link: '/', label: 'Massages', icon: Icon2fa },
+    { link: '/', label: 'Messages', icon: Icon2fa },
     { link: '/assets', label: 'Assets', icon: IconFile3d },
+    { link: '/demo', label: 'Demo', icon: IconFile3d },
   ];
 
 

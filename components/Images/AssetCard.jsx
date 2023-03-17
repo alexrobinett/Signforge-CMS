@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider} from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
 import { apiClient } from '../../api/api';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 function AssetCard(asset) {
 const [editing, setEditing] = useState(false);
 const isMobile = useMediaQuery('(max-width: 568px)');
+
 async function updateImageName(id, name) {
     try {
       await apiClient.patch(`/images/${id}`, { name });
@@ -16,6 +17,16 @@ async function updateImageName(id, name) {
       console.error('Error updating image name:', error);
     }
   }
+
+  async function deleteImage(id) {
+    try {
+      await apiClient.delete(`/images/${id}`);
+      fetchImages();
+    } catch (error) {
+      console.error('Error deleting image:', error);
+    }
+  }
+  const theme = useMantineTheme();
   
   return (
     <Card shadow="sm" padding="lg" radius="md" height={isMobile ? 200 : 250} withBorder>
@@ -28,29 +39,26 @@ async function updateImageName(id, name) {
         fit="scale-down"
       />
     </Card.Section>
-    <Group  mt="sm" mb="xs" >
+    <Group  mt="sm" mb="xs" grow position="center" >
       {editing ? (
         <>
-        <Group noWrap spacing={0}>
+        <Group >
         <TextInput
           value={asset.fileName}
           onChange={(event) =>
             updateImageName(asset._id, event.target.value)
           }
           mr={0}
+          rightSection={<ActionIcon size={32}  color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
         />
-        <Button px={4} ml={0}
-        onClick={() => setEditing(!editing)}
-        >
-        <IconCheck/>
-      </Button>
-      </Group>
+      </Group >
       </>
       ) : (
         <Text
           weight={500}
           size={isMobile ? 'sm' : 'md'}
           style={{ margin: '0.5rem' }}
+          truncate
         >
           {asset.fileName}
         </Text>

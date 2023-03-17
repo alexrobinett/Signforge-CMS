@@ -8,7 +8,6 @@ function ImageBar() {
       <>
         <Paper shadow="xs" mx="md" p="md" >
         <Group position="apart">
-        <Chip defaultChecked size="md">Allow Editing</Chip>
         <Pagination total={4} />
         <Button onClick={open}>Upload +</Button>
         </Group>
