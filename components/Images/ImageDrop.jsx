@@ -3,6 +3,7 @@ import { Text, Group, Button, createStyles, rem } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
 import { uploadImage } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -34,15 +35,18 @@ const useStyles = createStyles((theme) => ({
 function ImageDropZone() {
   const { classes, theme } = useStyles();
   const openRef = useRef ();
+  const navigate = useNavigate()
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
         openRef={openRef}
-        onDrop={(acceptedFiles) => {
-          acceptedFiles.forEach((file) => {
-            uploadImage(file);
-          });
+        onDrop={ (acceptedFiles) => {
+           acceptedFiles.forEach(async (file) => {
+           await uploadImage(file);
+           navigate("./")
+           })
+           
         }}
         className={classes.dropzone}
         radius="md"

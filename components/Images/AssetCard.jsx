@@ -3,12 +3,13 @@ import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
 import { apiClient, fetchImages, deleteImage, updateImageName } from '../../api/api';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate} from 'react-router-dom';
 
 
 function AssetCard(asset) {
 const [editing, setEditing] = useState(false);
 const isMobile = useMediaQuery('(max-width: 568px)');
+const navigate = useNavigate()
 
   const theme = useMantineTheme();
   
@@ -63,6 +64,7 @@ const isMobile = useMediaQuery('(max-width: 568px)');
       {editing? (<Button
         onClick={async() => {
         await deleteImage(asset.id)
+        navigate("./")
         }}
         variant="outline"
         color='red'

@@ -23,7 +23,7 @@ function App() {
       <Route path='/dashboard/' element={<CardBadgeEX/>} loader={assetLoader} error={Error}/>
       <Route path='/dashboard/players' element={<ImagePage />} loader={assetLoader} error={Error}/>
       <Route path='/dashboard/messages' element={<ImagePage />} loader={assetLoader} error={Error}/>
-      <Route path='/dashboard/assets' element={<ImagePage />} loader={assetLoader} action={()=> fetchImages()} error={Error}/>
+      <Route path='/dashboard/assets' element={<ImagePage />} loader={assetLoader}  error={Error}/>
       <Route path='/dashboard/demo' element={<CardBadgeEX />} />
   </Route>
   <Route path='*' element={<h1>404 PAGE NOT FOUND!</h1>}/>
