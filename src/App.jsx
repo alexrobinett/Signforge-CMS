@@ -1,44 +1,39 @@
-import { MantineProvider, Text, createStyles, AppShell, Button, Navbar, Group, getStylesRef, rem,Header, MediaQuery, Burger, useMantineTheme} from '@mantine/core';
-import { ImageDropZone } from '../components/Images/ImageDrop';
-import { useState } from 'react';
+
+
 import { CardBadgeEX } from '../components/CardBadgeEX';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import { SideBar } from '../components/Sidebar';
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+
 import ImagePage from '../components/Images/ImagePage';
-import { DsLogo } from '../components/misc/Dslogo';
-import { AppHeader } from '../components/AppHeader';
 
+import { DashboardLayout } from '../components/DashboardLayout';
+import { assetLoader } from '../components/Images/ImageGallery';
+import { Error } from '../components/error';
+import { LoginPage } from '../components/LoginPage';
 
+import { fetchImages } from '../api/api';
 
 function App() {
-  const [opened, setOpened] = useState(false);
 
- const handleOpen = (newValue) => {
-  setOpened(newValue)
- }
+
+ const router = createBrowserRouter(createRoutesFromElements(
+  <>
+  <Route path='/' element={<LoginPage/>}/>
+  <Route path='/login' element={<LoginPage/>}/>
+  <Route path='/dashboard' element={<DashboardLayout />}>
+      <Route path='/dashboard/' element={<CardBadgeEX/>} loader={assetLoader} error={Error}/>
+      <Route path='/dashboard/players' element={<ImagePage />} loader={assetLoader} error={Error}/>
+      <Route path='/dashboard/messages' element={<ImagePage />} loader={assetLoader} error={Error}/>
+      <Route path='/dashboard/assets' element={<ImagePage />} loader={assetLoader} action={()=> fetchImages()} error={Error}/>
+      <Route path='/dashboard/demo' element={<CardBadgeEX />} />
+  </Route>
+  <Route path='*' element={<h1>404 PAGE NOT FOUND!</h1>}/>
+  </>
+ 
+ ))
 
   return (
-    <BrowserRouter>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <AppShell
-          padding="md"
-          navbarOffsetBreakpoint="sm"
-          asideOffsetBreakpoint="sm"
-          header={<AppHeader handleOpen={ handleOpen} {...opened} />}
-          navbar={ <SideBar opened={opened} /> }
-          styles={(theme) => ({
-            main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
-          })}
-        >
-        <Routes>
-          <Route path='/assets' element={<ImagePage />} />
-          <Route path='/demo' element={<CardBadgeEX/>} />
-          {/* <Route path='/players' element={} /> */}
-        </Routes>
-
-        </AppShell>
-    </MantineProvider>
-    </BrowserRouter>
+    <RouterProvider router={router}/> 
+     
   )
 }
 

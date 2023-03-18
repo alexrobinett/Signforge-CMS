@@ -7,7 +7,8 @@ import {
     Anchor,
     Group,
     rem,
-    Flex
+    Flex,
+    Title
   } from '@mantine/core';
   import {
     IconCreditCard,
@@ -76,6 +77,7 @@ function CardBadgeEX() {
   
     return (
       <>
+      <Title ta="center" order={1}>Demo Player</Title>
       <Flex
       mih={50}
       gap="md"

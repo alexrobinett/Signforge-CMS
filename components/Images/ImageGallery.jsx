@@ -3,38 +3,26 @@ import { apiClient } from '../../api/api';
 import { Col, Grid, Text, Loader, Group} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
+import { useLoaderData } from 'react-router-dom';
+import { fetchImages } from '../../api/api';
+
+
+export function assetLoader(){
+  return fetchImages()
+}
 
 function ImageGallery() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const isMobile = useMediaQuery('(max-width: 568px)');
   const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
 
 
-  useEffect(() => {
-    fetchImages();
-  }, []);
 
-  async function fetchImages() {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get(`/images/?id=640bf6e47781518ed5c23575`);
-      setImages(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const images = useLoaderData()
 
 
 
 
   
-  if (isLoading) {
-    return (<Group pt={50} position="center"><Loader size="xl" variant="dots" /></Group>
-    )}
 
   return (
     <Grid gutter="lg" justify="start" style={{ margin: '0.5rem' }}>
@@ -61,5 +49,7 @@ function ImageGallery() {
     </Grid>
   );
 }
+
+
 
 export { ImageGallery };

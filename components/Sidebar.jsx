@@ -65,17 +65,17 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-    { link: '/', label: 'Dashboard', icon: IconFile3d },
-    { link: '/players', label: 'Players', icon: IconDeviceTv },
-    { link: '/', label: 'Messages', icon: Icon2fa },
-    { link: '/assets', label: 'Assets', icon: IconFile3d },
-    { link: '/demo', label: 'Demo', icon: IconFile3d },
+    { link: './', label: 'Dashboard', icon: IconFile3d },
+    { link: './players', label: 'Players', icon: IconDeviceTv },
+    { link: './messages', label: 'Messages', icon: Icon2fa },
+    { link: './assets', label: 'Assets', icon: IconFile3d },
+    { link: './demo', label: 'Demo', icon: IconFile3d },
   ];
 
 
 function SideBar({ opened}) {
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState('Players');
+    const [active, setActive] = useState('/dashboard/player');
     const links = data.map((item) => (
       <Text
         className={cx(classes.link, { [classes.linkActive]: item.label === active })}
@@ -100,10 +100,12 @@ function SideBar({ opened}) {
         <Navbar.Section grow>{links}</Navbar.Section>
 
         <Navbar.Section className={classes.footer}>
-          <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <Link to="/">
+          <Text className={classes.link}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
-          </a>
+          </Text>
+          </Link>
         </Navbar.Section>
       </Navbar>
     );

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Text, Group, Button, createStyles, rem } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
+import { uploadImage } from '../../api/api';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -26,19 +27,26 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+
+
+
+
 function ImageDropZone() {
   const { classes, theme } = useStyles();
-  const openRef = useRef;
+  const openRef = useRef ();
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
         openRef={openRef}
-        onDrop={() => {}}
+        onDrop={(acceptedFiles) => {
+          acceptedFiles.forEach((file) => {
+            uploadImage(file);
+          });
+        }}
         className={classes.dropzone}
         radius="md"
         accept={[MIME_TYPES.png]}
-        maxSize={30 * 1024 ** 2}
       >
         <div style={{ pointerEvents: 'none' }}>
           <Group position="center">

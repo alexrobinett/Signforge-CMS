@@ -1,31 +1,15 @@
 import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
-import { apiClient } from '../../api/api';
+import { apiClient, fetchImages, deleteImage, updateImageName } from '../../api/api';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function AssetCard(asset) {
 const [editing, setEditing] = useState(false);
 const isMobile = useMediaQuery('(max-width: 568px)');
 
-async function updateImageName(id, name) {
-    try {
-      await apiClient.patch(`/images/${id}`, { name });
-      fetchImages();
-    } catch (error) {
-      console.error('Error updating image name:', error);
-    }
-  }
-
-  async function deleteImage(id) {
-    try {
-      await apiClient.delete(`/images/${id}`);
-      fetchImages();
-    } catch (error) {
-      console.error('Error deleting image:', error);
-    }
-  }
   const theme = useMantineTheme();
   
   return (
@@ -77,7 +61,9 @@ async function updateImageName(id, name) {
       </Button>
 
       {editing? (<Button
-        onClick={() => deleteImage(asset.id)}
+        onClick={async() => {
+        await deleteImage(asset.id)
+        }}
         variant="outline"
         color='red'
         radius="md"
