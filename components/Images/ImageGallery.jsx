@@ -6,7 +6,6 @@ import { AssetCard } from './AssetCard';
 import { useLoaderData } from 'react-router-dom';
 import { fetchImages } from '../../api/api';
 
-
 export function assetLoader(){
   return fetchImages()
 }

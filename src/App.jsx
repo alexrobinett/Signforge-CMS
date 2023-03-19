@@ -10,7 +10,6 @@ import { assetLoader } from '../components/Images/ImageGallery';
 import { Error } from '../components/error';
 import { LoginPage } from '../components/LoginPage';
 
-import { fetchImages } from '../api/api';
 
 function App() {
 

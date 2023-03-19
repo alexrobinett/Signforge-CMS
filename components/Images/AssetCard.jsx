@@ -10,9 +10,9 @@ function AssetCard(asset) {
 const [editing, setEditing] = useState(false);
 const isMobile = useMediaQuery('(max-width: 568px)');
 const navigate = useNavigate()
+const [fileName, setFileName] = useState(asset.fileName)
 
   const theme = useMantineTheme();
-  
   return (
     <Card shadow="sm" padding="lg" radius="md" height={isMobile ? 200 : 250} withBorder>
     <Card.Section>
@@ -29,12 +29,12 @@ const navigate = useNavigate()
         <>
         <Group >
         <TextInput
-          value={asset.fileName}
+          defaultValue={fileName}
           onChange={(event) =>
-            updateImageName(asset._id, event.target.value)
+            setFileName(event.target.value)
           }
           mr={0}
-          rightSection={<ActionIcon size={32}  color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
+          rightSection={<ActionIcon size={32}  onClick={()=>{updateImageName(asset.id, fileName),setEditing(!editing)}} color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
         />
       </Group >
       </>

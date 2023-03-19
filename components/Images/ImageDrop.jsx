@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 
 
 
-function ImageDropZone() {
+function ImageDropZone(props) {
   const { classes, theme } = useStyles();
   const openRef = useRef ();
   const navigate = useNavigate()
@@ -44,9 +44,11 @@ function ImageDropZone() {
         onDrop={ (acceptedFiles) => {
            acceptedFiles.forEach(async (file) => {
            await uploadImage(file);
+           props.handle()
            navigate("./")
            })
-           
+          
+          
         }}
         className={classes.dropzone}
         radius="md"

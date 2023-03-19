@@ -41,9 +41,9 @@ async function uploadImage(file){
 }
 
 async function updateImageName(id, name) {
+  console.log(name)
   try {
-    await apiClient.patch(`/images/${id}`, { name });
-    fetchImages();
+    await apiClient.patch(`/images/${id}`, { updateName: `${name}` });
   } catch (error) {
     console.error('Error updating image name:', error);
   }

@@ -2,7 +2,13 @@ import { Container, MantineProvider,Paper, Text, Button,  Modal, Group, Paginati
 import { useDisclosure } from '@mantine/hooks';
 import { ImageDropZone } from './ImageDrop';
 
+
+
 function ImageBar() {
+  
+  function handleUploadClose(){
+    return close()
+  }
     const [opened, { open, close }] = useDisclosure(false);
     return (
       <>
@@ -12,8 +18,8 @@ function ImageBar() {
         <Button onClick={open}>Upload +</Button>
         </Group>
         
-        <Modal opened={opened} onClose={close} title="Image Upload" centered>
-        <ImageDropZone/>
+        <Modal opened={opened} onClose={close}   title="Image Upload" centered>
+        <ImageDropZone handle={handleUploadClose}/>
         </Modal>
 
        
