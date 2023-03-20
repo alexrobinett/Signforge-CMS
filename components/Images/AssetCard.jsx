@@ -1,7 +1,7 @@
 import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
-import { apiClient, fetchImages, deleteImage, updateImageName } from '../../api/api';
+import { apiClient, fetchImages, deleteImage, updateImageName } from '../../app/api/api';
 import { useState } from 'react';
 import {  useNavigate} from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const [fileName, setFileName] = useState(asset.fileName)
             setFileName(event.target.value)
           }
           mr={0}
-          rightSection={<ActionIcon size={32}  onClick={()=>{updateImageName(asset.id, fileName),setEditing(!editing)}} color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
+          rightSection={<ActionIcon size={32}  onClick={async()=>{await updateImageName(asset.id, fileName),setEditing(!editing), navigate("./")}} color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
         />
       </Group >
       </>

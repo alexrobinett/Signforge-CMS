@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createStyles, Navbar, getStylesRef, rem, Text } from '@mantine/core';
 import {
     Icon2fa,
@@ -7,7 +7,10 @@ import {
     IconLogout,
   } from '@tabler/icons-react';
 
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+import {useMediaQuery } from '@mantine/hooks'
+import { useLocation } from 'react-router-dom';
+
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -73,42 +76,62 @@ const data = [
   ];
 
 
-function SideBar({ opened}) {
-    const { classes, cx } = useStyles();
-    const [active, setActive] = useState('/dashboard/player');
-    const links = data.map((item) => (
-      <Text
-        className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-        to={item.link}
-        key={item.label}
-        variant="link"
-        component={Link}
-        onClick={(event) => {
-          setActive(item.label);
-        }}
-      >
-        <item.icon className={classes.linkIcon} stroke={1.5} />
-        <span>{item.label}</span>
-      </Text>
-    ));
+
+function SideBar({ opened} , handleOpen , mobile) {
+  const isMobile = useMediaQuery('(max-width: 568px)');
+  const isTablet = useMediaQuery('(min-width: 569px) and (max-width: 924px)');
+  const { classes, cx } = useStyles();
+  const location = useLocation();
 
 
-  
-    return (
+const [active, setActive] = useState(() => {
+  const activeItem = data.find((item) => item.link === location.pathname);
+  return activeItem ? activeItem.label : 'Dashboard';
+});
 
-      <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 220, lg: 350 }}>
-        <Navbar.Section grow>{links}</Navbar.Section>
+  useEffect(() => {
+    const activeItem = data.find((item) => item.link === location.pathname);
+    if (activeItem) {
+      setActive(activeItem.label);
+    }
+  }, [location]);
 
-        <Navbar.Section className={classes.footer}>
-          <Link to="/">
+  function handleClick(activeItem, isOpen, mobile) {
+    setActive(activeItem);
+
+    if (mobile) {
+      handleOpen(!isOpen);
+    }
+  }
+
+  const links = data.map((item) => (
+    <Text
+      className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+      to={item.link}
+      key={item.label}
+      variant="link"
+      component={Link}
+      onClick={() => handleClick(item.label, opened, isMobile)}
+    >
+      <item.icon className={classes.linkIcon} stroke={1.5} />
+      <span>{item.label}</span>
+    </Text>
+  ));
+
+  return (
+    <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 220, lg: 250 }}>
+      <Navbar.Section grow>{links}</Navbar.Section>
+
+      <Navbar.Section className={classes.footer}>
+        <Link to="/">
           <Text className={classes.link}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </Text>
-          </Link>
-        </Navbar.Section>
-      </Navbar>
-    );
-  }
+        </Link>
+      </Navbar.Section>
+    </Navbar>
+  );
+}
 
   export{SideBar}

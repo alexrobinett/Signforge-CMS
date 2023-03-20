@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { apiClient } from '../../api/api';
 import { Col, Grid, Text, Loader, Group} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
-import { useLoaderData } from 'react-router-dom';
-import { fetchImages } from '../../api/api';
+import { useGetImagesQuery } from '../../app/features/images/imagesAPI';
 
-export function assetLoader(){
-  return fetchImages()
-}
 
 function ImageGallery() {
   const isMobile = useMediaQuery('(max-width: 568px)');
-  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+  const isTablet = useMediaQuery('(min-width: 569px) and (max-width: 924px)');
 
 
 
-  const images = useLoaderData()
+  const {
+    data: images,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+} = useGetImagesQuery()
 
 
+if (isLoading){
+  return <Loader size="xl" variant="bars" />;
+}
 
-
+if (isError){
+  return <Text>{error?.data?.message}</Text>
+}
   
+if (isSuccess){
+
 
   return (
-    <Grid gutter="lg" justify="start" style={{ margin: '0.5rem' }}>
+    <Grid gutter="sm" justify="start" style={{ margin: '0.5rem' }}>
       {images.map((image) => {
         let colSpan;
         if (isMobile) {
@@ -34,7 +42,7 @@ function ImageGallery() {
         } else {
           colSpan = 4;
         }
-  
+
         return (
           <Col key={image._id} span={colSpan}>
             <AssetCard
@@ -47,6 +55,8 @@ function ImageGallery() {
       })}
     </Grid>
   );
+}
+
 }
 
 

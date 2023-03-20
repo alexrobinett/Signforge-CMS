@@ -1,6 +1,8 @@
-import { Container, MantineProvider,Paper, Text, Button,  Modal, Group, Pagination,Chip} from '@mantine/core';
+import { Paper, Button,  Modal, Group, Pagination, Autocomplete} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ImageDropZone } from './ImageDrop';
+import { IconSearch } from '@tabler/icons-react';
+
 
 
 
@@ -12,9 +14,10 @@ function ImageBar() {
     const [opened, { open, close }] = useDisclosure(false);
     return (
       <>
-        <Paper shadow="xs" mx="md" p="md" >
+        <Paper shadow="xs" mx="md" p="xs" >
         <Group position="apart">
-        <Pagination total={4} />
+        <Autocomplete placeholder='Search' icon={<IconSearch />} data={['React', 'Angular', 'Svelte', 'Vue']} />
+        {/* <Pagination total={2} /> */}
         <Button onClick={open}>Upload +</Button>
         </Group>
         

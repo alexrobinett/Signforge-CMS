@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { json } from 'react-router-dom';
 
 const BASE_URL = 'http://127.0.0.1:3000/';
 
@@ -50,6 +49,15 @@ async function updateImageName(id, name) {
 }
 
 
+
+async function fetchPlayers(user = '640bf6e47781518ed5c23575') {
+  try {
+    const response = await apiClient.get(`/images/?id=${user}`);
+    return response.data
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
 
 
 export {apiClient, fetchImages, uploadImage, deleteImage, updateImageName}

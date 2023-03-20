@@ -3,9 +3,6 @@ import {
   AppShell,
   Navbar,
   Header,
-  Footer,
-  Aside,
-  Text,
   MediaQuery,
   Burger,
   useMantineTheme,
@@ -25,7 +22,7 @@ function AppHeader({handleOpen,opened}){
                 opened={opened}
                 onClick={() => handleOpen((o) => !o)}
                 size="sm"
-                color={theme.colors.gray[6]}
+                color="white"
                 mr="xl"
               />
             </MediaQuery>

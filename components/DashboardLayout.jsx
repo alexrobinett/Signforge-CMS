@@ -4,7 +4,7 @@ import { AppHeader } from './AppHeader';
 import { MantineProvider, AppShell} from '@mantine/core';
 import { SideBar } from './Sidebar';
 import { Outlet } from "react-router-dom";
-
+import {useMediaQuery } from '@mantine/hooks'
 function DashboardLayout(){
     const [opened, setOpened] = useState(false);
 
@@ -13,13 +13,14 @@ function DashboardLayout(){
     }
 
     return(
+
         <MantineProvider withGlobalStyles withNormalizeCSS>
         <AppShell
           padding="md"
           navbarOffsetBreakpoint="sm"
           asideOffsetBreakpoint="sm"
           header={<AppHeader handleOpen={ handleOpen} {...opened} />}
-          navbar={ <SideBar opened={opened} /> }
+          navbar={ <SideBar opened={opened} handleOpen={ handleOpen} /> }
           styles={(theme) => ({
             main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
           })}

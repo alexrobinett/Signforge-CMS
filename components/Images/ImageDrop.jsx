@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Text, Group, Button, createStyles, rem } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
-import { uploadImage } from '../../api/api';
+import { useAddNewImageMutation } from '../../app/features/images/imagesAPI';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -32,10 +32,25 @@ const useStyles = createStyles((theme) => ({
 
 
 
+
 function ImageDropZone(props) {
   const { classes, theme } = useStyles();
   const openRef = useRef ();
   const navigate = useNavigate()
+  const [addNewImage,{
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  }] = useAddNewImageMutation()
+
+ async function uploadImage(file){
+    const formData = new FormData()
+    formData.append('id','640bf6e47781518ed5c23575')
+    formData.append('photo',file)
+   
+   return formData
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -43,7 +58,7 @@ function ImageDropZone(props) {
         openRef={openRef}
         onDrop={ (acceptedFiles) => {
            acceptedFiles.forEach(async (file) => {
-           await uploadImage(file);
+          addNewImage(await uploadImage(file));
            props.handle()
            navigate("./")
            })
