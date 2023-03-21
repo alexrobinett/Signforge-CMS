@@ -1,23 +1,31 @@
 import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
-import { apiClient, fetchImages, deleteImage, updateImageName } from '../../app/api/api';
+import { apiClient, fetchImages,} from '../../app/api/api';
 import { useState } from 'react';
 import {  useNavigate} from 'react-router-dom';
+import { useUpdateImageMutation, useDeleteImageMutation } from '../../app/features/images/imagesAPI';
 
-
-function AssetCard(asset) {
-const [editing, setEditing] = useState(false);
+function AssetCard({ imageURL, id, fileName, refetchImages }) {
+const theme = useMantineTheme();
 const isMobile = useMediaQuery('(max-width: 568px)');
-const navigate = useNavigate()
-const [fileName, setFileName] = useState(asset.fileName)
+const [editing, setEditing] = useState(false);
+const [fileNameState, setFileNameState] = useState(fileName)
+const [updateImage,{
+  isLoading,
+  isSuccess,
+  isError,
+  error,
+}] = useUpdateImageMutation()
 
-  const theme = useMantineTheme();
+const [deleteImage,{}] = useDeleteImageMutation()
+
+
   return (
     <Card shadow="sm" padding="lg" radius="md" height={isMobile ? 200 : 250} withBorder>
     <Card.Section>
       <Image
-        src={asset.imageURL}
+        src={imageURL}
         height={isMobile ? 200 : 250}
         alt=""
         mt={10}
@@ -31,10 +39,11 @@ const [fileName, setFileName] = useState(asset.fileName)
         <TextInput
           defaultValue={fileName}
           onChange={(event) =>
-            setFileName(event.target.value)
+            setFileNameState(event.target.value)
           }
           mr={0}
-          rightSection={<ActionIcon size={32}  onClick={async()=>{await updateImageName(asset.id, fileName),setEditing(!editing), navigate("./")}} color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
+          rightSection={<ActionIcon size={32}  onClick={async ()=>{ await updateImage({"id": id, "file": `${fileNameState}`}), await refetchImages() ,setEditing(!editing)}} 
+          color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
         />
       </Group >
       </>
@@ -45,7 +54,7 @@ const [fileName, setFileName] = useState(asset.fileName)
           style={{ margin: '0.5rem' }}
           truncate
         >
-          {asset.fileName}
+          {fileName}
         </Text>
       )}
     </Group>
@@ -63,8 +72,8 @@ const [fileName, setFileName] = useState(asset.fileName)
 
       {editing? (<Button
         onClick={async() => {
-        await deleteImage(asset.id)
-        navigate("./")
+        await deleteImage(id)
+        refetchImages()
         }}
         variant="outline"
         color='red'

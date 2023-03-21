@@ -1,4 +1,4 @@
-import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea, Badge,Indicator } from '@mantine/core';
+import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea, Badge,Indicator, Loader } from '@mantine/core';
 import {
   IconPencil,
   IconMessages,
@@ -9,15 +9,36 @@ import {
   IconCast,
 } from '@tabler/icons-react';
 
+import { selectAllPlayers, useGetPlayersQuery } from '../../app/features/players/playersApiSlice';
+import { useSelector } from 'react-redux';
 
 
-function PlayerList( {data} ) {
 
-  // const tags = badges.map((badge) => (
-   
-  // ))
 
-  const rows = data.map((item) => (
+function PlayerList( ) {
+
+  const {
+    data: players,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    refetch, 
+} = useGetPlayersQuery()
+
+const allPlayers = useSelector(selectAllPlayers);
+
+if (isLoading){
+  return <Loader size="xl" variant="bars" />;
+}
+
+if (isError){
+  return <Text>{error?.data?.message}</Text>
+}
+  
+if (isSuccess){
+
+  const rows = allPlayers.map((item) => (
     <tr key={item.id}>
       <td>
         <Group spacing="sm">
@@ -39,7 +60,8 @@ function PlayerList( {data} ) {
          <Badge size="xs" variant="outline">Default</Badge>
       </td>
       <td>
-        <Text fz="xs">{item.playlist}</Text>
+        <Text fz="xs">Standard</Text>
+        {/* {item.playlist}  goes in to replace default once query is update and playlist feature built*/}
       </td>
       <td>
         <Group spacing={0} position="right">
@@ -85,7 +107,8 @@ function PlayerList( {data} ) {
         <tbody>{rows}</tbody>
       </Table>
     </ScrollArea>
-  );
+  )
+  }
 }
 
 export {PlayerList}

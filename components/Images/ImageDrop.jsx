@@ -58,7 +58,7 @@ function ImageDropZone(props) {
         openRef={openRef}
         onDrop={ (acceptedFiles) => {
            acceptedFiles.forEach(async (file) => {
-          addNewImage(await uploadImage(file));
+           await addNewImage(await uploadImage(file));
            props.handle()
            navigate("./")
            })

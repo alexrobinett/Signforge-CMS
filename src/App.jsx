@@ -9,10 +9,18 @@ import ImagePage from '../components/Images/ImagePage';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { BrowserRouter, Routes} from 'react-router-dom';
 import { LoginPage } from '../components/LoginPage';
+import { imageApiSlice } from '../app/features/images/imagesAPI';
+import { store } from '../app/store';
 
 
 function App() {
+
+  store.dispatch(imageApiSlice.endpoints.getImages.initiate())
+
+
   return (
+
+
 
     <BrowserRouter>
       <Routes>   

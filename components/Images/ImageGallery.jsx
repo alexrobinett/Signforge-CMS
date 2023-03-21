@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Col, Grid, Text, Loader, Group} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
-import { useGetImagesQuery } from '../../app/features/images/imagesAPI';
+import { useGetImagesQuery, selectAllImages} from '../../app/features/images/imagesAPI';
+import { useSelector } from 'react-redux';
 
 
 function ImageGallery() {
@@ -16,9 +17,11 @@ function ImageGallery() {
     isLoading,
     isSuccess,
     isError,
-    error
+    error,
+    refetch, 
 } = useGetImagesQuery()
 
+const allImages = useSelector(selectAllImages);
 
 if (isLoading){
   return <Loader size="xl" variant="bars" />;
@@ -33,7 +36,7 @@ if (isSuccess){
 
   return (
     <Grid gutter="sm" justify="start" style={{ margin: '0.5rem' }}>
-      {images.map((image) => {
+      {allImages.map((image) => {
         let colSpan;
         if (isMobile) {
           colSpan = 12;
@@ -44,11 +47,12 @@ if (isSuccess){
         }
 
         return (
-          <Col key={image._id} span={colSpan}>
+          <Col key={image.id} span={colSpan}>
             <AssetCard
               imageURL={image.imageURL}
-              id={image._id}
+              id={image.id}
               fileName={image.fileName}
+              refetchImages={refetch}
             />
           </Col>
         );

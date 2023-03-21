@@ -16,7 +16,7 @@ export const imageApiSlice = apiSlice.injectEndpoints({
                 return response.status === 200 && !result.isError
             },
             keepUnusedDataFor: 5,
-            transformErrorResponse: responseData => {
+            transformResponse: responseData => {
                 const loadedImages = responseData.map( image => {
                     image.id = image._id
                     return image
@@ -27,7 +27,7 @@ export const imageApiSlice = apiSlice.injectEndpoints({
                 if (results?.ids){
                     return [
                         {type: 'Image', id: 'LIST'},
-                        ...results.ids.map(id => ({ type: 'Image', id}))
+                        ...results.ids.map(id => ({ type: 'Image', id: "LIST"}))
                     ]
                 }else return [{ type: 'Image', id: 'LIST'}]
             }
@@ -38,29 +38,26 @@ export const imageApiSlice = apiSlice.injectEndpoints({
               method: "POST",
               body: initialImageData, // Pass formData here
             }),
-            invalidatesTags: [{ type: "Images", id: "LIST" }],
+            invalidatesTags: [{ type: "Image", id: "LIST" }],
         }),
 
         updateImage: builder.mutation({
-            query: initialImageData => ({
-                url: '/images',
+            query: (data) => ({
+                url: `/images/${data.id}`,
                 method: 'PATCH',
-                body:{
-                    ...initialImageData,
-                }
+                body:{ updateName: `${data.file}` }
             }),
             invalidatesTags: (result, error, arg) => [
-                {type: 'Images', id: 'arg.id' }
+                {type: 'Image', id: arg.id }
             ]
         }),
         deleteImage: builder.mutation({
-            query: ({id}) => ({
-                url: '/images',
+            query: (id) => ({
+                url: `/images/${id}`,
                 method: 'DELETE',
-                body:{ id}
             }),
             invalidatesTags: (result, error, arg) => [
-                {type: 'Images', id: 'arg.id' }
+                {type: 'Image', id: arg.id }
             ]
         }),
         
@@ -87,5 +84,4 @@ export const {
     selectAll: selectAllImages,
     selectById: selectImageByID,
     selectIds: selectImageIds
-} = imageAdapter.getSelectors( state => selectImageData(state) ??
-initialSate)
+} = imageAdapter.getSelectors( state => selectImageData(state) ?? initialSate)
