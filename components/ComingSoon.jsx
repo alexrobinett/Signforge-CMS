@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Text } from "@mantine/core";
+import {Text } from "@mantine/core";
 
 
 function ComingSoon(){

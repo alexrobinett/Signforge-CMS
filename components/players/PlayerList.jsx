@@ -1,4 +1,4 @@
-import {Table, Text, ScrollArea, Loader } from '@mantine/core';
+import {Table, Text, ScrollArea, Loader, Container, Group } from '@mantine/core';
 
 
 import { selectAllPlayers, useGetPlayersQuery } from '../../app/features/players/playersApiSlice';
@@ -22,8 +22,8 @@ function PlayerList( ) {
 const allPlayers = useSelector(selectAllPlayers);
 
 if (isLoading){
-  return <Loader size="xl" variant="bars" />;
-}
+  return <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container>;
+};
 
 if (isError){
   return <Text>{error?.data?.message}</Text>

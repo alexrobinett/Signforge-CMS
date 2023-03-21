@@ -1,4 +1,4 @@
-import { Container, MantineProvider,Paper, Text, Button,  Modal, Group, Pagination, Autocomplete} from '@mantine/core';
+import { Paper, Button,  Modal, Group, Autocomplete} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { IconSearch } from '@tabler/icons-react';

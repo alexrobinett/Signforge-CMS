@@ -1,9 +1,7 @@
-import { Card, Image, Text, Badge, Button, Group, Flex, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
+import { Card, Image, Text, Button, Group, TextInput, Divider, ActionIcon, useMantineTheme} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
-import { apiClient, fetchImages,} from '../../app/api/api';
 import { useState } from 'react';
-import {  useNavigate} from 'react-router-dom';
 import { useUpdateImageMutation, useDeleteImageMutation } from '../../app/features/images/imagesAPI';
 
 function AssetCard({ imageURL, id, fileName, refetchImages }) {

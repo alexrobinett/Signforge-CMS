@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Grid, Text, Loader, Group} from '@mantine/core';
+import React from 'react';
+import { Col, Grid, Text, Loader, Group, Container, Flex} from '@mantine/core';
 import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
 import { useGetImagesQuery, selectAllImages} from '../../app/features/images/imagesAPI';
@@ -24,7 +24,7 @@ function ImageGallery() {
 const allImages = useSelector(selectAllImages);
 
 if (isLoading){
-  return <Loader size="xl" variant="bars" />;
+  return <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container>;
 }
 
 if (isError){

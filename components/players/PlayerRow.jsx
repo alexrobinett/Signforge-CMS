@@ -1,10 +1,8 @@
 import React from "react"
-import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea, Badge,Indicator, Loader, TextInput, Button } from '@mantine/core';
+import { Group, Text, ActionIcon, Menu, Badge,Indicator, TextInput, Button } from '@mantine/core';
 import {
     IconPencil,
     IconMessages,
-    IconNote,
-    IconReportAnalytics,
     IconTrash,
     IconDots,
     IconCast,

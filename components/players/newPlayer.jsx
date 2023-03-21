@@ -1,8 +1,5 @@
 import {
     createStyles,
-    Paper,
-    Title,
-    Text,
     TextInput,
     Button,
     Container,
@@ -11,7 +8,6 @@ import {
     Center,
     Box,
     rem,
-    Select,
   } from '@mantine/core';
   import { IconArrowLeft } from '@tabler/icons-react';
   import { useAddNewPlayerMutation } from '../../app/features/players/playersApiSlice';
