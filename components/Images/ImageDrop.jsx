@@ -31,8 +31,6 @@ const useStyles = createStyles((theme) => ({
 
 
 
-
-
 function ImageDropZone(props) {
   const { classes, theme } = useStyles();
   const openRef = useRef ();
@@ -52,15 +50,25 @@ function ImageDropZone(props) {
    return formData
   }
 
+  async function handleImageDrop(file){
+    try{
+      await addNewImage(
+      await uploadImage(file))
+      props.handle()
+      navigate("./")
+    
+    }catch{
+      console.error("could't upload file!")
+    }
+  }
+
   return (
     <div className={classes.wrapper}>
       <Dropzone
         openRef={openRef}
         onDrop={ (acceptedFiles) => {
-           acceptedFiles.forEach(async (file) => {
-           await addNewImage(await uploadImage(file));
-           props.handle()
-           navigate("./")
+           acceptedFiles.forEach((file) => {
+            handleImageDrop(file)
            })
           
           
@@ -92,8 +100,8 @@ function ImageDropZone(props) {
 
           <Text ta="center" fw={700} fz="lg" mt="xl">
             <Dropzone.Accept>Drop files here</Dropzone.Accept>
-            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-            <Dropzone.Idle>Upload resume</Dropzone.Idle>
+            <Dropzone.Reject>Needs To Be a Transparent PNG</Dropzone.Reject>
+            <Dropzone.Idle>Upload Assets</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
             Drag&apos;n&apos;drop images Files here to upload. We can only Accept transparent PNG

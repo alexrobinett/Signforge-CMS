@@ -21,6 +21,34 @@ const [updateImage,{
 const [deleteImage,{}] = useDeleteImageMutation()
 
 
+const canUpdate = [fileNameState].every(Boolean) && !isLoading;
+ 
+async function handleUpdateClick(){
+    if(canUpdate){
+        try{
+          await updateImage({"id": id, "file": `${fileNameState}`})
+          await refetchImages() 
+          setEditing(!editing)
+        }catch{
+            console.error('failed to update Image Name', err)
+        }
+    } 
+}
+ 
+async function handleDeleteClick(){
+    if(canUpdate){
+        try{
+          await deleteImage(id)
+          refetchImages()
+        }catch{
+            console.error('failed to Delete Image', err)
+        }
+    } 
+}
+
+
+
+
   return (
     <Card shadow="sm" padding="lg" radius="md" height={isMobile ? 200 : 250} withBorder>
     <Card.Section>
@@ -42,7 +70,7 @@ const [deleteImage,{}] = useDeleteImageMutation()
             setFileNameState(event.target.value)
           }
           mr={0}
-          rightSection={<ActionIcon size={32}  onClick={async ()=>{ await updateImage({"id": id, "file": `${fileNameState}`}), await refetchImages() ,setEditing(!editing)}} 
+          rightSection={<ActionIcon size={32}  onClick={()=> handleUpdateClick()} 
           color={theme.primaryColor} variant="filled"><IconCheck/></ActionIcon>}
         />
       </Group >
@@ -71,10 +99,7 @@ const [deleteImage,{}] = useDeleteImageMutation()
       </Button>
 
       {editing? (<Button
-        onClick={async() => {
-        await deleteImage(id)
-        refetchImages()
-        }}
+        onClick={() => handleDeleteClick() }
         variant="outline"
         color='red'
         radius="md"
