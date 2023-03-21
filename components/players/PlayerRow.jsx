@@ -16,7 +16,7 @@ import { useUpdatePlayerMutation, useDeletePlayerMutation } from "../../app/feat
 
 
 
-function Row({id, playerName, refetch}){
+function PlayerRow({id, playerName, refetch}){
 const [editing, setEditing] = useState(false);
 const [editPlayerName, setEditPlayerName] = useInputState(playerName)
 const [deletePlayer, {
@@ -32,7 +32,8 @@ const [updatePlayer,{
 
 
 
-const canUpdate = [editPlayerName]. every (Boolean) && ! isUpdateLoading;
+
+const canUpdate = [editPlayerName]. every (Boolean) && !isUpdateLoading;
  
 async function handleUpdateClick(){
     if(canUpdate){
@@ -46,15 +47,17 @@ async function handleUpdateClick(){
     } 
 }
 
+const canDelete = !isDeleteLoading;
+
 async function handleDeleteClick(){
-
-    try{
-        await deletePlayer({"id": id}), 
-        await refetch()
-    }catch{
-        console.error('failed to update Player Name', err)
-    }
-
+    if(canDelete){
+        try{
+            await deletePlayer({"id": id}), 
+            await refetch()
+        }catch{
+            console.error('failed to delete Player Name', err)
+        }
+    } 
 }
 
 
@@ -125,4 +128,4 @@ return(
     )
 };      
 
-export {Row}
+export {PlayerRow}

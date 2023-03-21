@@ -4,7 +4,7 @@ import {Table, Text, ScrollArea, Loader } from '@mantine/core';
 import { selectAllPlayers, useGetPlayersQuery } from '../../app/features/players/playersApiSlice';
 import { useSelector } from 'react-redux';
 import { useInputState } from '@mantine/hooks';
-import { Row } from './row';
+import { PlayerRow } from './PlayerRow';
 
 
 
@@ -31,7 +31,7 @@ if (isError){
   
 if (isSuccess){
 
-const rows = allPlayers.map((player) => <Row playerName={player.playerName} id={player.id} key={player.id} refetch={refetch}/>)
+const rows = allPlayers.map((player) => <PlayerRow playerName={player.playerName} id={player.id} key={player.id} refetch={refetch}/>)
 
   return (
     <ScrollArea>

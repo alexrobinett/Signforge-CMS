@@ -47,7 +47,22 @@ import {
         isError,
         error
       }] = useAddNewPlayerMutation()
+      
   
+      const canUpdate = [newPlayerName].every(Boolean) && !isLoading;
+ 
+
+      async function handleNewPlayerClick(){
+        if(canUpdate){
+            try{
+                await addNewPlayer({"owner": '640bf6e47781518ed5c23575', "playerName": `${newPlayerName}`})
+                handleClose() 
+
+            }catch{
+                console.error('failed to update Player Name', err)
+            }
+        } 
+    }
     return (
       <Container size={460} my={10}>
           <TextInput value={newPlayerName} onChange={setNewPlayerName} label="PlayerName" placeholder="New Player Name" required />
@@ -60,7 +75,7 @@ import {
             </Anchor>
             <Button 
             className={classes.control} 
-            onClick={async ()=> {await addNewPlayer({"owner": '640bf6e47781518ed5c23575', "playerName": `${newPlayerName}`}), handleClose() }}> 
+            onClick={ () => handleNewPlayerClick()}> 
             New Player
             </Button>
           </Group>
