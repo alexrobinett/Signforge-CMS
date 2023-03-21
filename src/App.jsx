@@ -11,6 +11,7 @@ import { BrowserRouter, Routes} from 'react-router-dom';
 import { LoginPage } from '../components/LoginPage';
 import { imageApiSlice } from '../app/features/images/imagesAPI';
 import { store } from '../app/store';
+import { ComingSoon } from '../components/ComingSoon';
 
 
 function App() {
@@ -27,9 +28,9 @@ function App() {
         <Route path='/' element={<LoginPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route path='/dashboard/' element={<DemoPage/>}/>
+            <Route path='/dashboard/' element={<ComingSoon/>}/>
             <Route path='/dashboard/players' element={<PlayersPage />} />
-            <Route path='/dashboard/messages' element={<ImagePage />} />
+            <Route path='/dashboard/messages' element={<ComingSoon/>} />
             <Route path='/dashboard/assets' element={<ImagePage />}/>
             <Route path='/dashboard/demo' element={<DemoPage/>} />
         </Route>

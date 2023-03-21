@@ -42,17 +42,20 @@ export const playerApiSlice = apiSlice.injectEndpoints({
 
         updatePlayer: builder.mutation({
             query: (data) => ({
-                url: `/player/${data.id}`,
-                method: 'PATCH',
-                body:{ updateName: `${data.file}` }
+              url: `/player/${data.id}`,
+              method: 'PATCH',
+              body: JSON.stringify({ playerName: data.playerName, id: data.id }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }),
             invalidatesTags: (result, error, arg) => [
-                {type: 'player', id: arg.id }
-            ]
-        }),
+              { type: 'player', id: arg.id },
+            ],
+          }),
         deletePlayer: builder.mutation({
-            query: (id) => ({
-                url: `/players/${id}`,
+            query: (data) => ({
+                url: `/player/${data.id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, arg) => [

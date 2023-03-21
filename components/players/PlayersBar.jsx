@@ -2,9 +2,12 @@ import { Container, MantineProvider,Paper, Text, Button,  Modal, Group, Paginati
 import { useDisclosure } from '@mantine/hooks';
 
 import { IconSearch } from '@tabler/icons-react';
+import { NewPlayer } from './newPlayer';
 
 function PlayersBar() {
-  
+  function handleClose(){
+    return close()
+  }
 
     const [opened, { open, close }] = useDisclosure(false);
     return (
@@ -15,7 +18,8 @@ function PlayersBar() {
         <Button onClick={open}>New Player +</Button>
         </Group>
         
-        <Modal opened={opened} onClose={close}   title="New Player" centered>
+        <Modal opened={opened} onClose={close} centered>
+          <NewPlayer handleClose={handleClose} />
         </Modal>
 
        
