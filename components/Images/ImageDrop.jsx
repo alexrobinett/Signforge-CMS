@@ -52,8 +52,7 @@ function ImageDropZone(props) {
 
   async function handleImageDrop(file){
     try{
-      await addNewImage(
-      await uploadImage(file))
+      await addNewImage(await uploadImage(file))
       props.handle()
       navigate("./")
     

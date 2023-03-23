@@ -16,6 +16,7 @@ import { NotFoundPage } from '../components/NotFoundPage';
 import { SignUpPage } from '../components/SignUpPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './HomePage'
+import { MessagesPage } from '../components/messages/MessagePage'
 
 
 
@@ -33,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   <Route path='/dashboard/' element={<ComingSoon/>}/>
                   <Route path='/dashboard/players' element={<PlayersPage />} />
                   <Route path='/dashboard/playlist' element={<ComingSoon/>} />
-                  <Route path='/dashboard/messages' element={<ComingSoon/>} />
+                  <Route path='/dashboard/messages' element={<MessagesPage/>} />
                   <Route path='/dashboard/assets' element={<ImagePage />}/>
                   <Route path='/dashboard/demo' element={<DemoPage/>} />
               </Route>

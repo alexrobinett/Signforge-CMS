@@ -3,13 +3,12 @@ import {Table, Text, ScrollArea, Loader, Container, Group, Card } from '@mantine
 
 import { selectAllPlayers, useGetPlayersQuery } from '../../app/features/players/playersApiSlice';
 import { useSelector } from 'react-redux';
-import { useInputState } from '@mantine/hooks';
-import { PlayerRow } from './PlayerRow';
+import { PlayerRow } from '../players/PlayerRow';
 
 
 
 
-function PlayerList( ) {
+function MessageList( ) {
   const {
     data: players,
     isLoading,
@@ -56,4 +55,4 @@ const rows = allPlayers.map((player) => <PlayerRow playerName={player.playerName
   }
 }
 
-export {PlayerList}
+export {MessageList}
