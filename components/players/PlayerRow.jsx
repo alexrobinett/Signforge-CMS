@@ -45,28 +45,25 @@ async function handleUpdateClick(){
     } 
 }
 
-const canDelete = !isDeleteLoading;
-
 async function handleDeleteClick(){
-    if(canDelete){
+  
         try{
             await deletePlayer({"id": id}), 
             await refetch()
         }catch{
             console.error('failed to delete Player Name', err)
         }
-    } 
+
 }
 
 
 return(
     <tr>
       <td>
-        <Group spacing="sm">
-        <Indicator color="green" size={8} >
+        <Group spacing="sm" noWrap="true">
+        <Indicator color="green" size={8} zIndex={2} >
           <IconCast/>
-          </Indicator>
-          <div>
+        </Indicator>
             {editing ? (
             <Group>
                 <TextInput 
@@ -80,10 +77,9 @@ return(
                     Done</Button>
             </Group>) : ( 
 
-            <Text fz="sm" mr={20} fw={500}>
+            <Text fz="sm" mr={20} fw={500} truncate="end">
               {playerName}
             </Text>)}
-          </div>
         </Group>
       </td>
       <td>
@@ -115,7 +111,7 @@ return(
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>Send message</Menu.Item>
-              <Menu.Item onClick={async ()=> handleDeleteClick} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
+              <Menu.Item onClick={()=> handleDeleteClick()} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
                 Delete Player
               </Menu.Item>
             </Menu.Dropdown>

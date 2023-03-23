@@ -4,7 +4,6 @@ import { AppHeader } from './AppHeader';
 import { MantineProvider, AppShell} from '@mantine/core';
 import { SideBar } from './Sidebar';
 import { Outlet } from "react-router-dom";
-import {useMediaQuery } from '@mantine/hooks'
 function DashboardLayout(){
     const [opened, setOpened] = useState(false);
 

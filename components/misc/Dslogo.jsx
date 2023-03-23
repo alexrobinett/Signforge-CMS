@@ -30,7 +30,7 @@ function DsLogo() {
         align="center"
         direction="row"
         wrap="wrap">
-             <span className={classes.Logo}>ScreenSpace</span>
+             <span className={classes.Logo}>SignForge</span>
             <IconDeviceTv className={classes.linkIcon}  stroke={2} size={30}/>
         </Flex>
         

@@ -1,8 +1,8 @@
 
 
-import { DemoPage} from '../components/DemoPage'
+import { DemoPage} from '../components/DemoPage';
 import { PlayersPage } from '../components/players/PlayersPage';
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import ImagePage from '../components/Images/ImagePage';
 
@@ -12,33 +12,23 @@ import { LoginPage } from '../components/LoginPage';
 import { imageApiSlice } from '../app/features/images/imagesAPI';
 import { store } from '../app/store';
 import { ComingSoon } from '../components/ComingSoon';
-
+import { NotFoundPage } from '../components/NotFoundPage';
+import { SignUpPage } from '../components/SignUpPage';
+import { HomePage } from './HomePage.jsx';
+import { Outlet } from 'react-router-dom';
 
 function App() {
 
-  store.dispatch(imageApiSlice.endpoints.getImages.initiate())
+  store.dispatch(imageApiSlice.endpoints.getImages.initiate());
 
 
-  return (
-
-
-
-    <BrowserRouter>
-      <Routes>   
-        <Route path='/' element={<LoginPage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route path='/dashboard/' element={<ComingSoon/>}/>
-            <Route path='/dashboard/players' element={<PlayersPage />} />
-            <Route path='/dashboard/messages' element={<ComingSoon/>} />
-            <Route path='/dashboard/assets' element={<ImagePage />}/>
-            <Route path='/dashboard/demo' element={<DemoPage/>} />
-        </Route>
-        <Route path='*' element={<h1>404 PAGE NOT FOUND!</h1>}/>
-      </Routes>
-    </BrowserRouter>
-  )
+  return (  
+    <>
+      <HomePage m={0}/>
+      <LoginPage/>
+    </>
+  );
 }
 
 
-export {App}
+export {App};

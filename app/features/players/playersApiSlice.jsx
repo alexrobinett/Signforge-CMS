@@ -1,34 +1,34 @@
 import{
     createSelector,
     createEntityAdapter
-} from "@reduxjs/toolkit"
-import { apiSlice } from "../../api/apiSlice"
+} from "@reduxjs/toolkit";
+import { apiSlice } from "../../api/apiSlice";
 
-const playerAdapter = createEntityAdapter({})
-const initialSate = playerAdapter.getInitialState()
+const playerAdapter = createEntityAdapter({});
+const initialSate = playerAdapter.getInitialState();
 
 export const playerApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getPlayers: builder.query({
             query: () => `/player/?id=640bf6e47781518ed5c23575`,
             validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
+                return response.status === 200 && !result.isError;
             },
             keepUnusedDataFor: 5,
             transformResponse: responseData => {
                 const loadedPlayers = responseData.map( player => {
-                    player.id = player._id
-                    return player
-                })
-                return playerAdapter.setAll(initialSate, loadedPlayers)
+                    player.id = player._id;
+                    return player;
+                });
+                return playerAdapter.setAll(initialSate, loadedPlayers);
             },
             providesTags: (results, error, arg) => {
                 if (results?.ids){
                     return [
                         {type: 'player', id: 'LIST'},
                         ...results.ids.map(id => ({ type: 'player', id: "LIST"}))
-                    ]
-                }else return [{ type: 'player', id: 'LIST'}]
+                    ];
+                }else return [{ type: 'player', id: 'LIST'}];
             }
         }),
         addNewPlayer: builder.mutation({
@@ -64,7 +64,7 @@ export const playerApiSlice = apiSlice.injectEndpoints({
         }),
         
     }),
-})
+});
 
 export const {
     useGetPlayersQuery,
@@ -72,18 +72,18 @@ export const {
     useUpdatePlayerMutation,
     useDeletePlayerMutation,
     
-} = playerApiSlice
+} = playerApiSlice;
 
 
-export const selectPlayerResult = playerApiSlice.endpoints.getPlayers.select()
+export const selectPlayerResult = playerApiSlice.endpoints.getPlayers.select();
 
 const selectPlayerData = createSelector(
     selectPlayerResult,
     playersResult => playersResult.data
-)
+);
 
 export const {
     selectAll: selectAllPlayers,
     selectById: selectPlayerByID,
     selectIds: selectPlayerIds
-} = playerAdapter.getSelectors( state => selectPlayerData(state) ?? initialSate)
+} = playerAdapter.getSelectors( state => selectPlayerData(state) ?? initialSate);
