@@ -2,10 +2,12 @@ import{
     createSelector,
     createEntityAdapter
 } from "@reduxjs/toolkit";
+import { PlayerList } from "../../../components/players/PlayerList";
 import { apiSlice } from "../../api/apiSlice";
 
 const playerAdapter = createEntityAdapter({});
 const initialSate = playerAdapter.getInitialState();
+
 
 export const playerApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -53,9 +55,10 @@ export const playerApiSlice = apiSlice.injectEndpoints({
               { type: 'player', id: arg.id },
             ],
           }),
+          
         deletePlayer: builder.mutation({
             query: (data) => ({
-                url: `/player/${data.id}`,
+                url: `/player/playlist/${data.id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, arg) => [
@@ -71,13 +74,15 @@ export const {
     useAddNewPlayerMutation,
     useUpdatePlayerMutation,
     useDeletePlayerMutation,
+
     
 } = playerApiSlice;
 
 
 export const selectPlayerResult = playerApiSlice.endpoints.getPlayers.select();
 
-const selectPlayerData = createSelector(
+
+const selectPlayerData  = createSelector(
     selectPlayerResult,
     playersResult => playersResult.data
 );
@@ -87,3 +92,4 @@ export const {
     selectById: selectPlayerByID,
     selectIds: selectPlayerIds
 } = playerAdapter.getSelectors( state => selectPlayerData(state) ?? initialSate);
+

@@ -6,7 +6,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 
 
-function MessageToolBar() {
+function MessageToolBar({handlePlayerUpdate}) {
     const [opened, { open, close }] = useDisclosure(false);
     const [isPlayerSearchDisabled, setIsPlayerSearchDisabled] = useState(false)
     const [dropDownValue, setDropDownValue] = useState([]);
@@ -36,8 +36,12 @@ function MessageToolBar() {
     useEffect(() => {
         setIsPlayerSearchDisabled(isLoading);
     }, [isLoading])
-    
 
+
+    useEffect(()=> {
+        handlePlayerUpdate(dropDownValue)
+    })
+    
 
     return (
       <>
