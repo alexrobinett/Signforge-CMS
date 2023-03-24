@@ -4,9 +4,12 @@ import { useSelector } from 'react-redux';
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
+import { SplitSaveButton } from './SplitSaveButton';
 
 
-function MessageToolBar({handlePlayerUpdate}) {
+
+
+function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessagePage}) {
     const [opened, { open, close }] = useDisclosure(false);
     const [isPlayerSearchDisabled, setIsPlayerSearchDisabled] = useState(false)
     const [dropDownValue, setDropDownValue] = useState([]);
@@ -17,7 +20,6 @@ function MessageToolBar({handlePlayerUpdate}) {
         isSuccess,
         isError,
         error,
-        refetch, 
     } = useGetPlayersQuery()
     
     const allPlayers = useSelector(selectAllPlayers);
@@ -39,14 +41,17 @@ function MessageToolBar({handlePlayerUpdate}) {
 
 
     useEffect(()=> {
-        handlePlayerUpdate(dropDownValue)
-    })
+        const selectedLabel = dropDownData.find((item) => item.value === String(dropDownValue))?.label
+        console.log(selectedLabel)
+        handlePlayerUpdate(dropDownValue, selectedLabel)
+    },[dropDownValue] )
     
 
     return (
       <>
         <Paper shadow="xs" mx="md" p="xs" >
-        <Group position="apart">
+        {newMessagePage === false? 
+        ( <Group position="apart">
         <Group>
         {/* <Text  fw={500}>Select A Player:</Text> */}
         <MultiSelect
@@ -62,12 +67,37 @@ function MessageToolBar({handlePlayerUpdate}) {
         disabled={isPlayerSearchDisabled}
         />
         </Group>
-        <Button onClick={open}>New Message</Button>
+        <Button onClick={()=> handleNewMessageButton()}>New Message</Button>
         </Group>
+        ): (
+        <Group position="apart">
+        <Group>
+        <MultiSelect
+        maxSelectedValues={1}
+        w={200}
+        data={dropDownData}
+        placeholder="Player"
+        maxDropdownHeight={160}
+        searchable limit={20}
+        value={dropDownValue}
+        nothingFound="Nothing found"
+        />
+        </Group>
+        <MultiSelect
+        maxSelectedValues={1}
+        w={200}
+        data={dropDownData}
+        placeholder="Message Type"
+        maxDropdownHeight={160}
+        searchable limit={20}
+        value={dropDownValue}
+        nothingFound="Nothing found"
+        />
+        <SplitSaveButton></SplitSaveButton>
+        </Group>
+        )}
+       
         
-        <Modal opened={opened} onClose={close}   title="New Message" centered>
-        
-        </Modal>
 
        
         </Paper>

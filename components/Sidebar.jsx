@@ -70,7 +70,7 @@ const useStyles = createStyles((theme) => ({
 const data = [
     { link: './', label: 'Dashboard', icon: IconFile3d },
     { link: './players', label: 'Players', icon: IconDeviceTv },
-    { link: './playlist', label: 'Playlist', icon: IconFile3d },
+    // { link: './playlist', label: 'Playlist', icon: IconFile3d },
     { link: './messages', label: 'Messages', icon: Icon2fa },
     { link: './assets', label: 'Assets', icon: IconFile3d },
     { link: './demo', label: 'Demo', icon: IconFile3d },

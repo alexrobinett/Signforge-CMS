@@ -1,4 +1,4 @@
-import { createStyles, Table, ScrollArea, rem } from '@mantine/core';
+import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Container, Loader } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { IconGripVertical } from '@tabler/icons-react';
@@ -23,7 +23,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 
-function MessageList({ playerId }) {
+
+function MessageList({ playerId, playerName }) {
   const { classes } = useStyles();
   const [state, handlers] = useListState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
@@ -38,6 +39,10 @@ function MessageList({ playerId }) {
 
   const playlistMessages = useSelector((state) => selectAllPlaylist(state));
 
+useEffect(()=> {
+    console.log(state)
+}, [state])
+
   useEffect(() => {
     if (isSuccess && !messagesLoaded) {
       const messagesArray = Object.values(playlist.entities);
@@ -45,7 +50,6 @@ function MessageList({ playerId }) {
       setMessagesLoaded(true);
     }
   }, [isSuccess, messagesLoaded, playlist, handlers]);
-  console.log(state)
 
   const items = state.length ? (
     state.map((item, index) => (
@@ -58,7 +62,7 @@ function MessageList({ playerId }) {
               </div>
             </td>
             <td style={{ width: rem(80) }}>{item.messageName}</td>
-            <td style={{ width: rem(120) }}>{item.name}</td>
+            <td style={{ width: rem(120) }}>{item.messageType}</td>
             {/* <td style={{ width: rem(80) }}>{item.symbol}</td>
             <td>{item.mass}</td> */}
           </tr>
@@ -67,12 +71,18 @@ function MessageList({ playerId }) {
     ))
   ) : (
     <tr>
-      <td colSpan={5}>Loading data...</td>
+      <td colSpan={5}> return <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container></td>
     </tr>
   );
 
   return (
+   
+    <Card mt={20} shadow="xs" mx="md" p="xs">
+    <Group>
+        <Text fz="lg" fw={500}>{`${playerName}`} Playlist</Text>
+    </Group>
     <ScrollArea>
+  
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           handlers.reorder({ from: source.index, to: destination?.index || 0 })
@@ -81,9 +91,9 @@ function MessageList({ playerId }) {
         <Table sx={{ minWidth: rem(420), '& tbody tr td': { borderBottom: 0 } }}>
           <thead>
             <tr>
-              <th style={{ width: rem(40) }} />
-              <th style={{ width: rem(80) }}>Name</th>
-              <th style={{ width: rem(120) }}>Type</th>
+              <th style={{ width: rem(20) }} />
+              <th style={{ width: rem(180) }}>Name</th>
+              <th style={{ width: rem(80) }}>Message Type</th>
             </tr>
           </thead>
           <Droppable droppableId="dnd-list" direction="vertical">
@@ -96,7 +106,10 @@ function MessageList({ playerId }) {
           </Droppable>
         </Table>
       </DragDropContext>
+     
     </ScrollArea>
+    </Card>
+    
   );
 }
 
