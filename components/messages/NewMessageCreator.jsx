@@ -2,6 +2,7 @@ import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Contain
 import { useListState } from '@mantine/hooks';;
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { MessageForm } from './MessageForm';
 
 
 
@@ -10,8 +11,8 @@ function NewMessageCreator() {
   const [messagesLoaded, setMessagesLoaded] = useState(false);
 
   return (
-    <Card mt={20} shadow="xs" mx="md" p="xs">
-        New Message Creator
+    <Card mt={20} shadow="xs" mx="md" p="md">
+        <MessageForm/>
     </Card>
   )
 

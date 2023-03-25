@@ -1,4 +1,4 @@
-import { Paper, Button,  Modal, Group, Pagination, Autocomplete, MultiSelect, Container, Loader, Text} from '@mantine/core';
+import { Paper, Button,  Modal, Group, Pagination, Autocomplete, MultiSelect, Container, Loader, Text, Select} from '@mantine/core';
 import { useGetPlayersQuery, selectAllPlayers } from '../../app/features/players/playersApiSlice';
 import { useSelector } from 'react-redux';
 import { useDisclosure } from '@mantine/hooks';
@@ -46,6 +46,10 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         handlePlayerUpdate(dropDownValue, selectedLabel)
     },[dropDownValue] )
     
+    const messageTypes = [ {value: 'c-store',
+      label: 'C Store Message',}]
+  
+    
 
     return (
       <>
@@ -54,8 +58,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         ( <Group position="apart">
         <Group>
         {/* <Text  fw={500}>Select A Player:</Text> */}
-        <MultiSelect
-        maxSelectedValues={1}
+        <Select
         w={200}
         data={dropDownData}
         placeholder="Pick A Player"
@@ -72,8 +75,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         ): (
         <Group position="apart">
         <Group>
-        <MultiSelect
-        maxSelectedValues={1}
+        <Select
         w={200}
         data={dropDownData}
         placeholder="Player"
@@ -83,14 +85,12 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         nothingFound="Nothing found"
         />
         </Group>
-        <MultiSelect
-        maxSelectedValues={1}
+        <Select
         w={200}
-        data={dropDownData}
+        data={messageTypes}
         placeholder="Message Type"
         maxDropdownHeight={160}
         searchable limit={20}
-        value={dropDownValue}
         nothingFound="Nothing found"
         />
         <SplitSaveButton></SplitSaveButton>
