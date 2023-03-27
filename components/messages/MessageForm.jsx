@@ -20,7 +20,6 @@ function MessageForm() {
     } = useGetImagesQuery()
     
     const allImages = useSelector(selectAllImages);
-    console.log(allImages)
     useEffect(() => {
         if (isSuccess) {
           const newDropDownData = allImages.map((image) => ({
@@ -35,18 +34,20 @@ function MessageForm() {
 const navigate = useNavigate();
 const [imageDropDownData, setImageDropDownData] = useState([])
 const form = useForm({
-    initialValues: { firstName: '', lastName: '', email: '', password:'',
-    confirmPassword: '' },
+    initialValues: { quantity: '', price: '', points: '', promo:'', promoLineOne:'', promoLineTwo:'',  disclaimerLineOne:'',  disclaimerLineTwo:'',
+    imageOne: '',  imageTwo: '',  imageThree: '' },
 
  
     // functions will validate values at corresponding key
     validate: {
-      firstName: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-      lastName: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value) => (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value) ? null : 'Password must contain at least 8 characters and at least one number'),
-      confirmPassword: (value, values) =>
-        value !== values.password ? 'Passwords did not match' : null
+       quantity: (value) => (value.length > 2 ? 'Quantity must have one number' : null),
+       price: (value) => (value.length >= 2 ? 'price must have one number' : null),
+       points: (value) => (value.length < 2 ? 'needs two or three numbers' : null),
+       promo: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+       promoLineOne: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+       promoLineTwo: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+       disclaimerLineOne: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+       disclaimerLineTwo: (value) => (value.length < 2  ? null : 'Invalid email'),
     },
   });
 
@@ -60,9 +61,9 @@ const form = useForm({
                 C-Store Promo
         </Title>
         <Group grow>
-        <TextInput  mt="sm"  label="Quantity" placeholder="2" {...form.getInputProps('firstName')} required/>
-        <TextInput mt="sm"  label="Price" placeholder="4" {...form.getInputProps('lastName')} required/>
-        <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('email')} required/>
+        <TextInput  mt="sm"  label="Quantity" placeholder="2" {...form.getInputProps('quantity')} required/>
+        <TextInput mt="sm"  label="Price" placeholder="4" {...form.getInputProps('price')} required/>
+        <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('points')} required/>
         </Group>
         </Stack>
         <Stack>
@@ -77,14 +78,14 @@ const form = useForm({
        
 
         <Group grow>
-        <TextInput mt="sm" label="Promo Line One" placeholder="BUY ANY 2" {...form.getInputProps('email')} required/>
-        <TextInput mt="sm" label="Promo Line Two" placeholder="POWERADE" {...form.getInputProps('email')} required/>
-        <TextInput mt="sm" label="Promo Line Three" placeholder="All Flavours, 710mL" {...form.getInputProps('email')} required/>
+        <TextInput mt="sm" label="Promo Line One" placeholder="BUY ANY 2" {...form.getInputProps('promo')} required/>
+        <TextInput mt="sm" label="Promo Line Two" placeholder="POWERADE" {...form.getInputProps('promoLineOne')} required/>
+        <TextInput mt="sm" label="Promo Line Three" placeholder="All Flavours, 710mL" {...form.getInputProps('promoLineTwo')} required/>
         </Group>
         
         <Group grow>
-        <TextInput mt="sm" label="Disclaimer Line One" placeholder="Legal Copy" {...form.getInputProps('email')} required/>
-        <TextInput mt="sm" label="Disclaimer Line Two" placeholder="Legal Copy" {...form.getInputProps('email')} required/>
+        <TextInput mt="sm" label="Disclaimer Line One" placeholder="Legal Copy" {...form.getInputProps('disclaimerLineOne')} required/>
+        <TextInput mt="sm" label="Disclaimer Line Two" placeholder="Legal Copy" {...form.getInputProps('disclaimerLineTwo')} required/>
         
         </Group >
         
