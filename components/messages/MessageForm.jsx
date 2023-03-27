@@ -1,16 +1,39 @@
 import { useForm } from '@mantine/form';
-import { TextInput, Button,PasswordInput, Paper, Container, Title, createStyles, Flex , Group, Center, Box, rem, Anchor , Text, Select, AspectRatio, Image, Card, Stack} from '@mantine/core';
+import { TextInput, Title, createStyles, Flex , Group,  Select, AspectRatio, Image, Card, Stack} from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { Link , useNavigate } from 'react-router-dom';
-
-
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectAllImages, useGetImagesQuery } from '../../app/features/images/imagesAPI';
 
 
 
 
 function MessageForm() {
+    const {
+        data: images,
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+        refetch, 
+    } = useGetImagesQuery()
+    
+    const allImages = useSelector(selectAllImages);
+    console.log(allImages)
+    useEffect(() => {
+        if (isSuccess) {
+          const newDropDownData = allImages.map((image) => ({
+            value: `${image.imageURL}`,
+            label: `${image.fileName}`,
+          }));
+          setImageDropDownData(newDropDownData);
+        }
+      }, [isSuccess, allImages]);
+    
 
 const navigate = useNavigate();
+const [imageDropDownData, setImageDropDownData] = useState([])
 const form = useForm({
     initialValues: { firstName: '', lastName: '', email: '', password:'',
     confirmPassword: '' },
@@ -31,24 +54,25 @@ const form = useForm({
   return (
     <>
     <form onSubmit={form.onSubmit((values)=> handleNewUserSubmit(values))}>
-     <Group grow>
-        <Stack justify="flex-start">
-        <Title align="start" m={0} sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 600,})} >
+     <Group grow >
+        <Stack justify="start">
+        <Title  mt={0}  >
                 C-Store Promo
         </Title>
         <Group grow>
         <TextInput  mt="sm"  label="Quantity" placeholder="2" {...form.getInputProps('firstName')} required/>
         <TextInput mt="sm"  label="Price" placeholder="4" {...form.getInputProps('lastName')} required/>
+        <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('email')} required/>
         </Group>
         </Stack>
-        <AspectRatio ratio={1920 / 1080} maw={500} mx="auto">
+        <Stack>
+        <AspectRatio ratio={1920 / 1080} maw={500} m={12}>
         <Card bg="black"shadow="sm">Test</Card>
-         </AspectRatio>
+        </AspectRatio>
+        </Stack>
     </Group> 
          
         
-
-  
       
        
 
@@ -61,7 +85,7 @@ const form = useForm({
         <Group grow>
         <TextInput mt="sm" label="Disclaimer Line One" placeholder="Legal Copy" {...form.getInputProps('email')} required/>
         <TextInput mt="sm" label="Disclaimer Line Two" placeholder="Legal Copy" {...form.getInputProps('email')} required/>
-        <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('email')} required/>
+        
         </Group >
         
         <Group grow>
@@ -72,23 +96,13 @@ const form = useForm({
         placeholder="Image One"
         maxDropdownHeight={160}
         searchable limit={20}
-        data={[
-            { value: 'react', label: 'React' },
-            { value: 'ng', label: 'Angular' },
-            { value: 'svelte', label: 'Svelte' },
-            { value: 'vue', label: 'Vue' },
-          ]}
+        data={imageDropDownData}
         nothingFound="Nothing found"
         />
          <Select
         mt="sm"
         w={200}
-        data={[
-            { value: 'react', label: 'React' },
-            { value: 'ng', label: 'Angular' },
-            { value: 'svelte', label: 'Svelte' },
-            { value: 'vue', label: 'Vue' },
-          ]}
+        data={imageDropDownData}
           label="Center Image"
         placeholder="Image Two"
         maxDropdownHeight={160}
@@ -99,12 +113,7 @@ const form = useForm({
         label="Right Image"
         mt="sm"
         w={200}
-        data={[
-            { value: 'react', label: 'React' },
-            { value: 'ng', label: 'Angular' },
-            { value: 'svelte', label: 'Svelte' },
-            { value: 'vue', label: 'Vue' },
-          ]}
+        data={imageDropDownData}
         placeholder="Image Three"
         maxDropdownHeight={160}
         searchable limit={20}
