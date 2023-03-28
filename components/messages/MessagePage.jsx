@@ -12,6 +12,7 @@ function MessagesPage(){
     const [playerId, setPlayerId] = useState('')
     const [playerName, setPlayerName] = useState('')
     const [newMessagePage, setNewMessagePage] = useState(false)
+    
 
     function handlePlayerUpdate(id, playerName){
         setPlayerId(id)
@@ -22,6 +23,9 @@ function MessagesPage(){
         setNewMessagePage(true)
     }
 
+    function handleTrashClick(){
+      setNewMessagePage(false)
+    }
 
     return(
         <>
@@ -34,7 +38,12 @@ function MessagesPage(){
         <MessageList playerId={playerId} playerName={playerName}/>
       )}
       {newMessagePage == true ? (
-           <NewMessageCreator playerId={playerId} />
+           <NewMessageCreator playerId={playerId} handleTrashClick={handleTrashClick}/>
+      ) : (
+        null
+      )}
+        {newMessagePage == !true && playerId == '' ? (
+           <InfoMessageCard/>
       ) : (
         null
       )}

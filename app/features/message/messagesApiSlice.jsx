@@ -60,6 +60,16 @@ export const messageApiSlice = apiSlice.injectEndpoints({
                 {type: 'message', id: arg.id }
             ]
         }),
+        updateMessagePosition: builder.mutation({
+            query: ({ messageId, position }) => ({
+                url: `/messages/${messageId}`,
+                method: 'PATCH',
+                body: { id: messageId, position },
+            }),
+            invalidatesTags: (result, error, arg) => [
+                {type: 'message', id: arg.id }
+            ]
+        }),
         
     }),
 });
@@ -69,7 +79,7 @@ export const {
     useAddNewMessageMutation,
     useUpdateMessageMutation,
     useDeleteMessageMutation,
-    
+    useUpdateMessagePositionMutation,
 } = messageApiSlice;
 
 

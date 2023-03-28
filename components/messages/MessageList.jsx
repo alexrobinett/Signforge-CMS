@@ -1,10 +1,11 @@
-import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Container, Loader } from '@mantine/core';
+import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Container, Loader, ActionIcon, Menu, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { IconGripVertical } from '@tabler/icons-react';
+import { IconGripVertical, IconPencil, IconDots , IconMessages, IconTrash} from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useGetPlayerPlaylistQuery,selectAllPlaylist } from '../../app/features/playlist/playlistAPISlice';
+import { useGetPlayerPlaylistQuery,selectAllPlaylist} from '../../app/features/playlist/playlistAPISlice';
+import { useUpdateMessagePositionMutation } from '../../app/features/message/messagesApiSlice';
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -26,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 
 function MessageList({ playerId, playerName }) {
   const { classes } = useStyles();
-  const [state, handlers] = useListState([]);
+  const [state, setState] = useState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const {
     data: playlist,
@@ -36,26 +37,49 @@ function MessageList({ playerId, playerName }) {
     error,
     refetch,
   } = useGetPlayerPlaylistQuery(playerId , { skip: !playerId });
+  
+  const [updateMessagePosition] = useUpdateMessagePositionMutation()
+
+
 
   const playlistMessages = useSelector((state) => selectAllPlaylist(state));
 
-useEffect(()=> {
-    console.log(state)
-}, [state])
+
+
+  async function updatePlaylistMessagePositions(){
+    for (let i = 0; i < state.length; i++) {
+      const message = state[i];
+      try {
+        const response = await updateMessagePosition({
+          messageId: message._id,
+          position: i,
+        });
+        console.log(response);
+        console.log(state)
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+
+
 
   useEffect(() => {
-    if (isSuccess && !messagesLoaded) {
+    if (isSuccess) {
       const messagesArray = Object.values(playlist.entities);
-      handlers.setState(messagesArray);
+      setState(messagesArray);
       setMessagesLoaded(true);
     }
-  }, [isSuccess, messagesLoaded, playlist, handlers]);
+  }, [isSuccess, messagesLoaded, playlist]);
+  
+  
 
   const items = state.length ? (
     state.map((item, index) => (
         <Draggable key={item._id} index={index}  draggableId={`${item._id}`}>
         {(provided) => (
-          <tr className={classes.item} ref={provided.innerRef} {...provided.draggableProps}>
+        <tr className={classes.item} ref={provided.innerRef} {...provided.draggableProps}>
             <td>
               <div className={classes.dragHandle} {...provided.dragHandleProps}>
                 <IconGripVertical size="1.05rem" stroke={1.5} />
@@ -63,8 +87,32 @@ useEffect(()=> {
             </td>
             <td style={{ width: rem(80) }}>{item.messageName}</td>
             <td style={{ width: rem(120) }}>{item.messageType}</td>
-            {/* <td style={{ width: rem(80) }}>{item.symbol}</td>
-            <td>{item.mass}</td> */}
+            <td  style={{ width: rem(60) }}>
+                <Group spacing={0} position="right">
+                  <ActionIcon onClick={() => setEditing(!editing)}>
+                    <IconPencil size="1rem" stroke={1.5} />
+                  </ActionIcon>
+                  <Menu
+                    transitionProps={{ transition: 'pop' }}
+                    withArrow
+                    position="bottom-end"
+                    withinPortal
+                  >
+                    <Menu.Target>
+                      <ActionIcon>
+                        <IconDots size="1rem" stroke={1.5} />
+                      </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>Send message</Menu.Item>
+                      <Menu.Item onClick={()=> handleDeleteClick()} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
+                        Delete Player
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </Group>
+             </td>
+             <td style={{ width: rem(40) }}>{item.position + 1}</td>
           </tr>
         )}
       </Draggable>
@@ -75,7 +123,10 @@ useEffect(()=> {
     </tr>
   );
 
+
+  
   return (
+    
    
     <Card mt={20} shadow="xs" mx="md" p="xs">
     <Group>
@@ -84,9 +135,20 @@ useEffect(()=> {
     <ScrollArea>
   
       <DragDropContext
-        onDragEnd={({ destination, source }) =>
-          handlers.reorder({ from: source.index, to: destination?.index || 0 })
+       onDragEnd={({ destination, source }) => {
+        if (!destination) {
+          return;
         }
+      
+        if (source.index === destination.index) {
+          return;
+        }
+      
+        const newState = [...state];
+        const [removed] = newState.splice(source.index, 1);
+        newState.splice(destination.index, 0, removed);
+        setState(newState);
+      }}
       >
         <Table sx={{ minWidth: rem(420), '& tbody tr td': { borderBottom: 0 } }}>
           <thead>
@@ -94,6 +156,9 @@ useEffect(()=> {
               <th style={{ width: rem(20) }} />
               <th style={{ width: rem(180) }}>Name</th>
               <th style={{ width: rem(80) }}>Message Type</th>
+              <th style={{ width: rem(40) }}>position</th>
+              <th style={{ width: rem(40) }}></th>
+
             </tr>
           </thead>
           <Droppable droppableId="dnd-list" direction="vertical">
@@ -108,6 +173,7 @@ useEffect(()=> {
       </DragDropContext>
      
     </ScrollArea>
+    <Group position="right"><Button mt={20} onClick={()=> updatePlaylistMessagePositions()}>Update Playlist</Button></Group>
     </Card>
     
   );

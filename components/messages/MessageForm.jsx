@@ -10,7 +10,7 @@ import { SplitSaveButton } from './SplitSaveButton';
 
 
 
-function MessageForm({playerId}) {
+function MessageForm({playerId} , props) {
     const {
         data: images,
         isLoading,
@@ -47,6 +47,10 @@ const form = useForm({
        price: (value) => (value.length >= 2 ? 'price must have one number' : null),
     },
   });
+
+  useEffect(() => {
+    form.setFieldValue('player', playerId)
+  }, [playerId]);
 
 
   return (
@@ -127,7 +131,7 @@ const form = useForm({
         />
         </Group>
         <Group mt={16} position="right">
-        <SplitSaveButton formData={form.values} form={form} playerId={playerId} />
+        <SplitSaveButton formData={form.values} form={form} playerId={playerId} handleTrashClick={props.handleTrashClick}/>
         </Group>
       </form>
       </>

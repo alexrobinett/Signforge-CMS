@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function SplitSaveButton({formData, form, playerId}) {
+function SplitSaveButton({formData, form, playerId}, props) {
   const { classes, theme } = useStyles();
   const menuIconColor = theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 6];
   const [addNewMessage,{
@@ -36,14 +36,22 @@ function SplitSaveButton({formData, form, playerId}) {
 
 async function handleMessageSave(){
     try{
-      form.setFieldValue('player', playerId)
+      console.log(playerId)
       await addNewMessage(formData)
-      
+      form.reset()
     }catch{
       console.error(error)
     }
   }
   
+  function handleTrashMessage(){
+    console.log('clicked')
+    form.reset()
+   
+
+  }
+
+
   // async function handleMessageDraft(file){
   //   try{
     
@@ -56,7 +64,7 @@ async function handleMessageSave(){
   return (
     <Group noWrap spacing={0}>
       <Button className={classes.button} type="submit" onClick={form.onSubmit(() => {
-       handleMessageSave()
+       handleMessageSave() 
     })}>Save Message</Button >
       <Menu transitionProps={{ transition: 'pop' }} position="bottom-end" withinPortal>
         <Menu.Target >
@@ -75,8 +83,8 @@ async function handleMessageSave(){
           <Menu.Item icon={<IconBookmark size="1rem" stroke={1.5} color={menuIconColor} />}>
             Save draft
           </Menu.Item>
-          <Menu.Item icon={<IconTrash size="1rem" stroke={1.5} color={menuIconColor} />}>
-            Delete
+          <Menu.Item onClick={handleTrashMessage} icon={<IconTrash size="1rem" stroke={1.5} color={menuIconColor}  />}>
+            Trash
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

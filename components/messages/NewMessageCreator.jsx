@@ -6,13 +6,13 @@ import { MessageForm } from './MessageForm';
 
 
 
-function NewMessageCreator({playerId}) {
+function NewMessageCreator({playerId}, props) {
   const [state, handlers] = useListState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
 
   return (
     <Card mt={20} shadow="xs" mx="md" p="md">
-        <MessageForm playerId={playerId}/>
+        <MessageForm playerId={playerId} handleTrashClick={props.handleTrashClick}/>
     </Card>
   )
 
