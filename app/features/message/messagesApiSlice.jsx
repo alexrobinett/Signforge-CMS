@@ -11,7 +11,7 @@ const initialSate = messageAdapter.getInitialState();
 export const messageApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getMessages: builder.query({
-            query: () => `/message/`,
+            query: () => `/messages/`,
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError;
             },
@@ -34,7 +34,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
         }),
         addNewMessage: builder.mutation({
             query: (initialMessageData) => ({
-              url: "/message",
+              url: "/messages",
               method: "POST",
               body: initialMessageData,
             }),
@@ -43,7 +43,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
 
         updateMessage: builder.mutation({
             query: (data) => ({
-                url: `/message/${data.id}`,
+                url: `/messages/${data.id}`,
                 method: 'PATCH',
                 body:{ updateName: `${data.file}` }
             }),
@@ -53,7 +53,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
         }),
         deleteMessage: builder.mutation({
             query: (id) => ({
-                url: `/message/${id}`,
+                url: `/messages/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, arg) => [

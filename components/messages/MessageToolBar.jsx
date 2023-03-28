@@ -30,7 +30,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
       const newDropDownData = allPlayers.map((player) => ({
         value: `${player.id}`,
         label: `${player.playerName}`,
-      }));
+      } ));
       setDropDownData(newDropDownData);
     }
   }, [isSuccess, allPlayers]);
@@ -82,6 +82,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         maxDropdownHeight={160}
         searchable limit={20}
         value={dropDownValue}
+        onChange={(value) => setDropDownValue(value)}
         nothingFound="Nothing found"
         />
         </Group>
@@ -93,7 +94,6 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         searchable limit={20}
         nothingFound="Nothing found"
         />
-        <SplitSaveButton></SplitSaveButton>
         </Group>
         )}
        

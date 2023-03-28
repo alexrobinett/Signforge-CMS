@@ -58,7 +58,7 @@ export const playerApiSlice = apiSlice.injectEndpoints({
           
         deletePlayer: builder.mutation({
             query: (data) => ({
-                url: `/player/playlist/${data.id}`,
+                url: `/player/${data.id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, arg) => [

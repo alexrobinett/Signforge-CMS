@@ -20,7 +20,6 @@ function MessagesPage(){
 
     function handleNewMessagePage(){
         setNewMessagePage(true)
-        setPlayerId('')
     }
 
 
@@ -29,18 +28,13 @@ function MessagesPage(){
   
         <MessageToolBar handlePlayerUpdate={handlePlayerUpdate} handleNewMessageButton={handleNewMessagePage} newMessagePage={newMessagePage} />
         
-        {playerId == '' ? (
+        {playerId == '' || playerId == undefined &&  newMessagePage === true || newMessagePage === true ? (
            null
       ) : (
         <MessageList playerId={playerId} playerName={playerName}/>
       )}
-        {newMessagePage === false && playerId == '' ? (
-           <InfoMessageCard />
-      ) : (
-        null
-      )}
       {newMessagePage == true ? (
-           <NewMessageCreator/>
+           <NewMessageCreator playerId={playerId} />
       ) : (
         null
       )}

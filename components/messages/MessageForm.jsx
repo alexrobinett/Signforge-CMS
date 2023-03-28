@@ -5,11 +5,12 @@ import { Link , useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllImages, useGetImagesQuery } from '../../app/features/images/imagesAPI';
+import { SplitSaveButton } from './SplitSaveButton';
 
 
 
 
-function MessageForm() {
+function MessageForm({playerId}) {
     const {
         data: images,
         isLoading,
@@ -31,45 +32,46 @@ function MessageForm() {
       }, [isSuccess, allImages]);
     
 
+
+      
 const navigate = useNavigate();
 const [imageDropDownData, setImageDropDownData] = useState([])
 const form = useForm({
     initialValues: { quantity: '', price: '', points: '', promo:'', promoLineOne:'', promoLineTwo:'',  disclaimerLineOne:'',  disclaimerLineTwo:'',
-    imageOne: '',  imageTwo: '',  imageThree: '' },
-
+    imageOne: '',  imageTwo: '',  imageThree: '', player: ``, id: '640bf6e47781518ed5c23575', draft: false, messageName: '', messageType: 'C-Store Promo'  },
+    
  
     // functions will validate values at corresponding key
     validate: {
        quantity: (value) => (value.length > 2 ? 'Quantity must have one number' : null),
        price: (value) => (value.length >= 2 ? 'price must have one number' : null),
-       points: (value) => (value.length < 2 ? 'needs two or three numbers' : null),
-       promo: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-       promoLineOne: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-       promoLineTwo: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-       disclaimerLineOne: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-       disclaimerLineTwo: (value) => (value.length < 2  ? null : 'Invalid email'),
     },
   });
 
 
   return (
     <>
-    <form onSubmit={form.onSubmit((values)=> handleNewUserSubmit(values))}>
+    <form onSubmit={form.onSubmit((values) => {
+     form.setFieldValue('player', playerId)
+    })}>
+    <Title  mt={0}  >
+                C-Store Promo
+    </Title>
      <Group grow >
         <Stack justify="start">
-        <Title  mt={0}  >
-                C-Store Promo
-        </Title>
         <Group grow>
-        <TextInput  mt="sm"  label="Quantity" placeholder="2" {...form.getInputProps('quantity')} required/>
-        <TextInput mt="sm"  label="Price" placeholder="4" {...form.getInputProps('price')} required/>
-        <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('points')} required/>
+            <TextInput  mt="sm"  label="Message Name" placeholder="C-store-Promo-Powerade" {...form.getInputProps('messageName')} required/>
+        </Group>
+        <Group grow>
+            <TextInput  mt="sm"  label="Quantity" placeholder="2" {...form.getInputProps('quantity')} required/>
+            <TextInput mt="sm"  label="Price" placeholder="4" {...form.getInputProps('price')} required/>
+            <TextInput mt="sm"  label="Points" placeholder="400" {...form.getInputProps('points')} required/>
         </Group>
         </Stack>
         <Stack>
-        <AspectRatio ratio={1920 / 1080} maw={500} m={12}>
-        <Card bg="black"shadow="sm">Test</Card>
-        </AspectRatio>
+            <AspectRatio ratio={1920 / 1080} maw={500} m={12}>
+                <Card bg="grey"shadow="sm">Preview</Card>
+            </AspectRatio>
         </Stack>
     </Group> 
          
@@ -99,6 +101,7 @@ const form = useForm({
         searchable limit={20}
         data={imageDropDownData}
         nothingFound="Nothing found"
+        {...form.getInputProps('imageOne')} 
         />
          <Select
         mt="sm"
@@ -109,6 +112,7 @@ const form = useForm({
         maxDropdownHeight={160}
         searchable limit={20}
         nothingFound="Nothing found"
+        {...form.getInputProps('imageTwo')} 
         />
          <Select
         label="Right Image"
@@ -119,7 +123,11 @@ const form = useForm({
         maxDropdownHeight={160}
         searchable limit={20}
         nothingFound="Nothing found"
+        {...form.getInputProps('imageThree')} 
         />
+        </Group>
+        <Group mt={16} position="right">
+        <SplitSaveButton formData={form.values} form={form} playerId={playerId} />
         </Group>
       </form>
       </>
