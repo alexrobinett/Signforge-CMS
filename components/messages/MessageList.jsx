@@ -56,6 +56,7 @@ function MessageList({ playerId, playerName }) {
         });
         console.log(response);
         console.log(state)
+        refetch()
       } catch (err) {
         console.error(err);
       }
@@ -85,9 +86,11 @@ function MessageList({ playerId, playerName }) {
                 <IconGripVertical size="1.05rem" stroke={1.5} />
               </div>
             </td>
-            <td style={{ width: rem(80) }}>{item.messageName}</td>
-            <td style={{ width: rem(120) }}>{item.messageType}</td>
-            <td  style={{ width: rem(60) }}>
+            <td style={{ width: rem(40) }}>{item.position + 1}</td>
+            <td style={{ width: rem(150) }}>{item.messageName}</td>
+            <td style={{ width: rem(140) }}>{item.messageType}</td>
+            
+            <td>
                 <Group spacing={0} position="right">
                   <ActionIcon onClick={() => setEditing(!editing)}>
                     <IconPencil size="1rem" stroke={1.5} />
@@ -104,7 +107,7 @@ function MessageList({ playerId, playerName }) {
                       </ActionIcon>
                     </Menu.Target>
                     <Menu.Dropdown>
-                      <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>Send message</Menu.Item>
+                    <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>Send message</Menu.Item>
                       <Menu.Item onClick={()=> handleDeleteClick()} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
                         Delete Player
                       </Menu.Item>
@@ -112,7 +115,7 @@ function MessageList({ playerId, playerName }) {
                   </Menu>
                 </Group>
              </td>
-             <td style={{ width: rem(40) }}>{item.position + 1}</td>
+             
           </tr>
         )}
       </Draggable>
@@ -153,12 +156,13 @@ function MessageList({ playerId, playerName }) {
         <Table sx={{ minWidth: rem(420), '& tbody tr td': { borderBottom: 0 } }}>
           <thead>
             <tr>
-              <th style={{ width: rem(20) }} />
-              <th style={{ width: rem(180) }}>Name</th>
-              <th style={{ width: rem(80) }}>Message Type</th>
+              <th style={{ width: rem(40) }} />
               <th style={{ width: rem(40) }}>position</th>
-              <th style={{ width: rem(40) }}></th>
-
+              <th style={{ width: rem(150) }}>Name</th>
+              <th style={{ width: rem(140) }}>Message Type</th>
+              
+              <th style={{ width: rem(140) }}></th>
+              
             </tr>
           </thead>
           <Droppable droppableId="dnd-list" direction="vertical">

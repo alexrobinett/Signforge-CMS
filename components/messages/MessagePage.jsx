@@ -4,6 +4,7 @@ import { MessageList } from "./MessageList";
 import { InfoMessageCard } from "./InfoMessageCard";
 import { Header, Text } from "@mantine/core";
 import { NewMessageCreator } from "./NewMessageCreator";
+import { current } from "@reduxjs/toolkit";
   
 
 
@@ -24,7 +25,7 @@ function MessagesPage(){
     }
 
     function handleTrashClick(){
-      setNewMessagePage(false)
+      setNewMessagePage((currentState) => !currentState)
     }
 
     return(

@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function SplitSaveButton({formData, form, playerId}, props) {
+function SplitSaveButton({formData, form, playerId, handleTrashClick}){
   const { classes, theme } = useStyles();
   const menuIconColor = theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 6];
   const [addNewMessage,{
@@ -45,7 +45,7 @@ async function handleMessageSave(){
   }
   
   function handleTrashMessage(){
-    console.log('clicked')
+    handleTrashClick()
     form.reset()
    
 
@@ -83,7 +83,7 @@ async function handleMessageSave(){
           <Menu.Item icon={<IconBookmark size="1rem" stroke={1.5} color={menuIconColor} />}>
             Save draft
           </Menu.Item>
-          <Menu.Item onClick={handleTrashMessage} icon={<IconTrash size="1rem" stroke={1.5} color={menuIconColor}  />}>
+          <Menu.Item onClick={()=>handleTrashMessage()} icon={<IconTrash size="1rem" stroke={1.5} color={menuIconColor}  />}>
             Trash
           </Menu.Item>
         </Menu.Dropdown>

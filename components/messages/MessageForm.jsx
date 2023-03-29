@@ -10,7 +10,7 @@ import { SplitSaveButton } from './SplitSaveButton';
 
 
 
-function MessageForm({playerId} , props) {
+function MessageForm({playerId, handleTrashClick}) {
     const {
         data: images,
         isLoading,
@@ -131,7 +131,7 @@ const form = useForm({
         />
         </Group>
         <Group mt={16} position="right">
-        <SplitSaveButton formData={form.values} form={form} playerId={playerId} handleTrashClick={props.handleTrashClick}/>
+        <SplitSaveButton formData={form.values} form={form} playerId={playerId} handleTrashClick={handleTrashClick}/>
         </Group>
       </form>
       </>
