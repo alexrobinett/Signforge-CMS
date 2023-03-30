@@ -38,6 +38,7 @@ async function handleMessageSave(){
     try{
       console.log(playerId)
       await addNewMessage(formData)
+      handleTrashClick()
       form.reset()
     }catch{
       console.error(error)

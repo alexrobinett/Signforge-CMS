@@ -5,7 +5,7 @@ import { IconGripVertical, IconPencil, IconDots , IconMessages, IconTrash} from 
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useGetPlayerPlaylistQuery,selectAllPlaylist} from '../../app/features/playlist/playlistAPISlice';
-import { useUpdateMessagePositionMutation } from '../../app/features/message/messagesApiSlice';
+import { useUpdateMessagePositionMutation, useDeleteMessageMutation } from '../../app/features/message/messagesApiSlice';
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -40,7 +40,7 @@ function MessageList({ playerId, playerName }) {
   
   const [updateMessagePosition] = useUpdateMessagePositionMutation()
 
-
+  const [deleteMessage] = useDeleteMessageMutation()
 
   const playlistMessages = useSelector((state) => selectAllPlaylist(state));
 
@@ -64,7 +64,10 @@ function MessageList({ playerId, playerName }) {
   };
 
 
-
+async function handleDeleteClick(id){
+  await deleteMessage(id)
+  refetch()
+}
 
   useEffect(() => {
     if (isSuccess) {
@@ -108,7 +111,7 @@ function MessageList({ playerId, playerName }) {
                     </Menu.Target>
                     <Menu.Dropdown>
                     <Menu.Item icon={<IconMessages size="1rem" stroke={1.5} />}>Send message</Menu.Item>
-                      <Menu.Item onClick={()=> handleDeleteClick()} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
+                      <Menu.Item onClick={()=> handleDeleteClick(item._id)} icon={<IconTrash size="1rem" stroke={1.5} />} color="red">
                         Delete Player
                       </Menu.Item>
                     </Menu.Dropdown>
@@ -122,7 +125,7 @@ function MessageList({ playerId, playerName }) {
     ))
   ) : (
     <tr>
-      <td colSpan={5}> return <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container></td>
+      <td colSpan={5}> <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container></td>
     </tr>
   );
 
@@ -135,7 +138,7 @@ function MessageList({ playerId, playerName }) {
     <Group>
         <Text fz="lg" fw={500}>{`${playerName}`} Playlist</Text>
     </Group>
-    <ScrollArea>
+    <ScrollArea >
   
       <DragDropContext
        onDragEnd={({ destination, source }) => {
