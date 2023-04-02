@@ -1,11 +1,11 @@
 import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Container, Loader, ActionIcon, Menu, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { IconGripVertical, IconPencil, IconDots , IconMessages, IconTrash} from '@tabler/icons-react';
+import { IconGripVertical, IconPencil, IconDots , IconMessages, IconTrash, IconEdit} from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useGetPlayerPlaylistQuery,selectAllPlaylist} from '../../app/features/playlist/playlistAPISlice';
-import { useUpdateMessagePositionMutation, useDeleteMessageMutation } from '../../app/features/message/messagesApiSlice';
+import { useUpdateMessagePositionMutation, useDeleteMessageMutation, useUpdateMessageMutation } from '../../app/features/message/messagesApiSlice';
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 
 function MessageList({ playerId, playerName }) {
   const { classes } = useStyles();
-  const [state, setState] = useState([]);
+  const [messageState, setMessageState] = useState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const {
     data: playlist,
@@ -40,22 +40,23 @@ function MessageList({ playerId, playerName }) {
   
   const [updateMessagePosition] = useUpdateMessagePositionMutation()
 
+  const [updateMessage] = useUpdateMessageMutation()
+
   const [deleteMessage] = useDeleteMessageMutation()
 
-  const playlistMessages = useSelector((state) => selectAllPlaylist(state));
+  const playlistMessages = useSelector((messageState) => selectAllPlaylist(messageState));
 
 
 
   async function updatePlaylistMessagePositions(){
-    for (let i = 0; i < state.length; i++) {
-      const message = state[i];
+    for (let i = 0; i < messageState.length; i++) {
+      const message = messageState[i];
       try {
         const response = await updateMessagePosition({
           messageId: message._id,
           position: i,
         });
         console.log(response);
-        console.log(state)
         refetch()
       } catch (err) {
         console.error(err);
@@ -69,18 +70,22 @@ async function handleDeleteClick(id){
   refetch()
 }
 
+async function handleEditClick(id){
+  console.log(id)
+}
+
   useEffect(() => {
     if (isSuccess) {
       const messagesArray = Object.values(playlist.entities);
-      setState(messagesArray);
+      setMessageState(messagesArray);
       setMessagesLoaded(true);
     }
   }, [isSuccess, messagesLoaded, playlist]);
   
   
 
-  const items = state.length ? (
-    state.map((item, index) => (
+  const items = messageState.length ? (
+    messageState.map((item, index) => (
         <Draggable key={item._id} index={index}  draggableId={`${item._id}`}>
         {(provided) => (
         <tr className={classes.item} ref={provided.innerRef} {...provided.draggableProps}>
@@ -92,10 +97,9 @@ async function handleDeleteClick(id){
             <td style={{ width: rem(40) }}>{item.position + 1}</td>
             <td style={{ width: rem(150) }}>{item.messageName}</td>
             <td style={{ width: rem(140) }}>{item.messageType}</td>
-            
             <td>
                 <Group spacing={0} position="right">
-                  <ActionIcon onClick={() => setEditing(!editing)}>
+                  <ActionIcon onClick={() => handleEditClick(item._id)}>
                     <IconPencil size="1rem" stroke={1.5} />
                   </ActionIcon>
                   <Menu
@@ -150,10 +154,10 @@ async function handleDeleteClick(id){
           return;
         }
       
-        const newState = [...state];
+        const newState = [...messageState];
         const [removed] = newState.splice(source.index, 1);
         newState.splice(destination.index, 0, removed);
-        setState(newState);
+        setMessageState(newState);
       }}
       >
         <Table sx={{ minWidth: rem(420), '& tbody tr td': { borderBottom: 0 } }}>
@@ -163,9 +167,7 @@ async function handleDeleteClick(id){
               <th style={{ width: rem(40) }}>position</th>
               <th style={{ width: rem(150) }}>Name</th>
               <th style={{ width: rem(140) }}>Message Type</th>
-              
               <th style={{ width: rem(140) }}></th>
-              
             </tr>
           </thead>
           <Droppable droppableId="dnd-list" direction="vertical">

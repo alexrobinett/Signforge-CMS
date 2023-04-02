@@ -45,7 +45,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
             query: (data) => ({
                 url: `/messages/${data.id}`,
                 method: 'PATCH',
-                body:{ updateName: `${data.file}` }
+                body: data
             }),
             invalidatesTags: (result, error, arg) => [
                 {type: 'message', id: arg.id }
