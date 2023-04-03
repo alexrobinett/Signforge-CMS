@@ -11,7 +11,7 @@ const initialSate = messageAdapter.getInitialState();
 export const messageApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getMessages: builder.query({
-            query: () => `/messages/`,
+            query: () => `/messages/?id=640bf6e47781518ed5c23575`,
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError;
             },
@@ -43,7 +43,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
 
         updateMessage: builder.mutation({
             query: (data) => ({
-                url: `/messages/${data.id}`,
+                url: `/messages`,
                 method: 'PATCH',
                 body: data
             }),

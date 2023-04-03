@@ -11,9 +11,10 @@ import { current } from "@reduxjs/toolkit";
 function MessagesPage(){
 
     const [playerId, setPlayerId] = useState('')
+    const [messageId, setMessageId] = useState('')
     const [playerName, setPlayerName] = useState('')
     const [newMessagePage, setNewMessagePage] = useState(false)
-    
+    const [messageUpdate, setMessageUpdate] = useState(false)
 
     function handlePlayerUpdate(id, playerName){
         setPlayerId(id)
@@ -28,6 +29,13 @@ function MessagesPage(){
       setNewMessagePage((currentState) => !currentState)
     }
 
+    function handleMessageUpdate(id){
+      console.log(id)
+      setNewMessagePage((currentState) => !currentState)
+      setMessageUpdate((currentState) => !currentState)
+      setMessageId(id)
+    }
+
     return(
         <>
   
@@ -36,10 +44,10 @@ function MessagesPage(){
         {playerId == '' || playerId == undefined &&  newMessagePage === true || newMessagePage === true ? (
            null
       ) : (
-        <MessageList playerId={playerId} playerName={playerName}/>
+        <MessageList playerId={playerId} playerName={playerName}  handleMessageUpdate={handleMessageUpdate}/>
       )}
       {newMessagePage == true ? (
-           <NewMessageCreator playerId={playerId} handleTrashClick={handleTrashClick}/>
+           <NewMessageCreator playerId={playerId} handleTrashClick={handleTrashClick} messageUpdate={messageUpdate} setMessageUpdate={setMessageUpdate} messageId={messageId}/>
       ) : (
         null
       )}

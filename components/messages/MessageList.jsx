@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
 
 
 
-function MessageList({ playerId, playerName }) {
+function MessageList({ playerId, playerName, handleMessageUpdate }) {
   const { classes } = useStyles();
   const [messageState, setMessageState] = useState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
@@ -40,7 +40,7 @@ function MessageList({ playerId, playerName }) {
   
   const [updateMessagePosition] = useUpdateMessagePositionMutation()
 
-  const [updateMessage] = useUpdateMessageMutation()
+
 
   const [deleteMessage] = useDeleteMessageMutation()
 
@@ -65,13 +65,14 @@ function MessageList({ playerId, playerName }) {
   };
 
 
+
 async function handleDeleteClick(id){
   await deleteMessage(id)
   refetch()
 }
 
 async function handleEditClick(id){
-  console.log(id)
+  handleMessageUpdate(id)
 }
 
   useEffect(() => {

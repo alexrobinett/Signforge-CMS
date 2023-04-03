@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllImages, useGetImagesQuery } from '../../app/features/images/imagesAPI';
 import { SplitSaveButton } from './SplitSaveButton';
+import { SplitUpdateButton } from './SplitUpdateButton';
+import { selectMessageByID, useGetMessagesQuery} from '../../app/features/message/messagesApiSlice';
 
 
 
-
-function MessageForm({playerId, handleTrashClick}) {
+function MessageForm({playerId, handleTrashClick, messageUpdate, messageId, setMessageUpdate}) {
     const {
         data: images,
         isLoading,
@@ -19,8 +20,16 @@ function MessageForm({playerId, handleTrashClick}) {
         error,
         refetch, 
     } = useGetImagesQuery()
-    
     const allImages = useSelector(selectAllImages);
+
+    const {
+      data: messages,
+      refetch: refetchMessages
+  } = useGetMessagesQuery()
+  
+  const updateMessage = useSelector((state) => selectMessageByID(state, messageId));
+
+
     useEffect(() => {
         if (isSuccess) {
           const newDropDownData = allImages.map((image) => ({
@@ -32,14 +41,12 @@ function MessageForm({playerId, handleTrashClick}) {
       }, [isSuccess, allImages]);
     
 
-
       
-const navigate = useNavigate();
 const [imageDropDownData, setImageDropDownData] = useState([])
 const form = useForm({
+
     initialValues: { quantity: '', price: '', points: '', promo:'', promoLineOne:'', promoLineTwo:'',  disclaimerLineOne:'',  disclaimerLineTwo:'',
     imageOne: '',  imageTwo: '',  imageThree: '', player: ``, id: '640bf6e47781518ed5c23575', draft: false, messageName: '', messageType: 'C-Store Promo'  },
-    
  
     // functions will validate values at corresponding key
     validate: {
@@ -51,6 +58,16 @@ const form = useForm({
   useEffect(() => {
     form.setFieldValue('player', playerId)
   }, [playerId]);
+
+  useEffect(() => {
+    if (messageUpdate &&  updateMessage) {
+      Object.keys(updateMessage).forEach((key) => {
+        form.setFieldValue(key, updateMessage[key]);
+      });
+    }
+  }, [updateMessage, messageUpdate, messages]);
+
+
 
 
   return (
@@ -131,7 +148,7 @@ const form = useForm({
         />
         </Group>
         <Group mt={16} position="right">
-        <SplitSaveButton formData={form.values} form={form} playerId={playerId} handleTrashClick={handleTrashClick}/>
+        {messageUpdate ? <SplitUpdateButton formData={form.values} form={form} playerId={playerId} handleTrashClick={handleTrashClick} refetchMessages={refetchMessages} setMessageUpdate={setMessageUpdate}/>  :<SplitSaveButton formData={form.values} form={form} playerId={playerId} handleTrashClick={handleTrashClick}/>}
         </Group>
       </form>
       </>
