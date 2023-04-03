@@ -17,7 +17,7 @@ import { SignUpPage } from '../components/SignUpPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { MessagesPage } from '../components/messages/MessagePage'
-
+import { Prefetch } from '../components/AUTH/Prefetch'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <Route path='/home/login' element={<LoginPage/>}/>
                     <Route path='/home/signup' element={<SignUpPage/>}/>
                   </Route>
+                <Route element={<Prefetch/>}>
                 <Route path='/dashboard' element={<DashboardLayout />}>
                   <Route path='/dashboard/' element={<ComingSoon/>}/>
                   <Route path='/dashboard/players' element={<PlayersPage />} />
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   <Route path='/dashboard/messages' element={<MessagesPage/>} />
                   <Route path='/dashboard/assets' element={<ImagePage />}/>
                   <Route path='/dashboard/demo' element={<DemoPage/>} />
+              </Route>
               </Route>
               <Route path='*' element={<NotFoundPage/>}/>
             </Routes>

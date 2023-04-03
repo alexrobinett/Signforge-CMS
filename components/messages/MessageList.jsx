@@ -36,7 +36,11 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
     isError,
     error,
     refetch,
-  } = useGetPlayerPlaylistQuery(playerId , { skip: !playerId });
+  } = useGetPlayerPlaylistQuery(playerId , { 
+    skip: !playerId,
+    pollingInterval: 60000, 
+    refetchOnFocus: true,});
+
   
   const [updateMessagePosition] = useUpdateMessagePositionMutation()
 
@@ -56,7 +60,6 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
           messageId: message._id,
           position: i,
         });
-        console.log(response);
         refetch()
       } catch (err) {
         console.error(err);

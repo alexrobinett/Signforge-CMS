@@ -19,7 +19,11 @@ function ImageGallery() {
     isError,
     error,
     refetch, 
-} = useGetImagesQuery()
+} = useGetImagesQuery(undefined, {
+  pollingInterval: 60000, 
+  refetchOnFocus: true,
+  refetchOnMountOrArgChange: true
+})
 
 const allImages = useSelector(selectAllImages);
 

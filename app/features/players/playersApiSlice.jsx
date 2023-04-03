@@ -16,7 +16,6 @@ export const playerApiSlice = apiSlice.injectEndpoints({
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError;
             },
-            keepUnusedDataFor: 5,
             transformResponse: responseData => {
                 const loadedPlayers = responseData.map( player => {
                     player.id = player._id;

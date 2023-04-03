@@ -1,9 +1,10 @@
 import { useRef } from 'react';
-import { Text, Group, Button, createStyles, rem } from '@mantine/core';
-import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+import { Text, Group, Button, createStyles, rem, LoadingOverlay, SimpleGrid  } from '@mantine/core';
+import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
 import { useAddNewImageMutation } from '../../app/features/images/imagesAPI';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -32,9 +33,11 @@ const useStyles = createStyles((theme) => ({
 
 
 function ImageDropZone(props) {
+  const [files, setFiles] = useState([]);
   const { classes, theme } = useStyles();
   const openRef = useRef ();
   const navigate = useNavigate()
+
   const [addNewImage,{
     isLoading,
     isSuccess,
@@ -50,15 +53,27 @@ function ImageDropZone(props) {
    return formData
   }
 
+  const previews = files.map((file, index) => {
+    const imageUrl = URL.createObjectURL(file);
+    return (
+      <Image
+        key={index}
+        src={imageUrl}
+        imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
+      />
+    );
+  });
+
   async function handleImageDrop(file){
     try{
       await addNewImage(await uploadImage(file))
       props.handle()
       navigate("./")
-    
+      props.handleLoading.close()
     }catch{
       console.error("could't upload file!")
     }
+
   }
 
   return (
@@ -66,17 +81,18 @@ function ImageDropZone(props) {
       <Dropzone
         openRef={openRef}
         onDrop={ (acceptedFiles) => {
-           acceptedFiles.forEach((file) => {
+            props.handleLoading.open()
+            acceptedFiles.forEach((file) => {
             handleImageDrop(file)
            })
-          
-          
+           
         }}
         className={classes.dropzone}
         radius="md"
         accept={[MIME_TYPES.png]}
       >
         <div style={{ pointerEvents: 'none' }}>
+        
           <Group position="center">
             <Dropzone.Accept>
               <IconDownload

@@ -16,7 +16,6 @@ export const playlistApiSlice = apiSlice.injectEndpoints({
         validateStatus: (response, result) => {
           return response.status === 200 && !result.isError;
         },
-        keepUnusedDataFor: 5,
         transformResponse: responseData => {
           // Sort function to sort playlist by position
           const sortByPosition = (a, b) => a.position - b.position;

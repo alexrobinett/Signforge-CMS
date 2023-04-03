@@ -17,7 +17,10 @@ function PlayerList( ) {
     isError,
     error,
     refetch, 
-} = useGetPlayersQuery()
+} = useGetPlayersQuery(undefined, {
+  pollingInterval: 60000, 
+  refetchOnFocus: true,
+  refetchOnMountOrArgChange: true})
 
 const allPlayers = useSelector(selectAllPlayers);
 
