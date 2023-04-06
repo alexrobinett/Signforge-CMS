@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createStyles, Navbar, getStylesRef, rem, Text } from '@mantine/core';
+import { createStyles, Navbar, getStylesRef, rem, Text, Group } from '@mantine/core';
 import {
     Icon2fa,
     IconDeviceTv,
@@ -7,9 +7,9 @@ import {
     IconLogout,
   } from '@tabler/icons-react';
 
-import { Link} from 'react-router-dom';
+import { Link, useLocation, useNavigate} from 'react-router-dom';
 import {useMediaQuery } from '@mantine/hooks'
-import { useLocation } from 'react-router-dom';
+import { useSendLogoutMutation } from '../app/features/auth/authApiSlice';
 
 
 const useStyles = createStyles((theme) => ({
@@ -79,11 +79,20 @@ const data = [
 
 
 
+
 function SideBar({ opened} , handleOpen , mobile) {
   const isMobile = useMediaQuery('(max-width: 568px)');
   const isTablet = useMediaQuery('(min-width: 569px) and (max-width: 924px)');
   const { classes, cx } = useStyles();
   const location = useLocation();
+  const navigate = useNavigate()
+  const {pathname} = useLocation()
+  
+  const [sendLogout , {isLoading, isSuccess, isError, error}] = useSendLogoutMutation()
+
+  useEffect(() => {
+    if(isSuccess) navigate('/')
+  }, [isSuccess, navigate])
 
 
 const [active, setActive] = useState(() => {
@@ -125,12 +134,12 @@ const [active, setActive] = useState(() => {
       <Navbar.Section grow>{links}</Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Link to="/">
+        <Group onClick={() => sendLogout()}>
           <Text className={classes.link}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </Text>
-        </Link>
+        </Group>
       </Navbar.Section>
     </Navbar>
   );

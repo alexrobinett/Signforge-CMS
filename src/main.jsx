@@ -18,6 +18,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { MessagesPage } from '../components/messages/MessagePage'
 import { Prefetch } from '../components/AUTH/Prefetch'
+import PersistLogin from '../components/AUTH/PersistLogin'
+import { Welcome } from '../components/Welcome'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -27,16 +29,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path='/' element={<App/>}/>
                   <Route path='/home'  element={<HomePage/>}>
                     <Route path='/home/login' element={<LoginPage/>}/>
-                    <Route path='/home/signup' element={<SignUpPage/>}/>
+                    <Route path='/home/signuppage' element={<SignUpPage/>}/>
                   </Route>
+                <Route element={<PersistLogin/>}>
                 <Route element={<Prefetch/>}>
+
                 <Route path='/dashboard' element={<DashboardLayout />}>
-                  <Route path='/dashboard/' element={<ComingSoon/>}/>
+                  <Route path='/dashboard/' element={<Welcome/>}/>
                   <Route path='/dashboard/players' element={<PlayersPage />} />
                   <Route path='/dashboard/playlist' element={<ComingSoon/>} />
                   <Route path='/dashboard/messages' element={<MessagesPage/>} />
                   <Route path='/dashboard/assets' element={<ImagePage />}/>
                   <Route path='/dashboard/demo' element={<DemoPage/>} />
+              </Route>
               </Route>
               </Route>
               <Route path='*' element={<NotFoundPage/>}/>

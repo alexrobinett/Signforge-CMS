@@ -17,7 +17,7 @@ function PlayerList( ) {
     isError,
     error,
     refetch, 
-} = useGetPlayersQuery(undefined, {
+} = useGetPlayersQuery('playerList', {
   pollingInterval: 60000, 
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true})

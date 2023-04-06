@@ -19,9 +19,6 @@ import { Outlet } from 'react-router-dom';
 
 function App() {
 
-  store.dispatch(imageApiSlice.endpoints.getImages.initiate());
-
-
   return (  
     <>
       <HomePage m={0}/>
