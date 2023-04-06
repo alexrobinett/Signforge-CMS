@@ -45,7 +45,6 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
 
     useEffect(()=> {
         const selectedLabel = dropDownData.find((item) => item.value === String(dropDownValue))?.label
-        console.log(selectedLabel)
         handlePlayerUpdate(dropDownValue, selectedLabel)
     },[dropDownValue] )
     

@@ -21,7 +21,7 @@ function ImageBar() {
       <>
         <Paper shadow="xs" mx="md" p="xs" >
         <Group position="apart">
-        <Autocomplete placeholder='Search' icon={<IconSearch />} data={['React', 'Angular', 'Svelte', 'Vue']} />
+        {/* <Autocomplete placeholder='Search' icon={<IconSearch />} data={['React', 'Angular', 'Svelte', 'Vue']} /> */}
         {/* <Pagination total={2} /> */}
         <Button onClick={open}>Upload +</Button>
         </Group>

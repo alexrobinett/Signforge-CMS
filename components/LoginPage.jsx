@@ -62,7 +62,7 @@ function LoginPage() {
 
   const handleUserInput = (e) => setEmail(e.target.value)
   const handlePwdInput = (e) => setPassword(e.target.value)
-  const handleToggle = () => {setPersist(prevVal => !prevVal), console.log('toggleing')};
+  const handleToggle = () => {setPersist(prevVal => !prevVal)};
 
 
   async function handleSubmit(e){

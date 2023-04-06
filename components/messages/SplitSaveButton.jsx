@@ -32,6 +32,7 @@ function SplitSaveButton({formData, form, playerId, handleTrashClick}){
     isError,
     error
   }] = useAddNewMessageMutation()
+  
 
 
 async function handleMessageSave(){
@@ -48,9 +49,9 @@ async function handleMessageSave(){
   function handleTrashMessage(){
     handleTrashClick()
     form.reset()
-   
-
   }
+  
+
 
 
   // async function handleMessageDraft(file){

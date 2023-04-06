@@ -4,6 +4,7 @@ import {useMediaQuery } from '@mantine/hooks'
 import { AssetCard } from './AssetCard';
 import { useGetImagesQuery, selectAllImages} from '../../app/features/images/imagesAPI';
 import { useSelector } from 'react-redux';
+import useAuth from '../../hooks/useAuth';
 
 
 function ImageGallery() {

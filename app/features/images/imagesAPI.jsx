@@ -6,12 +6,13 @@ import { apiSlice } from "../../api/apiSlice"
 
 const imageAdapter = createEntityAdapter({})
 
+
 const initialSate = imageAdapter.getInitialState()
 
 export const imageApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getImages: builder.query({
-            query: () => `/images/?id=640bf6e47781518ed5c23575`,
+            query: () => `/images/`,
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError
             },
@@ -36,7 +37,7 @@ export const imageApiSlice = apiSlice.injectEndpoints({
             query: (initialImageData) => ({
               url: "/images",
               method: "POST",
-              body: initialImageData, // Pass formData here
+              body: initialImageData,
             }),
             invalidatesTags: [{ type: "Image", id: "LIST" }],
         }),

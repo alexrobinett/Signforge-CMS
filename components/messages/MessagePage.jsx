@@ -30,7 +30,6 @@ function MessagesPage(){
     }
 
     function handleMessageUpdate(id){
-      console.log(id)
       setNewMessagePage((currentState) => !currentState)
       setMessageUpdate((currentState) => !currentState)
       setMessageId(id)
