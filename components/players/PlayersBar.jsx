@@ -14,7 +14,7 @@ function PlayersBar() {
       <>
         <Paper shadow="xs" mx="sm" p="sm" >
         <Group position="apart">
-        <Autocomplete placeholder='Search' icon={<IconSearch />} data={['React', 'Angular', 'Svelte', 'Vue']} />
+        {/* <Autocomplete placeholder='Search' icon={<IconSearch />} data={['React', 'Angular', 'Svelte', 'Vue']} /> */}
         <Button onClick={open}>New Player +</Button>
         </Group>
         
