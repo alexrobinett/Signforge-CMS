@@ -46,7 +46,7 @@ const [imageDropDownData, setImageDropDownData] = useState([])
 const form = useForm({
 
     initialValues: { quantity: '', price: '', points: '', promo:'', promoLineOne:'', promoLineTwo:'',  disclaimerLineOne:'',  disclaimerLineTwo:'',
-    imageOne: '',  imageTwo: '',  imageThree: '', player: ``, id: '640bf6e47781518ed5c23575', draft: false, messageName: '', messageType: 'C-Store Promo'  },
+    imageOne: '',  imageTwo: '',  imageThree: '', player: ``, draft: false, messageName: '', messageType: 'C-Store Promo'  },
  
     // functions will validate values at corresponding key
     validate: {
