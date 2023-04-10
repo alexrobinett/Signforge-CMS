@@ -1,4 +1,4 @@
-import { createStyles, Container, Text, Button, Group, rem } from '@mantine/core';
+import { createStyles, Container, Text, Button, Group, rem, Card } from '@mantine/core';
 import { GithubIcon } from '@mantine/ds';
 
 const useStyles = createStyles((theme) => ({
@@ -69,6 +69,7 @@ function Welcome() {
   const { classes } = useStyles();
 
   return (
+    <Card mt={20} shadow="xs" mx="md" p="xs"> 
       <Container className={classes.inner} mt={0}>
         <h1 className={classes.title}>
           Welcome to{' '}
@@ -101,6 +102,7 @@ The demo tab allows you to see a demo player. This is useful if you want to see 
         </Text>
 
       </Container>
+      </Card>
   );
 }
 
