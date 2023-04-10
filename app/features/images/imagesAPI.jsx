@@ -27,10 +27,10 @@ export const imageApiSlice = apiSlice.injectEndpoints({
             providesTags: (results, error, arg) => {
                 if (results?.ids){
                     return [
-                        {type: 'Image', id: 'LIST'},
-                        ...results.ids.map(id => ({ type: 'Image', id: "LIST"}))
+                        {type: 'Image', id: 'Image'},
+                        ...results.ids.map(id => ({ type: 'Image', id: "Image"}))
                     ]
-                }else return [{ type: 'Image', id: 'LIST'}]
+                }else return [{ type: 'Image', id: 'Image'}]
             }
         }),
         addNewImage: builder.mutation({
@@ -39,14 +39,14 @@ export const imageApiSlice = apiSlice.injectEndpoints({
               method: "POST",
               body: initialImageData,
             }),
-            invalidatesTags: [{ type: "Image", id: "LIST" }],
+            invalidatesTags: [{ type: "Image", id: "Image" }],
         }),
 
         updateImage: builder.mutation({
-            query: (data) => ({
+            query: (data) => ( console.log(data),{
                 url: `/images/${data.id}`,
                 method: 'PATCH',
-                body:{ updateName: `${data.file}` }
+                body:{ updateName: `${data.file}` },
             }),
             invalidatesTags: (result, error, arg) => [
                 {type: 'Image', id: arg.id }

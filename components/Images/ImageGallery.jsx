@@ -20,7 +20,7 @@ function ImageGallery() {
     isError,
     error,
     refetch, 
-} = useGetImagesQuery('images', {
+} = useGetImagesQuery(undefined, {
   pollingInterval: 60000, 
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true
