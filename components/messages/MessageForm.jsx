@@ -90,8 +90,8 @@ const form = useForm({
         </Group>
         </Stack>
         <Stack>
-            <AspectRatio ratio={1920 / 1080} maw={500} m={12}>
-                <Card bg="grey"shadow="sm">Preview</Card>
+            <AspectRatio ratio={1920 / 1080} maw={500} m={12} >
+                <Card bg="#1A1B1E"shadow="sm" radius="md" ><Image mx={0} src="../public/cstore-preview.png" alt="CStore Message Preview" /></Card>
             </AspectRatio>
         </Stack>
     </Group> 

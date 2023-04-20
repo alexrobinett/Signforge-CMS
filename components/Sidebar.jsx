@@ -5,6 +5,10 @@ import {
     IconDeviceTv,
     IconFile3d,
     IconLogout,
+    Icon123,
+    IconHome,
+    IconFileUpload,
+    IconMovie
   } from '@tabler/icons-react';
 
 import { Link, useLocation, useNavigate} from 'react-router-dom';
@@ -68,12 +72,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-    { link: './', label: 'Dashboard', icon: IconFile3d },
+    { link: './', label: 'Dashboard', icon: IconHome },
     { link: './players', label: 'Players', icon: IconDeviceTv },
     // { link: './playlist', label: 'Playlist', icon: IconFile3d },
-    { link: './messages', label: 'Messages', icon: Icon2fa },
+    { link: './messages', label: 'Messages', icon: Icon123 },
     { link: './assets', label: 'Assets', icon: IconFile3d },
-    { link: './demo', label: 'Demo', icon: IconFile3d },
+    { link: './demo', label: 'Demo', icon: IconMovie },
     
   ];
 

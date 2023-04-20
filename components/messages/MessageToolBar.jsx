@@ -88,14 +88,14 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         nothingFound="Nothing found"
         />
         </Group>
-        <Select
+        {/* <Select
         w={200}
         data={messageTypes}
         placeholder="Message Type"
         maxDropdownHeight={160}
         searchable limit={20}
         nothingFound="Nothing found"
-        />
+        /> */}
         </Group>
         )}
        

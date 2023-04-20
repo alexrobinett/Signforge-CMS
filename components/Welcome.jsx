@@ -35,7 +35,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   description: {
-    marginTop: theme.spacing.xl,
+    marginTop: theme.spacing.lg,
     fontSize: rem(16),
 
     [theme.fn.smallerThan('sm')]: {
@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     marginTop: `calc(${theme.spacing.xl} * 2)`,
 
     [theme.fn.smallerThan('sm')]: {
-      marginTop: theme.spacing.xl,
+      marginTop: theme.spacing.lg,
     },
   },
 
@@ -83,21 +83,21 @@ function Welcome() {
         </Text>
 
         <Text className={classes.description} color="dimmed">
-        Players Tab:
+       <Text fw={700} c="black">Players Tab:</Text> 
 The players tab is where you can create and manage player names. This is useful if you have multiple screens and want to assign each one a specific name. To create a player, click on the "Create Player" button and enter a name. You can then assign messages and playlists to each player.
         </Text>
 
-        <Text className={classes.description} color="dimmed">Messages Tab:
+        <Text className={classes.description} color="dimmed"><Text fw={700} c="black">Message Tab:</Text> 
 The messages tab is where you can manage your player playlists and create or update messages. To create a message, click on the "Create Message" button and select the player you want to assign it to. You can then add text, images to your message. To Edit a playlist simply select a player from the dropdown menu and you can see it's current messages
         </Text>
 
-        <Text className={classes.description} color="dimmed">Messages Tab:
-        Assets Tab:
+        <Text className={classes.description} color="dimmed">
+        <Text fw={700} c="black">Assets Tab:</Text> 
 The assets tab is where you can upload your images to be used in your digital signage messages. To upload an image, click on the "Upload" button and select the image you want to upload. You can then use this image in your messages.
         </Text>
 
         <Text className={classes.description} color="dimmed">
-       Demo Tab:
+        <Text fw={700} c="black">Demo Tab:</Text> 
 The demo tab allows you to see a demo player. This is useful if you want to see how your messages will look on your digital signage screens before you actually display them.
         </Text>
 
