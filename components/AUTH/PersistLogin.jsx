@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "../../app/features/auth/authApiSlice";
-import { useSelector, } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import { selectCurrentToken,} from "../../app/features/auth/authSlice";
 import usePersist from "../../hooks/usePersist";
 import { Outlet, useNavigate, Link } from "react-router-dom";
+import { setCredentials } from "../../app/features/auth/authSlice";
 
 const PersistLogin = () => {
 
@@ -12,6 +13,7 @@ const PersistLogin = () => {
     const effectRan = useRef(false)
     const navigate = useNavigate()
     const [trueSuccess, setTrueSuccess] = useState(false)
+    const dispatch = useDispatch();
     
     const [refresh, {
         isUninitialized,
@@ -22,29 +24,30 @@ const PersistLogin = () => {
     }] = useRefreshMutation()
 
 
-    useEffect(() => {
+useEffect(() => {
+    const verifyRefreshToken = async () => {
+        console.log('verifying refresh token');
+        try {
+            await refresh();
+            setTrueSuccess(true);
+        } catch (err) {
+            console.error(err);
+            navigate('/');
+        }
+    };
 
+    if (!token && persist) {
+        const storedAccessToken = localStorage.getItem('access_token');
+        if (storedAccessToken) {
+            dispatch(setCredentials({ accessToken: storedAccessToken }));
+            setTrueSuccess(true);
+        } else {
+            verifyRefreshToken();
+        }
+    }
 
-            const verifyRefreshToken = async () => {
-                console.log('verifying refresh token')
-                try {
-                    //const response = 
-                    await refresh()
-                    //const { accessToken } = response.data
-                    setTrueSuccess(true)
-                }
-                catch (err) {
-                    console.error(err)
-                    navigate('/')
-                }
-            }
-
-            if (!token && persist) verifyRefreshToken()
-    
-
-        return () => effectRan.current = true
-
-    }, [])
+    return () => (effectRan.current = true);
+}, []);
 
 
     let content
