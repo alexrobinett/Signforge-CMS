@@ -116,7 +116,7 @@ function LoginPage() {
           <TextInput label="Email" placeholder="you@youremail.com" required type='text' id='email' value={email} onChange={handleUserInput} autoComplete='off'ref={userRef}/>
           <PasswordInput label="Password" placeholder="Your password" required mt="md" id='password'  value={password} onChange={handlePwdInput} />
           <Group position="apart" mt="lg">
-            <Checkbox  display="hidden" label="Remember me" id="persist" value={true} onChange={() => handleToggle()}/>
+            <Checkbox  display="hidden" label="Remember me" id="persist" value={true} />
             <Anchor  component="button" size="sm">
               Forgot password?
             </Anchor>

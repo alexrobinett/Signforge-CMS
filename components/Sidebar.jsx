@@ -72,12 +72,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-    { link: './', label: 'Dashboard', icon: IconHome },
+    { link: './', label: 'Home', icon: IconHome },
     { link: './players', label: 'Players', icon: IconDeviceTv },
     // { link: './playlist', label: 'Playlist', icon: IconFile3d },
-    { link: './messages', label: 'Messages', icon: Icon123 },
+    { link: './messages', label: 'Messages / Ads', icon: Icon123 },
     { link: './assets', label: 'Assets', icon: IconFile3d },
-    { link: './demo', label: 'Demo', icon: IconMovie },
+    { link: './demo', label: 'Demo Player', icon: IconMovie },
     
   ];
 

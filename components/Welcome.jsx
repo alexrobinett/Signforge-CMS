@@ -84,21 +84,21 @@ function Welcome() {
 
         <Text className={classes.description} color="dimmed">
        <Text fw={700} c="black">Players Tab:</Text> 
-The players tab is where you can create and manage player names. This is useful if you have multiple screens and want to assign each one a specific name. To create a player, click on the "Create Player" button and enter a name. You can then assign messages and playlists to each player.
+The players tab is where you can create and manage virtual players. Virtual Players allow you to run the your ads/messages on any chromium based browser. ideally on a Raspberry pi 4 or other SBCs. Virtual players allow you to have multiple screens. To use each player visit https://sign-forge-player.vercel.app and paste in the player id when prompted. To create a player, click on the "Create Player" button and enter a name. You can then assign messages to each player and reorder them on the messages tab.
         </Text>
 
-        <Text className={classes.description} color="dimmed"><Text fw={700} c="black">Message Tab:</Text> 
-The messages tab is where you can manage your player playlists and create or update messages. To create a message, click on the "Create Message" button and select the player you want to assign it to. You can then add text, images to your message. To Edit a playlist simply select a player from the dropdown menu and you can see it's current messages
+        <Text className={classes.description} color="dimmed"><Text fw={700} c="black">Messages / Ads Tab:</Text> 
+The messages tab is where you can manage your player's playlist order and create or update messages. To create a message, click on the "Create ad/message" button and select the player you want to assign it to. You can then add text, images to your ads/messages. To Edit the playlist order simply select a player from the dropdown menu and you can see it's current messages and reorder them by dragging and dropping them. 
         </Text>
 
         <Text className={classes.description} color="dimmed">
         <Text fw={700} c="black">Assets Tab:</Text> 
-The assets tab is where you can upload your images to be used in your digital signage messages. To upload an image, click on the "Upload" button and select the image you want to upload. You can then use this image in your messages.
+The assets tab is where you can upload your images to be used in your digital signage ads/messages. To upload an image, click on the "Upload" button and select the image you want to upload. You can then use this image in your ads/messages.
         </Text>
 
         <Text className={classes.description} color="dimmed">
         <Text fw={700} c="black">Demo Tab:</Text> 
-The demo tab allows you to see a demo player. This is useful if you want to see how your messages will look on your digital signage screens before you actually display them.
+The demo tab allows you to see a demo player. This is useful if you want to see how your messages/ads will look on your digital signage screen. To use the demo player simply copy a player's ID from the player tab and past it into the alert.
         </Text>
 
       </Container>

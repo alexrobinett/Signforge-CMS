@@ -63,7 +63,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         <Select
         w={200}
         data={dropDownData}
-        placeholder="Pick A Player"
+        placeholder="Pick A Player to Edit"
         maxDropdownHeight={160}
         searchable limit={20}
         value={dropDownValue}
