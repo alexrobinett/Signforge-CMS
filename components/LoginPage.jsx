@@ -62,7 +62,7 @@ function LoginPage() {
 
   const handleUserInput = (e) => setEmail(e.target.value)
   const handlePwdInput = (e) => setPassword(e.target.value)
-  const handleToggle = () => {setPersist(prevVal => !prevVal)};
+  // const handleToggle = () => {setPersist(prevVal => !prevVal)};
 
 
   async function handleSubmit(e){
@@ -116,8 +116,8 @@ function LoginPage() {
           <TextInput label="Email" placeholder="you@youremail.com" required type='text' id='email' value={email} onChange={handleUserInput} autoComplete='off'ref={userRef}/>
           <PasswordInput label="Password" placeholder="Your password" required mt="md" id='password'  value={password} onChange={handlePwdInput} />
           <Group position="apart" mt="lg">
-            {/* <Checkbox label="Remember me" id="persist" value={persist} onChange={() => handleToggle()}/> */}
-            <Anchor component="button" size="sm">
+            <Checkbox  display="hidden" label="Remember me" id="persist" value={true} onChange={() => handleToggle()}/>
+            <Anchor  component="button" size="sm">
               Forgot password?
             </Anchor>
           </Group>
