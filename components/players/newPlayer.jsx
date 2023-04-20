@@ -34,7 +34,7 @@ import {
     },
   }));
 
- function NewPlayer({handleClose}) {
+ function NewPlayer({handleClose, refetch}) {
     const { classes } = useStyles();
     const [newPlayerName, setNewPlayerName] = useInputState('')
     const [addNewPlayer,{
@@ -51,11 +51,13 @@ import {
       async function handleNewPlayerClick(){
         if(canUpdate){
             try{
-                await addNewPlayer({"owner": '640bf6e47781518ed5c23575', "playerName": `${newPlayerName}`})
+                await addNewPlayer({"playerName": `${newPlayerName}`})
                 handleClose() 
+                refetch()
+
 
             }catch{
-                console.error('failed to update Player Name', err)
+                console.error('failed to update Player Name', error)
             }
         } 
     }

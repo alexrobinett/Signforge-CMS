@@ -12,7 +12,7 @@ const initialSate = playerAdapter.getInitialState();
 export const playerApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getPlayers: builder.query({
-            query: () => `/player/?id=640bf6e47781518ed5c23575`,
+            query: () => `/player/`,
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError;
             },
@@ -36,7 +36,7 @@ export const playerApiSlice = apiSlice.injectEndpoints({
             query: (initialPlayerData) => ({
               url: "/player",
               method: "POST",
-              body: initialPlayerData, // Pass formData here
+              body: initialPlayerData, 
             }),
             invalidatesTags: [{ type: "player", id: "LIST" }],
         }),

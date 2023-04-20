@@ -37,7 +37,7 @@ async function handleUpdateClick(){
     if(canUpdate){
         try{
             await updatePlayer( {"id": id, "playerName": `${editPlayerName}`}).unwrap()
-            await refetch()
+            refetch()
             setEditing(!editing)
         }catch{
             console.error('failed to update Player Name', err)
