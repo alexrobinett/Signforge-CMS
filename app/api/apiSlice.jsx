@@ -3,7 +3,7 @@ import { setCredentials } from '../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
 
-    baseUrl: 'http://127.0.0.1:3000/',
+    baseUrl: 'https://signage-api-production.up.railway.app',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token
