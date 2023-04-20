@@ -45,7 +45,7 @@ function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [persist, setPersist] = usePersist(false)
+  const [persist, setPersist] = usePersist(true)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -116,7 +116,7 @@ function LoginPage() {
           <TextInput label="Email" placeholder="you@youremail.com" required type='text' id='email' value={email} onChange={handleUserInput} autoComplete='off'ref={userRef}/>
           <PasswordInput label="Password" placeholder="Your password" required mt="md" id='password'  value={password} onChange={handlePwdInput} />
           <Group position="apart" mt="lg">
-            <Checkbox label="Remember me" id="persist" value={persist} onChange={() => handleToggle()}/>
+            {/* <Checkbox label="Remember me" id="persist" value={persist} onChange={() => handleToggle()}/> */}
             <Anchor component="button" size="sm">
               Forgot password?
             </Anchor>
