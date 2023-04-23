@@ -17,13 +17,14 @@ function PlayerList( ) {
     isError,
     error,
     refetch, 
-} = useGetPlayersQuery('playerList', {
+} = useGetPlayersQuery( undefined, {
   pollingInterval: 60000, 
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true})
 
 const allPlayers = useSelector(selectAllPlayers);
 
+console.log(allPlayers)
 if (isLoading){
   return <Container mt={30}><Group position="center"><Loader size="xl" variant="bars" /></Group></Container>;
 };
@@ -40,7 +41,7 @@ const rows = allPlayers.map((player) => <PlayerRow playerName={player.playerName
     <ScrollArea>
     <Card mt={20} m={10}>
     
-      <Table sx={{ minWidth: 600 }} verticalSpacing="md">
+      <Table sx={{ minWidth: 500 }} verticalSpacing="md">
       <thead>
           <tr>
             <th>Player Name</th>
