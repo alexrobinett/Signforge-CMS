@@ -40,7 +40,7 @@ const rows = allPlayers.map((player) => <PlayerRow playerName={player.playerName
 
   return (
     <ScrollArea>
-    <Card mt={20} m={10}>
+    <Card mt={20} m={10} shadow="xs">
 
       <Table sx={ isMobile ? { minWidth: 100 } : { minWidth: 500 } } verticalSpacing="sm" horizontalSpacing={3} >
       <thead>

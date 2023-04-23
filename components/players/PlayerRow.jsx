@@ -93,7 +93,7 @@ return(
         </Group>
       </td>
       <td>
-        <Text fz={isMobile ? 8 : "sm"}  truncate="end">{id}</Text>
+        <Text fz={isMobile ? 10 : "sm"}  truncate="end">{id}</Text>
 
       </td>
       {isMobile ? null : (<> <td>

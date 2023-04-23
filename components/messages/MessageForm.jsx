@@ -8,7 +8,7 @@ import { selectAllImages, useGetImagesQuery } from '../../app/features/images/im
 import { SplitSaveButton } from './SplitSaveButton';
 import { SplitUpdateButton } from './SplitUpdateButton';
 import { selectMessageByID, useGetMessagesQuery} from '../../app/features/message/messagesApiSlice';
-import previewImage from '../../public/cstore-preview.png'
+import previewImage from '../../src/assets/cstore-preview.png'
 
 function MessageForm({playerId, handleTrashClick, messageUpdate, messageId, setMessageUpdate}) {
     const {
