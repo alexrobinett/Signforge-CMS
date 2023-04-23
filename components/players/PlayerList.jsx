@@ -3,7 +3,7 @@ import {Table, Text, ScrollArea, Loader, Container, Group, Card } from '@mantine
 
 import { selectAllPlayers, useGetPlayersQuery } from '../../app/features/players/playersApiSlice';
 import { useSelector } from 'react-redux';
-import { useInputState } from '@mantine/hooks';
+import { useInputState, useMediaQuery } from '@mantine/hooks';
 import { PlayerRow } from './PlayerRow';
 
 
@@ -23,6 +23,7 @@ function PlayerList( ) {
   refetchOnMountOrArgChange: true})
 
 const allPlayers = useSelector(selectAllPlayers);
+const isMobile = useMediaQuery('(max-width: 568px)');
 
 console.log(allPlayers)
 if (isLoading){
@@ -40,14 +41,15 @@ const rows = allPlayers.map((player) => <PlayerRow playerName={player.playerName
   return (
     <ScrollArea>
     <Card mt={20} m={10}>
-    
-      <Table sx={{ minWidth: 500 }} verticalSpacing="md">
+
+      <Table sx={ isMobile ? { minWidth: 100 } : { minWidth: 500 } } verticalSpacing="sm" horizontalSpacing={3} >
       <thead>
           <tr>
             <th>Player Name</th>
             <th>Player Id</th>
-            <th>Tags</th>
-            <th>Playlist</th>
+            {isMobile ? null : (<><th>Tags</th>
+            <th>Playlist</th></>) }
+          
             <th />
           </tr>
         </thead>

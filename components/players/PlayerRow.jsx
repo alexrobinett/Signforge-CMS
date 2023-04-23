@@ -1,14 +1,15 @@
 import React from "react"
-import { Group, Text, ActionIcon, Menu, Badge,Indicator, TextInput, Button } from '@mantine/core';
+import { Group, Text, ActionIcon, Menu, Badge,Indicator, TextInput, Button,  } from '@mantine/core';
 import {
     IconPencil,
     IconMessages,
     IconTrash,
     IconDots,
     IconCast,
+    IconArrowRight
   } from '@tabler/icons-react';
 
-import { useInputState } from "@mantine/hooks";
+import { useInputState, useMediaQuery } from "@mantine/hooks";
 import { useState } from 'react';
 import { useUpdatePlayerMutation, useDeletePlayerMutation } from "../../app/features/players/playersApiSlice";
 
@@ -27,6 +28,7 @@ const [updatePlayer,{
     isError,
     error,
   }] = useUpdatePlayerMutation()
+  const isMobile = useMediaQuery('(max-width: 568px)');
 
 
 
@@ -56,43 +58,53 @@ async function handleDeleteClick(){
 
 }
 
+// sx={ isMobile ? { minWidth: 300 } : { minWidth: 500 } }
 
 return(
     <tr>
       <td>
         <Group spacing="sm" noWrap="true">
-        <Indicator color="green" size={8} zIndex={2} >
+        {isMobile ? null : (
+          <Indicator color="green" size={8} zIndex={2} >
           <IconCast/>
         </Indicator>
+        )}
+        
             {editing ? (
-            <Group>
+            <Group noWrap>
                 <TextInput 
                     placeholder="Player Name" 
-                    size="xs" mr={-40} 
+                    size="xs"
                     value={editPlayerName} 
-                    onChange={setEditPlayerName}/> 
-                <Button 
-                    size="xs" 
-                    onClick={() => handleUpdateClick() }>
-                    Done</Button>
+                    onChange={setEditPlayerName}
+                    rightSection={
+                      <ActionIcon size={30} variant="filled" color="blue">
+                        <IconArrowRight size="1.1rem" stroke={1.5} onClick={() => handleUpdateClick()}/>
+                      </ActionIcon>
+                    }
+                    /> 
+        
             </Group>) : ( 
 
-            <Text fz="sm" mr={20} fw={500} truncate="end">
+            <Text fz={isMobile ? 12 : "sm"} mr={20} fw={500} truncate="end">
               {playerName}
             </Text>)}
         </Group>
       </td>
       <td>
-        <Text fz="xs">{id}</Text>
+        <Text fz={isMobile ? 8 : "sm"}  truncate="end">{id}</Text>
 
       </td>
-      <td>
+      {isMobile ? null : (<> <td>
          <Badge size="xs" variant="outline">Default</Badge>
       </td>
       <td>
         <Text fz="xs">Standard</Text>
-        {/* {item.playlist}  goes in to replace default once query is update and playlist feature built*/}
       </td>
+      </>)}
+      
+      
+     
       <td>
         <Group spacing={0} position="right">
           <ActionIcon onClick={() => setEditing(!editing)}>
