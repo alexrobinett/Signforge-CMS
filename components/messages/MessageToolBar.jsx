@@ -1,7 +1,7 @@
 import { Paper, Button,  Modal, Group, Pagination, Autocomplete, MultiSelect, Container, Loader, Text, Select} from '@mantine/core';
 import { useGetPlayersQuery, selectAllPlayers } from '../../app/features/players/playersApiSlice';
 import { useSelector } from 'react-redux';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import { SplitSaveButton } from './SplitSaveButton';
@@ -24,7 +24,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
     
     const allPlayers = useSelector(selectAllPlayers);
 
-
+    const isMobile = useMediaQuery('(max-width: 568px)');
  
 
 
@@ -61,7 +61,7 @@ function MessageToolBar({handlePlayerUpdate, handleNewMessageButton, newMessageP
         <Group>
         {/* <Text  fw={500}>Select A Player:</Text> */}
         <Select
-        w={200}
+        w={ isMobile ? 140 : 200 }
         data={dropDownData}
         placeholder="Pick A Player to Edit"
         maxDropdownHeight={160}

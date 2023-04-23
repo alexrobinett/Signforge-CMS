@@ -1,5 +1,5 @@
 import { createStyles, Table, ScrollArea, rem, Paper, Card, Text, Group, Container, Loader, ActionIcon, Menu, Button } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
+import { useListState, useMediaQuery } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { IconGripVertical, IconPencil, IconDots , IconMessages, IconTrash, IconEdit} from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
@@ -50,6 +50,7 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
 
   const playlistMessages = useSelector((messageState) => selectAllPlaylist(messageState));
 
+  const isMobile = useMediaQuery('(max-width: 568px)');
 
 
   async function updatePlaylistMessagePositions(){
@@ -100,7 +101,8 @@ async function handleEditClick(id){
             </td>
             <td style={{ width: rem(40) }}>{item.position + 1}</td>
             <td style={{ width: rem(150) }}>{item.messageName}</td>
-            <td style={{ width: rem(140) }}>{item.messageType}</td>
+            {isMobile? null : (<td style={{ width: rem(140) }}>{item.messageType}</td>)}
+            
             <td>
                 <Group spacing={0} position="right">
                   <ActionIcon onClick={() => handleEditClick(item._id)}>
@@ -164,13 +166,13 @@ async function handleEditClick(id){
         setMessageState(newState);
       }}
       >
-        <Table sx={{ minWidth: rem(420), '& tbody tr td': { borderBottom: 0 } }}>
+        <Table sx={{ minWidth: rem(220), '& tbody tr td': { borderBottom: 0 } }}>
           <thead>
             <tr>
               <th style={{ width: rem(40) }} />
               <th style={{ width: rem(40) }}>position</th>
               <th style={{ width: rem(150) }}>Name</th>
-              <th style={{ width: rem(140) }}>Message Type</th>
+              {isMobile? null : ( <th style={{ width: rem(140) }}>Message Type</th>)}
               <th style={{ width: rem(140) }}></th>
             </tr>
           </thead>

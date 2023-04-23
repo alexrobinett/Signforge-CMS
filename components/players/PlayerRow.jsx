@@ -6,7 +6,8 @@ import {
     IconTrash,
     IconDots,
     IconCast,
-    IconArrowRight
+    IconArrowRight,
+    IconCheck
   } from '@tabler/icons-react';
 
 import { useInputState, useMediaQuery } from "@mantine/hooks";
@@ -79,7 +80,7 @@ return(
                     onChange={setEditPlayerName}
                     rightSection={
                       <ActionIcon size={30} variant="filled" color="blue">
-                        <IconArrowRight size="1.1rem" stroke={1.5} onClick={() => handleUpdateClick()}/>
+                        <IconCheck size="1.1rem" stroke={1.5} onClick={() => handleUpdateClick()}/>
                       </ActionIcon>
                     }
                     /> 
