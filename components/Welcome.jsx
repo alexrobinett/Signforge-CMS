@@ -1,5 +1,5 @@
 import { createStyles, Container, Text, Button, Group, rem, Card } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
+import {useMediaQuery} from '@mantine/hooks'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -31,6 +31,8 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(42),
       lineHeight: 1.2,
+      margin: 0,
+      padding: 0,
     },
   },
 
@@ -67,10 +69,11 @@ const useStyles = createStyles((theme) => ({
 
 function Welcome() {
   const { classes } = useStyles();
+  const isMobile = useMediaQuery('(max-width: 568px)');
 
   return (
-    <Card mt={20} shadow="xs" mx="md" p="xs"> 
-      <Container className={classes.inner} mt={0}>
+    <Card mt={isMobile ? 5 : 20} shadow="xs" mx="md" p="xl"> 
+
         <h1 className={classes.title}>
           Welcome to{' '}
           <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
@@ -101,7 +104,6 @@ The assets tab is where you can upload your images to be used in your digital si
 The demo tab allows you to see a demo player. This is useful if you want to see how your messages/ads will look on your digital signage screen. To use the demo player simply copy a player's ID from the player tab and past it into the alert.
         </Text>
 
-      </Container>
       </Card>
   );
 }
