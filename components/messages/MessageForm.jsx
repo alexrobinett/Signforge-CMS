@@ -8,8 +8,7 @@ import { selectAllImages, useGetImagesQuery } from '../../app/features/images/im
 import { SplitSaveButton } from './SplitSaveButton';
 import { SplitUpdateButton } from './SplitUpdateButton';
 import { selectMessageByID, useGetMessagesQuery} from '../../app/features/message/messagesApiSlice';
-
-
+import previewImage from '../../public/cstore-preview.png'
 
 function MessageForm({playerId, handleTrashClick, messageUpdate, messageId, setMessageUpdate}) {
     const {
@@ -91,7 +90,7 @@ const form = useForm({
         </Stack>
         <Stack>
             <AspectRatio ratio={1920 / 1080} maw={500} m={12} >
-                <Card bg="#1A1B1E"shadow="sm" radius="md" ><Image mx={0} src="../public/cstore-preview.png" alt="CStore Message Preview" /></Card>
+                <Card bg="#1A1B1E"shadow="sm" radius="md" ><Image mx={0} src={previewImage} alt="CStore Message Preview" /></Card>
             </AspectRatio>
         </Stack>
     </Group> 
