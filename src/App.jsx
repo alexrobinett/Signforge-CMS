@@ -1,17 +1,13 @@
-
-
 import { LoginPage } from '../components/LoginPage';
 import { HomePage } from './HomePage.jsx';
 
 function App() {
-
-  return (  
+  return (
     <>
-      <HomePage m={0}/>
-      <LoginPage/>
+      <HomePage m={0} />
+      <LoginPage />
     </>
   );
 }
 
-
-export {App};
+export { App };

@@ -1,6 +1,14 @@
 import { useRef } from 'react';
-import { Text, Group, Button, createStyles, rem, LoadingOverlay, SimpleGrid  } from '@mantine/core';
-import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
+import {
+  Text,
+  Group,
+  Button,
+  createStyles,
+  rem,
+  LoadingOverlay,
+  SimpleGrid,
+} from '@mantine/core';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
 import { useAddNewImageMutation } from '../../app/features/images/imagesAPI';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +26,10 @@ const useStyles = createStyles((theme) => ({
   },
 
   icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[3]
+        : theme.colors.gray[4],
   },
 
   control: {
@@ -29,28 +40,21 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
-
-
 function ImageDropZone(props) {
   const [files, setFiles] = useState([]);
   const { classes, theme } = useStyles();
-  const openRef = useRef ();
-  const navigate = useNavigate()
+  const openRef = useRef();
+  const navigate = useNavigate();
 
-  const [addNewImage,{
-    isLoading,
-    isSuccess,
-    isError,
-    error
-  }] = useAddNewImageMutation()
+  const [addNewImage, { isLoading, isSuccess, isError, error }] =
+    useAddNewImageMutation();
 
- async function uploadImage(file){
-    const formData = new FormData()
-    formData.append('id','640bf6e47781518ed5c23575')
-    formData.append('photo',file)
-   
-   return formData
+  async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('id', '640bf6e47781518ed5c23575');
+    formData.append('photo', file);
+
+    return formData;
   }
 
   const previews = files.map((file, index) => {
@@ -64,35 +68,32 @@ function ImageDropZone(props) {
     );
   });
 
-  async function handleImageDrop(file){
-    try{
-      await addNewImage(await uploadImage(file))
-      props.handle()
-      navigate("./")
-      props.handleLoading.close()
-    }catch{
-      console.error("could't upload file!")
+  async function handleImageDrop(file) {
+    try {
+      await addNewImage(await uploadImage(file));
+      props.handle();
+      navigate('./');
+      props.handleLoading.close();
+    } catch {
+      console.error("could't upload file!");
     }
-
   }
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
         openRef={openRef}
-        onDrop={ (acceptedFiles) => {
-            props.handleLoading.open()
-            acceptedFiles.forEach((file) => {
-            handleImageDrop(file)
-           })
-           
+        onDrop={(acceptedFiles) => {
+          props.handleLoading.open();
+          acceptedFiles.forEach((file) => {
+            handleImageDrop(file);
+          });
         }}
         className={classes.dropzone}
         radius="md"
         accept={[MIME_TYPES.png]}
       >
         <div style={{ pointerEvents: 'none' }}>
-        
           <Group position="center">
             <Dropzone.Accept>
               <IconDownload
@@ -107,7 +108,11 @@ function ImageDropZone(props) {
             <Dropzone.Idle>
               <IconCloudUpload
                 size={rem(50)}
-                color={theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black}
+                color={
+                  theme.colorScheme === 'dark'
+                    ? theme.colors.dark[0]
+                    : theme.black
+                }
                 stroke={1.5}
               />
             </Dropzone.Idle>
@@ -119,16 +124,22 @@ function ImageDropZone(props) {
             <Dropzone.Idle>Upload Assets</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Drag&apos;n&apos;drop images Files here to upload. We can only Accept transparent PNG
+            Drag&apos;n&apos;drop images Files here to upload. We can only
+            Accept transparent PNG
           </Text>
         </div>
       </Dropzone>
 
-      <Button className={classes.control} size="md" radius="xl" onClick={() => openRef.current?.()}>
+      <Button
+        className={classes.control}
+        size="md"
+        radius="xl"
+        onClick={() => openRef.current?.()}
+      >
         Select files
       </Button>
     </div>
   );
 }
 
-export{ImageDropZone}
+export { ImageDropZone };

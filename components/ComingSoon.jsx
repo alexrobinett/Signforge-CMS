@@ -1,9 +1,8 @@
-import React from "react";
-import {Text } from "@mantine/core";
+import React from 'react';
+import { Text } from '@mantine/core';
 
-
-function ComingSoon(){
-    return <Text>Feature Coming Soon!</Text>
+function ComingSoon() {
+  return <Text>Feature Coming Soon!</Text>;
 }
 
-export {ComingSoon}
+export { ComingSoon };
