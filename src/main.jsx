@@ -20,6 +20,9 @@ import { MessagesPage } from '../components/messages/MessagePage';
 import { Prefetch } from '../components/AUTH/Prefetch';
 import PersistLogin from '../components/AUTH/PersistLogin';
 import { Welcome } from '../components/Welcome';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if(process.env.NODE_ENV === 'production') disableReactDevTools()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
