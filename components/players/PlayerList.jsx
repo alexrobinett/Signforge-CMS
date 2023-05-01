@@ -33,7 +33,6 @@ function PlayerList() {
   const allPlayers = useSelector(selectAllPlayers);
   const isMobile = useMediaQuery('(max-width: 568px)');
 
-  console.log(allPlayers);
   if (isLoading) {
     return (
       <Container mt={30}>
