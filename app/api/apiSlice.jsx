@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials } from '../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
+  // baseUrl: 'http://127.0.0.1:5173/' dev url
   baseUrl: 'https://signage-api-production.up.railway.app',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
