@@ -2,6 +2,12 @@
 
 The SignForge application is a digital signage platform that allows users to manage and display content on digital signage screens. It is built using various technologies including JavaScript, TypeScript, React JS, Redux Toolkit, Mantine, Amazon S3, Express, Node, JWT Auth, Mongoose, MongoDB, and CSS.
 
+## Live Site
+
+Check out the live site of the SignForge application:
+
+https://ds-cms.vercel.app
+
 ## Demo Video
 
 Check out our demo video on YouTube to see the SignForge application in action:
@@ -12,6 +18,8 @@ Check out our demo video on YouTube to see the SignForge application in action:
 ## Demo Login
 
 To demo the SignForge application, use the following login credentials:
+
+Demo Live
 
 Email: `demo@signforge.com`
 
@@ -32,7 +40,6 @@ The SignForge application is built using the following technologies:
 - JWT Auth
 - Mongoose
 - MongoDB
-- CSS
 
 ## Features
 
@@ -49,3 +56,9 @@ To further improve the SignForge application, we plan to make the following opti
 
 - Live Preview Enhancements: We aim to improve the live preview feature by adding more customization options and providing a more interactive experience.
 - Template Library Expansion: We plan to expand the template library to provide users with more options for promotions and welcome messages.
+
+
+## Additional Repositories
+
+- [SignForge Player](https://github.com/alexrobinett/SignForge-Player)
+- [Backend API](https://github.com/alexrobinett/SignForge-Backend-API)
