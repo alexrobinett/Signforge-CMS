@@ -8,13 +8,6 @@ Check out the live site of the SignForge application:
 
 https://ds-cms.vercel.app
 
-## Demo Video
-
-Check out our demo video on YouTube to see the SignForge application in action:
-
-[![SignForge Demo Video](https://img.youtube.com/vi/9J8c4i8WAe8/0.jpg)](https://www.youtube.com/watch?v=9J8c4i8WAe8) 
-
-
 ## Demo Login
 
 To demo the SignForge application, use the following login credentials:
@@ -24,6 +17,13 @@ Demo Live
 Email: `demo@signforge.com`
 
 Password: `demo123demo`
+
+## Demo Video
+
+Check out our demo video on YouTube to see the SignForge application in action:
+
+[![SignForge Demo Video](https://img.youtube.com/vi/9J8c4i8WAe8/0.jpg)](https://www.youtube.com/watch?v=9J8c4i8WAe8) 
+
 
 ## Technologies Used
 
