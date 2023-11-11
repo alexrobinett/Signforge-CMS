@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "@mantine/modals": "^6.0.2",
     "@reduxjs/toolkit": "^1.9.3",
     "@tabler/icons-react": "^2.10.0",
+    "@types/react-redux": "^7.1.25",
     "dayjs": "^1.11.7",
     "iframe-resizer-react": "^1.1.0",
     "jwt-decode": "^3.1.2",
@@ -27,11 +28,14 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "^6.9.0",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
+    "@types/node": "^18.16.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.1",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^3.1.0",
     "prettier": "^2.8.8",
     "vite": "^4.1.0"

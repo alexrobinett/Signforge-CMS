@@ -10,8 +10,6 @@ import {
   rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown } from '@tabler/icons-react';
-import { MantineLogo } from '@mantine/ds';
 import { DsLogo } from '../components/misc/Dslogo';
 import { Outlet } from 'react-router-dom';
 

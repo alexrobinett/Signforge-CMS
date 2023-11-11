@@ -8,6 +8,7 @@ import {
   Card,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

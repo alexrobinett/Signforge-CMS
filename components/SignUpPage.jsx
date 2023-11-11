@@ -19,6 +19,7 @@ import bg from '../src/assets/bg-image/office-bg.jpg';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAddNewUserMutation } from '../app/features/users/usersApiSlice';
+import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   signUp: {
