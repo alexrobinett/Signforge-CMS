@@ -10,17 +10,11 @@ import {
   Stack,
 } from '@mantine/core';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import {
-  selectAllImages,
-  useGetImagesQuery,
-} from '../../app/features/images/imagesAPI';
+import { useImages } from '../../app/features/images/imagesApi';
+import { useMessages } from '../../app/features/message/messagesApi';
 import { SplitSaveButton } from './SplitSaveButton';
 import { SplitUpdateButton } from './SplitUpdateButton';
-import {
-  selectMessageByID,
-  useGetMessagesQuery,
-} from '../../app/features/message/messagesApiSlice';
+
 import previewImage from '../../src/assets/cstore-preview.png';
 
 function MessageForm({
@@ -30,20 +24,13 @@ function MessageForm({
   messageId,
   setMessageUpdate,
 }) {
-  const {
-    data: images,
-    isLoading,
-    isSuccess,
-    isError,
-    refetch,
-  } = useGetImagesQuery();
-  const allImages = useSelector(selectAllImages);
+  const { data: imagesData, isLoading, isSuccess, isError, refetch } = useImages();
+  const allImages = imagesData ?? [];
 
-  const { data: messages, refetch: refetchMessages } = useGetMessagesQuery();
+  const { data: messagesData, refetch: refetchMessages } = useMessages();
+  const allMessages = messagesData ?? [];
+  const updateMessage = allMessages.find((msg) => msg.id === messageId);
 
-  const updateMessage = useSelector((state) =>
-    selectMessageByID(state, messageId)
-  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -94,7 +81,7 @@ function MessageForm({
         form.setFieldValue(key, updateMessage[key]);
       });
     }
-  }, [updateMessage, messageUpdate, messages]);
+  }, [updateMessage, messageUpdate, allMessages]);
 
   return (
     <>

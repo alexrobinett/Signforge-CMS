@@ -16,10 +16,30 @@ import bg from '../src/assets/bg-image/office-bg.jpg';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../app/features/auth/authSlice';
-import { useLoginMutation } from '../app/features/auth/authApiSlice';
-import usePersist from '../hooks/usePersist';
+
+
+import { useMutation } from '@tanstack/react-query';
+import axiosInstance from "../app/api/axiosInstance";
+import { useAuth } from "../app/context/AuthContext";
+
+function useLogin() {
+  const { setAuth } = useAuth();
+  return useMutation(
+    async (credentials) => {
+      console.log('useLogin mutation called with:', credentials);
+      try {
+        const response = await axiosInstance.post('/auth', credentials);
+        console.log('axiosInstance.post /auth response:', response);
+        const { data } = response;
+        setAuth((prev) => ({ ...prev, ...data }));
+        return data;
+      } catch (error) {
+        console.error('Error in useLogin mutation:', error);
+        throw error;
+      }
+    }
+  );
+}
 
 const useStyles = createStyles((theme) => ({
   signUp: {
@@ -30,20 +50,26 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+
 function LoginPage() {
-  const { classes } = useStyles();
+  // Minimal test mutation
+  const testMutation = useMutation(async ({ email, password }) => {
+    console.log('Direct test mutation called with:', { email, password });
+    return { email, password };
+  });
+  const { classes } = useStyles();  
   const userRef = useRef();
   const errRef = useRef();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const [persist, setPersist] = usePersist(true);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setAuth } = useAuth();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const login = useLogin();
+  const { isLoading } = login;
 
   useEffect(() => {
     userRef.current.focus();
@@ -55,27 +81,17 @@ function LoginPage() {
 
   const handleUserInput = (e) => setEmail(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
-  // const handleToggle = () => {setPersist(prevVal => !prevVal)};
 
   async function handleSubmit(e) {
+    console.log('handleSubmit called with:', { email, password });
     try {
-      const { accessToken } = await login({ email, password }).unwrap();
-
-      localStorage.setItem('access_token', accessToken);
-      dispatch(setCredentials({ accessToken: accessToken }));
-      setEmail('');
-      setPassword('');
-      navigate('/dashboard');
+      // Use the direct test mutation instead of login
+      const result = await testMutation.mutateAsync({ email, password });
+      console.log('testMutation.mutateAsync result:', result);
+      // No further logic needed for this test
     } catch (err) {
-      if (!err.status) {
-        setErrMsg('No Server Response');
-      } else if (err.status === 400) {
-        setErrMsg('Missing Username or Password');
-      } else if (err.status === 401) {
-        setErrMsg('Unauthorized');
-      } else {
-        setErrMsg(err.data?.message);
-      }
+      console.error('Error in handleSubmit (test mutation):', err);
+      setErrMsg('Test mutation failed');
       errRef.current.focus();
     }
   }
@@ -84,6 +100,16 @@ function LoginPage() {
     <Container h="94vh" m={0} className={classes.signUp} fluid="true">
       <Container size={420} pt={30}>
         <Paper withBorder shadow="md" p={30} pt={10} mt={30} radius="md">
+          <Text
+            ref={errRef}
+            tabIndex={-1}
+            color="red"
+            size="sm"
+            role="alert"
+            style={{ display: errMsg ? 'block' : 'none', marginBottom: 10 }}
+          >
+            {errMsg}
+          </Text>
           <Flex
             mb={10}
             gap="sm"

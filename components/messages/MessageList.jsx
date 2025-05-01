@@ -21,16 +21,9 @@ import {
   IconMessages,
   IconTrash,
 } from '@tabler/icons-react';
-import { useSelector } from 'react-redux';
+import { usePlayerPlaylist } from '../../app/features/playlist/playlistApi';
+import { useUpdateMessagePosition, useDeleteMessage } from '../../app/features/message/messagesApi';
 import { useEffect, useState } from 'react';
-import {
-  useGetPlayerPlaylistQuery,
-  selectAllPlaylist,
-} from '../../app/features/playlist/playlistAPISlice';
-import {
-  useUpdateMessagePositionMutation,
-  useDeleteMessageMutation,
-} from '../../app/features/message/messagesApiSlice';
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -56,27 +49,11 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
   const { classes } = useStyles();
   const [messageState, setMessageState] = useState([]);
   const [messagesLoaded, setMessagesLoaded] = useState(false);
-  const {
-    data: playlist,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-    refetch,
-  } = useGetPlayerPlaylistQuery(playerId, {
-    skip: !playerId,
-    pollingInterval: 60000,
-    refetchOnFocus: true,
-  });
 
-  const [updateMessagePosition] = useUpdateMessagePositionMutation();
-
-  const [deleteMessage] = useDeleteMessageMutation();
-
-  const playlistMessages = useSelector((messageState) =>
-    selectAllPlaylist(messageState)
-  );
-
+  const { data, isLoading, isSuccess, isError, error, refetch } = usePlayerPlaylist(playerId);
+  const updateMessagePosition = useUpdateMessagePosition();
+  const deleteMessage = useDeleteMessage();
+  const playlistMessages = data ?? [];
   const isMobile = useMediaQuery('(max-width: 568px)');
 
   async function updatePlaylistMessagePositions() {
@@ -105,11 +82,10 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
 
   useEffect(() => {
     if (isSuccess) {
-      const messagesArray = Object.values(playlist.entities);
-      setMessageState(messagesArray);
+      setMessageState(playlistMessages);
       setMessagesLoaded(true);
     }
-  }, [isSuccess, messagesLoaded, playlist]);
+  }, [isSuccess, messagesLoaded, playlistMessages]);
 
   const items = messageState.length ? (
     messageState.map((item, index) => (

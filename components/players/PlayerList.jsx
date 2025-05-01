@@ -8,29 +8,13 @@ import {
   Card,
 } from '@mantine/core';
 
-import {
-  selectAllPlayers,
-  useGetPlayersQuery,
-} from '../../app/features/players/playersApiSlice';
-import { useSelector } from 'react-redux';
+import { usePlayers } from '../../app/features/players/playersApi';
 import { useInputState, useMediaQuery } from '@mantine/hooks';
 import { PlayerRow } from './PlayerRow';
 
 function PlayerList() {
-  const {
-    data: players,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-    refetch,
-  } = useGetPlayersQuery(undefined, {
-    pollingInterval: 60000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
-
-  const allPlayers = useSelector(selectAllPlayers);
+  const { data, isLoading, isSuccess, isError, error, refetch } = usePlayers();
+  const allPlayers = data ?? [];
   const isMobile = useMediaQuery('(max-width: 568px)');
 
   if (isLoading) {

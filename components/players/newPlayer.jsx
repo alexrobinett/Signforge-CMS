@@ -10,7 +10,7 @@ import {
   rem,
 } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { useAddNewPlayerMutation } from '../../app/features/players/playersApiSlice';
+import { useAddPlayer } from '../../app/features/players/playersApi';
 import { useInputState } from '@mantine/hooks';
 
 const useStyles = createStyles((theme) => ({
@@ -37,8 +37,8 @@ const useStyles = createStyles((theme) => ({
 function NewPlayer({ handleClose, refetch }) {
   const { classes } = useStyles();
   const [newPlayerName, setNewPlayerName] = useInputState('');
-  const [addNewPlayer, { isLoading, isSuccess, isError, error }] =
-    useAddNewPlayerMutation();
+  const addPlayer = useAddPlayer();
+  const { isLoading, isSuccess, isError, error } = addPlayer;
 
   const canUpdate = [newPlayerName].every(Boolean) && !isLoading;
 

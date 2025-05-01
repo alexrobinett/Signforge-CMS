@@ -19,8 +19,8 @@ function NewMessageCreator({
         playerId={playerId}
         handleTrashClick={handleTrashClick}
         messageUpdate={messageUpdate}
-        messageId={messageId}
         setMessageUpdate={setMessageUpdate}
+        messageId={messageId}
       />
     </Card>
   );

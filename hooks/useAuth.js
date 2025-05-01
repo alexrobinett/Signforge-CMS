@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
-import { selectCurrentToken } from '../app/features/auth/authSlice';
 import jwtDecode from 'jwt-decode';
+import { useAuth as useAuthContext } from '../app/context/AuthContext';
 
-const useAuth = () => {
-  const token = useSelector(selectCurrentToken);
+const useDecodedAuth = () => {
+  const { token } = useAuthContext();
   let userID = null;
   let firstName = null;
   let email = null;
@@ -20,4 +19,4 @@ const useAuth = () => {
   }
   return { userID, firstName, email };
 };
-export default useAuth;
+export default useDecodedAuth;

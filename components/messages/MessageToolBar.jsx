@@ -4,11 +4,14 @@ import {
   Group,
   Select,
 } from '@mantine/core';
-import {
-  useGetPlayersQuery,
-  selectAllPlayers,
-} from '../../app/features/players/playersApiSlice';
-import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+// TODO: Replace with your actual data fetching logic
+const getPlayers = async () => {
+  // Example fetch, replace URL with your API endpoint
+  const response = await fetch('/api/players');
+  if (!response.ok) throw new Error('Network response was not ok');
+  return response.json();
+};
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 
@@ -18,35 +21,28 @@ function MessageToolBar({
   newMessagePage,
 }) {
   const [opened, { open, close }] = useDisclosure(false);
-  const [isPlayerSearchDisabled, setIsPlayerSearchDisabled] = useState(false);
   const [dropDownValue, setDropDownValue] = useState([]);
-  const [dropDownData, setDropDownData] = useState([]);
-  const { data: players, isLoading, isSuccess, isError } = useGetPlayersQuery();
-
-  const allPlayers = useSelector(selectAllPlayers);
+  const { data: players, isLoading, isSuccess, isError } = useQuery({
+    queryKey: ['players'],
+    queryFn: getPlayers,
+  });
 
   const isMobile = useMediaQuery('(max-width: 568px)');
 
-  useEffect(() => {
-    if (isSuccess) {
-      const newDropDownData = allPlayers.map((player) => ({
+  // Derive dropdown data directly from players
+  const dropDownData = players
+    ? players.map((player) => ({
         value: `${player.id}`,
         label: `${player.playerName}`,
-      }));
-      setDropDownData(newDropDownData);
-    }
-  }, [isSuccess, allPlayers]);
-
-  useEffect(() => {
-    setIsPlayerSearchDisabled(isLoading);
-  }, [isLoading]);
+      }))
+    : [];
 
   useEffect(() => {
     const selectedLabel = dropDownData.find(
       (item) => item.value === String(dropDownValue)
     )?.label;
     handlePlayerUpdate(dropDownValue, selectedLabel);
-  }, [dropDownValue]);
+  }, [dropDownValue, dropDownData, handlePlayerUpdate]);
 
   const messageTypes = [{ value: 'c-store', label: 'C Store Message' }];
 
@@ -67,7 +63,7 @@ function MessageToolBar({
                 value={dropDownValue}
                 onChange={(value) => setDropDownValue(value)}
                 nothingFound="Nothing found"
-                disabled={isPlayerSearchDisabled}
+                disabled={isLoading}
               />
             </Group>
             <Button onClick={() => handleNewMessageButton()}>

@@ -12,27 +12,22 @@ import {
 import { useMediaQuery } from '@mantine/hooks';
 import { IconTrashFilled, IconCheck } from '@tabler/icons-react';
 import { useState } from 'react';
-import {
-  useUpdateImageMutation,
-  useDeleteImageMutation,
-} from '../../app/features/images/imagesAPI';
+import { useUpdateImage, useDeleteImage } from '../../app/features/images/imagesApi';
 
 function AssetCard({ imageURL, id, fileName, refetchImages }) {
   const theme = useMantineTheme();
   const isMobile = useMediaQuery('(max-width: 568px)');
   const [editing, setEditing] = useState(false);
   const [fileNameState, setFileNameState] = useState(fileName);
-  const [updateImage, { isLoading, isSuccess, isError, error }] =
-    useUpdateImageMutation();
+  const updateImageMutation = useUpdateImage();
+  const deleteImageMutation = useDeleteImage();
 
-  const [deleteImage, {}] = useDeleteImageMutation();
-
-  const canUpdate = [fileNameState].every(Boolean) && !isLoading;
+  const canUpdate = [fileNameState].every(Boolean) && !updateImageMutation.isLoading;
 
   async function handleUpdateClick() {
     if (canUpdate) {
       try {
-        await updateImage({ id: id, file: `${fileNameState}` });
+        await updateImageMutation.mutateAsync({ id: id, file: `${fileNameState}` });
         await refetchImages();
         setEditing(!editing);
       } catch {

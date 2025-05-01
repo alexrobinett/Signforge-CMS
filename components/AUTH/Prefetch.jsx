@@ -1,30 +1,22 @@
-import {store} from '../../app/store'
-import { messageApiSlice } from '../../app/features/message/messagesApiSlice'
-import { imageApiSlice } from '../../app/features/images/imagesAPI'
-import { playerApiSlice } from '../../app/features/players/playersApiSlice'
-import { userApiSlice } from '../../app/features/users/usersApiSlice'
-import { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import { fetchImages } from '../../app/features/images/imagesApi';
+import { fetchPlayers } from '../../app/features/players/playersApi';
+import { fetchMessages } from '../../app/features/message/messagesApi';
 
-function Prefetch(){
-
-    
+function Prefetch() {
   const { userID } = useAuth();
-    
-    useEffect(() => {
-        const images = store.dispatch(imageApiSlice.endpoints.getImages.initiate())
-        const players = store.dispatch(playerApiSlice.endpoints.getPlayers.initiate())
-        const messages = store.dispatch(messageApiSlice.endpoints.getMessages.initiate())
+  const queryClient = useQueryClient();
 
-        return () => {
-            images.unsubscribe()
-            players.unsubscribe()
-            messages.unsubscribe()
-        }
-    }, [userID])
+  useEffect(() => {
+    queryClient.prefetchQuery({ queryKey: ['images'], queryFn: fetchImages });
+    queryClient.prefetchQuery({ queryKey: ['players'], queryFn: fetchPlayers });
+    queryClient.prefetchQuery({ queryKey: ['messages'], queryFn: fetchMessages });
+  }, [userID, queryClient]);
 
-    return <Outlet />
+  return <Outlet />;
 }
 
-export {Prefetch}
+export { Prefetch };

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Header, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
 import { DsLogo } from './misc/Dslogo';
 

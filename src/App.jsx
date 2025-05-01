@@ -5,7 +5,6 @@ function App() {
   return (
     <>
       <HomePage m={0} />
-      <LoginPage />
     </>
   );
 }

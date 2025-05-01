@@ -11,7 +11,18 @@ import {
   IconBookmark,
   IconChevronDown,
 } from '@tabler/icons-react';
-import { useUpdateMessageMutation } from '../../app/features/message/messagesApiSlice';
+import { useMutation } from '@tanstack/react-query';
+// Replace with your actual API call
+async function updateMessage(formData) {
+  const response = await fetch(`/api/messages/${formData.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+  if (!response.ok) throw new Error('Failed to update message');
+  return response.json();
+}
+
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -40,19 +51,21 @@ function SplitUpdateButton({
   const { classes, theme } = useStyles();
   const menuIconColor =
     theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 6];
-  const [updateMessage, { isLoading, isSuccess, isError, error }] =
-    useUpdateMessageMutation();
-
-  async function handleMessageSave() {
-    try {
-      await updateMessage(formData);
+  const mutation = useMutation({
+    mutationFn: updateMessage,
+    onSuccess: () => {
       setMessageUpdate((currentState) => !currentState);
       handleTrashClick();
       refetchMessages();
       form.reset();
-    } catch {
+    },
+    onError: (error) => {
       console.error(error);
-    }
+    },
+  }); // Already v5 syntax
+
+  function handleMessageSave() {
+    mutation.mutate(formData);
   }
 
   function handleTrashMessage() {

@@ -13,7 +13,18 @@ import {
   IconCalendar,
   IconChevronDown,
 } from '@tabler/icons-react';
-import { useAddNewMessageMutation } from '../../app/features/message/messagesApiSlice';
+import { useMutation } from '@tanstack/react-query';
+// Replace this with your actual API call
+async function addNewMessage(formData) {
+  const response = await fetch('/api/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+  if (!response.ok) throw new Error('Failed to save message');
+  return response.json();
+}
+
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -34,18 +45,20 @@ function SplitSaveButton({ formData, form, playerId, handleTrashClick }) {
   const { classes, theme } = useStyles();
   const menuIconColor =
     theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 6];
-  const [addNewMessage, { isLoading, isSuccess, isError, error }] =
-    useAddNewMessageMutation();
-
-  async function handleMessageSave() {
-    try {
-      console.log(playerId);
-      await addNewMessage(formData);
+  const mutation = useMutation({
+    mutationFn: addNewMessage,
+    onSuccess: () => {
       handleTrashClick();
       form.reset();
-    } catch (err) {
-      console.error(err);
-    }
+    },
+    onError: (error) => {
+      // Optionally show an error toast or message
+      console.error(error);
+    },
+  }); // Already v5 syntax
+
+  function handleMessageSave() {
+    mutation.mutate(formData);
   }
 
   function handleTrashMessage() {

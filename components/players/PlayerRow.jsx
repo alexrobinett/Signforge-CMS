@@ -21,20 +21,15 @@ import {
 
 import { useInputState, useMediaQuery } from '@mantine/hooks';
 import { useState } from 'react';
-import {
-  useUpdatePlayerMutation,
-  useDeletePlayerMutation,
-} from '../../app/features/players/playersApiSlice';
+import { useUpdatePlayer, useDeletePlayer } from '../../app/features/players/playersApi';
 
 function PlayerRow({ id, playerName, refetch }) {
   const [editing, setEditing] = useState(false);
   const [editPlayerName, setEditPlayerName] = useInputState(playerName);
-  const [deletePlayer, { isLoading: isDeleteLoading }] =
-    useDeletePlayerMutation();
-  const [
-    updatePlayer,
-    { isLoading: isUpdateLoading, isSuccess, isError, error },
-  ] = useUpdatePlayerMutation();
+  const deletePlayer = useDeletePlayer();
+  const updatePlayer = useUpdatePlayer();
+  const { isLoading: isDeleteLoading } = deletePlayer;
+  const { isLoading: isUpdateLoading, isSuccess, isError, error } = updatePlayer;
   const isMobile = useMediaQuery('(max-width: 568px)');
 
   const canUpdate = [editPlayerName].every(Boolean) && !isUpdateLoading;

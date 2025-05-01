@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
-import { useAddNewImageMutation } from '../../app/features/images/imagesAPI';
+import { useAddImage } from '../../app/features/images/imagesApi';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -46,8 +46,7 @@ function ImageDropZone(props) {
   const openRef = useRef();
   const navigate = useNavigate();
 
-  const [addNewImage, { isLoading, isSuccess, isError, error }] =
-    useAddNewImageMutation();
+  const addImageMutation = useAddImage();
 
   async function uploadImage(file) {
     const formData = new FormData();
@@ -70,12 +69,12 @@ function ImageDropZone(props) {
 
   async function handleImageDrop(file) {
     try {
-      await addNewImage(await uploadImage(file));
+      await addImageMutation.mutateAsync(await uploadImage(file));
       props.handle();
       navigate('./');
       props.handleLoading.close();
-    } catch {
-      console.error("could't upload file!");
+    } catch (err) {
+      console.error("couldn't upload file!", err);
     }
   }
 

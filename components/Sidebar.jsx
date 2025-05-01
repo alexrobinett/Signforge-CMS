@@ -13,7 +13,6 @@ import {
 
 import { Link, useLocation, useNavigate} from 'react-router-dom';
 import {useMediaQuery } from '@mantine/hooks'
-import { useSendLogoutMutation } from '../app/features/auth/authApiSlice';
 
 
 const useStyles = createStyles((theme) => ({
@@ -92,12 +91,11 @@ function SideBar({ opened} , handleOpen , mobile) {
   const navigate = useNavigate()
   const {pathname} = useLocation()
   
-  const [sendLogout , {isLoading, isSuccess, isError, error}] = useSendLogoutMutation()
-
-  useEffect(() => {
-    if(isSuccess) navigate('/')
-  }, [isSuccess, navigate])
-
+  function handleLogout() {
+    // Clear auth context, localStorage, and redirect if needed
+    localStorage.removeItem('access_token');
+    window.location.href = '/home/login';
+  }
 
 const [active, setActive] = useState(() => {
   const activeItem = data.find((item) => item.link === location.pathname);
@@ -138,7 +136,7 @@ const [active, setActive] = useState(() => {
       <Navbar.Section grow>{links}</Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Group onClick={() => sendLogout()}>
+        <Group onClick={() => handleLogout()}>
           <Text className={classes.link}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
