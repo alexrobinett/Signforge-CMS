@@ -35,6 +35,19 @@ export function usePlayers() {
   });
 }
 
+// Reusable hook for dropdown options
+export function usePlayerDropdownOptions() {
+  return useQuery({
+    queryKey: ['players'],
+    queryFn: fetchPlayers,
+    select: (players) =>
+      players.map(player => ({
+        value: player.id,
+        label: player.playerName,
+      })),
+  });
+}
+
 export function useAddPlayer() {
   const queryClient = useQueryClient();
   return useMutation({

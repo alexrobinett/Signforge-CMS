@@ -23,9 +23,9 @@ const deleteImage = async (id) => {
 };
 
 // --- React Query Hooks ---
-export function useImages() {
+export function useImages(filters = {}) {
   return useQuery({
-    queryKey: ['images'],
+    queryKey: ['images', filters],
     queryFn: fetchImages,
   });
 }
