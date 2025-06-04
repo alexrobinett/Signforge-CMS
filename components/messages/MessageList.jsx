@@ -72,8 +72,12 @@ function MessageList({ playerId, playerName, handleMessageUpdate }) {
   }
 
   async function handleDeleteClick(id) {
-    await deleteMessage(id);
-    refetch();
+    try {
+      await deleteMessage.mutateAsync(id);
+      refetch();
+    } catch (error) {
+      console.error('failed to delete message', error);
+    }
   }
 
   async function handleEditClick(id) {
