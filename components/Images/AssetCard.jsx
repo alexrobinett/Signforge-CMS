@@ -39,9 +39,9 @@ function AssetCard({ imageURL, id, fileName, refetchImages }) {
   async function handleDeleteClick() {
     if (canUpdate) {
       try {
-        await deleteImage(id);
+        await deleteImageMutation.mutateAsync(id);
         refetchImages();
-      } catch {
+      } catch (error) {
         console.error('failed to Delete Image', error);
       }
     }
