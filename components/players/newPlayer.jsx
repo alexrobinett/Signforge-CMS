@@ -47,8 +47,11 @@ function NewPlayer({ handleClose, refetch }) {
       try {
         await addPlayer.mutateAsync({ playerName: `${newPlayerName}` });
         handleClose();
-        refetch();
-      } catch (error) {
+        if (refetch) {
+          await refetch();
+        }
+      } catch {
+
         console.error('failed to update Player Name', error);
       }
     }
