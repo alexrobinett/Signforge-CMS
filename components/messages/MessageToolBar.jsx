@@ -4,14 +4,7 @@ import {
   Group,
   Select,
 } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
-// TODO: Replace with your actual data fetching logic
-const getPlayers = async () => {
-  // Example fetch, replace URL with your API endpoint
-  const response = await fetch('/api/players');
-  if (!response.ok) throw new Error('Network response was not ok');
-  return response.json();
-};
+import { usePlayers } from '../../app/features/players/playersApi';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 
@@ -22,10 +15,7 @@ function MessageToolBar({
 }) {
   const [opened, { open, close }] = useDisclosure(false);
   const [dropDownValue, setDropDownValue] = useState([]);
-  const { data: players, isLoading, isSuccess, isError } = useQuery({
-    queryKey: ['players'],
-    queryFn: getPlayers,
-  });
+  const { data: players, isLoading } = usePlayers();
 
   const isMobile = useMediaQuery('(max-width: 568px)');
 
