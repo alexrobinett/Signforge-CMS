@@ -51,6 +51,7 @@ function NewPlayer({ handleClose, refetch }) {
           await refetch();
         }
       } catch {
+
         console.error('failed to update Player Name', error);
       }
     }
