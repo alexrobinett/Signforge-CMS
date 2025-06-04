@@ -45,9 +45,11 @@ function NewPlayer({ handleClose, refetch }) {
   async function handleNewPlayerClick() {
     if (canUpdate) {
       try {
-        await addNewPlayer({ playerName: `${newPlayerName}` });
+        await addPlayer.mutateAsync({ playerName: `${newPlayerName}` });
         handleClose();
-        refetch();
+        if (refetch) {
+          await refetch();
+        }
       } catch {
         console.error('failed to update Player Name', error);
       }
