@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import bg from '../src/assets/bg-image/office-bg.jpg';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useAddUser } from "../app/features/users/usersApi";
 
 const useStyles = createStyles((theme) => ({
@@ -70,7 +70,7 @@ function SignUpPage() {
   function handleNewUserSubmit(data) {
     try {
       addNewUser({ ...data });
-      navigate('../login');
+      navigate({ to: '../login' });
     } catch {
       console.error(error);
     }

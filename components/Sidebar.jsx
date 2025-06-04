@@ -11,7 +11,7 @@ import {
     IconMovie
   } from '@tabler/icons-react';
 
-import { Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import {useMediaQuery } from '@mantine/hooks'
 
 

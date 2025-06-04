@@ -13,7 +13,7 @@ import {
   Flex,
 } from '@mantine/core';
 import bg from '../src/assets/bg-image/office-bg.jpg';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from '@tanstack/react-router';
 import { useState, useRef, useEffect } from 'react';
 
 
