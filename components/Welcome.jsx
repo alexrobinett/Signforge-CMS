@@ -143,7 +143,7 @@ function Welcome() {
         The demo tab allows you to see a demo player. This is useful if you want
         to see how your messages/ads will look on your digital signage screen.
         To use the demo player simply copy a player's ID from the player tab and
-        past it into the alert.
+        paste it into the alert.
       </Text>
     </Card>
   );
