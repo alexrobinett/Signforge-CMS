@@ -62,3 +62,14 @@ To further improve the SignForge application, we plan to make the following opti
 
 - [SignForge Player](https://github.com/alexrobinett/SignForge-Player)
 - [Backend API](https://github.com/alexrobinett/SignForge-Backend-API)
+
+## Running Tests
+
+Unit tests are written with [Vitest](https://vitest.dev/). After installing
+dependencies, run:
+
+```bash
+npm test
+```
+
+This command executes all Vitest suites.
