@@ -11,7 +11,7 @@ import {
     IconMovie
   } from '@tabler/icons-react';
 
-import { Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import {useMediaQuery } from '@mantine/hooks'
 
 
@@ -124,6 +124,7 @@ const [active, setActive] = useState(() => {
       key={item.label}
       variant="link"
       component={Link}
+      preload="intent"
       onClick={() => handleClick(item.label, opened, isMobile)}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />

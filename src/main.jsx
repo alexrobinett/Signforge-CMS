@@ -9,20 +9,7 @@ import { AuthProvider } from '../app/context/AuthContext';
 
 
 
-import ImagePage from '../components/Images/ImagePage';
-import { DemoPage } from '../components/DemoPage';
-import { PlayersPage } from '../components/players/PlayersPage';
-import { DashboardLayout } from '../components/DashboardLayout';
-import { LoginPage } from '../components/LoginPage2';
-import { ComingSoon } from '../components/ComingSoon';
-import { NotFoundPage } from '../components/NotFoundPage';
-import { SignUpPage } from '../components/SignUpPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage } from './HomePage';
-import { MessagesPage } from '../components/messages/MessagePage';
-import { Prefetch } from '../components/AUTH/Prefetch';
-import PersistLogin from '../components/AUTH/PersistLogin';
-import { Welcome } from '../components/Welcome';
+import { AppRouter } from './router';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 if(process.env.NODE_ENV === 'production') disableReactDevTools()
@@ -32,28 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
 
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/home" element={<HomePage />}>
-            <Route path="/home/login" element={<LoginPage />} />
-            <Route path="/home/signuppage" element={<SignUpPage />} />
-          </Route>
-          <Route element={<PersistLogin />}>
-            <Route element={<Prefetch />}>
-              <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route path="/dashboard/" element={<Welcome />} />
-                <Route path="/dashboard/players" element={<PlayersPage />} />
-                <Route path="/dashboard/playlist" element={<ComingSoon />} />
-                <Route path="/dashboard/messages" element={<MessagesPage />} />
-                <Route path="/dashboard/assets" element={<ImagePage />} />
-                <Route path="/dashboard/demo" element={<DemoPage />} />
-              </Route>
-            </Route>
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+      <AppRouter />
     </AuthProvider>
   </QueryClientProvider>
 );
