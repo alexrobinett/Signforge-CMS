@@ -11,7 +11,7 @@ import {
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
 import { useAddImage } from '../../app/features/images/imagesApi';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
@@ -71,7 +71,7 @@ function ImageDropZone(props) {
     try {
       await addImageMutation.mutateAsync(await uploadImage(file));
       props.handle();
-      navigate({ to: './' });
+      navigate('./');
       props.handleLoading.close();
     } catch (err) {
       console.error("couldn't upload file!", err);
