@@ -124,6 +124,7 @@ const [active, setActive] = useState(() => {
       key={item.label}
       variant="link"
       component={Link}
+      preload="intent"
       onClick={() => handleClick(item.label, opened, isMobile)}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />

@@ -6,6 +6,10 @@ import {
   createRoute,
   Outlet,
 } from '@tanstack/react-router';
+import queryClient from '../app/queryClient';
+import { fetchImages } from '../app/features/images/imagesApi';
+import { fetchPlayers } from '../app/features/players/playersApi';
+import { fetchMessages } from '../app/features/message/messagesApi';
 
 import { App } from './App';
 import { HomePage } from './HomePage';
@@ -78,6 +82,11 @@ const playersRoute = createRoute({
   getParentRoute: () => dashboardRoute,
   path: 'players',
   component: PlayersPage,
+  loader: () =>
+    queryClient.ensureQueryData({
+      queryKey: ['players'],
+      queryFn: fetchPlayers,
+    }),
 });
 
 const playlistRoute = createRoute({
@@ -90,12 +99,22 @@ const messagesRoute = createRoute({
   getParentRoute: () => dashboardRoute,
   path: 'messages',
   component: MessagesPage,
+  loader: () =>
+    queryClient.ensureQueryData({
+      queryKey: ['messages'],
+      queryFn: fetchMessages,
+    }),
 });
 
 const assetsRoute = createRoute({
   getParentRoute: () => dashboardRoute,
   path: 'assets',
   component: ImagePage,
+  loader: () =>
+    queryClient.ensureQueryData({
+      queryKey: ['images'],
+      queryFn: fetchImages,
+    }),
 });
 
 const demoRoute = createRoute({
@@ -128,7 +147,11 @@ rootRoute.addChildren([
   notFoundRoute,
 ]);
 
-const router = createRouter({ routeTree: rootRoute });
+const router = createRouter({
+  routeTree: rootRoute,
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
+});
 
 export function AppRouter() {
   return <RouterProvider router={router} />;

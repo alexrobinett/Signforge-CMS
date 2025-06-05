@@ -137,7 +137,7 @@ function SignUpPage() {
 
             <Group position="apart">
               <Text color="dimmed" size="sm" className={classes.control}>
-                <Link to="../login">
+                <Link to="../login" preload="intent">
                   <Center inline mt={14} className={classes.control}>
                     <IconArrowLeft size={rem(12)} stroke={1.5} />
                     <Box ml={5}>Back to the login page</Box>
