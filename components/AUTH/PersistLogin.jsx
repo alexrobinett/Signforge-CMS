@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import usePersist from "../../hooks/usePersist";
-import { Outlet, useNavigate, Link } from "@tanstack/react-router";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../../app/api/axiosInstance";
 import { useAuth } from "../../app/context/AuthContext";
 
@@ -33,7 +33,7 @@ const PersistLogin = () => {
       } catch (err) {
         setIsError(true);
         setError(err);
-        navigate({ to: "/" });
+        navigate("/");
       } finally {
         setIsLoading(false);
       }

@@ -65,8 +65,6 @@ To further improve the SignForge application, we plan to make the following opti
 
 ## Running Tests
 
-The project now uses [TanStack Router](https://tanstack.com/router) for client-side routing.
-
 Unit tests are written with [Vitest](https://vitest.dev/). After installing
 dependencies, run:
 

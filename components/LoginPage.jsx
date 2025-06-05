@@ -13,7 +13,7 @@ import {
   Flex,
 } from '@mantine/core';
 import bg from '../src/assets/bg-image/office-bg.jpg';
-import { Link, Navigate, useNavigate } from '@tanstack/react-router';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
 
@@ -129,7 +129,7 @@ function LoginPage() {
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
               Do not have an account yet?{' '}
-              <Link to="../home/signuppage" preload="intent">Create account</Link>
+              <Link to="../home/signuppage">Create account</Link>
             </Text>
           </Flex>
 

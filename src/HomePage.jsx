@@ -13,7 +13,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
 import { DsLogo } from '../components/misc/Dslogo';
-import { Outlet } from '@tanstack/react-router';
+import { Outlet } from 'react-router-dom';
 
 const HEADER_HEIGHT = rem(60);
 

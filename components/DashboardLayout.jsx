@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { AppHeader } from './AppHeader';
 import { MantineProvider, AppShell } from '@mantine/core';
 import { SideBar } from './Sidebar';
-import { Outlet } from '@tanstack/react-router';
+import { Outlet } from 'react-router-dom';
 function DashboardLayout() {
   const [opened, setOpened] = useState(false);
 

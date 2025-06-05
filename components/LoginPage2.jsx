@@ -13,7 +13,7 @@ import {
   Flex,
 } from '@mantine/core';
 import bg from '../src/assets/bg-image/office-bg.jpg';
-import { Link, Navigate, useNavigate } from '@tanstack/react-router';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from "../app/api/axiosInstance";
@@ -98,7 +98,7 @@ function LoginPage() {
       setAuth({ token: accessToken, user });
       setEmail('');
       setPassword('');
-      navigate({ to: '/dashboard' });
+      navigate('/dashboard');
     } catch (err) {
       console.error('Error in handleSubmit:', err);
       if (!err.status) {
