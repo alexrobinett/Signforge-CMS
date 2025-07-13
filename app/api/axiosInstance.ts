@@ -1,10 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { AuthState } from '../context/AuthContext';
+
+interface AuthHelpers {
+  getToken: () => string | null;
+  setAuth: React.Dispatch<React.SetStateAction<AuthState>>;
+}
 
 // These will be injected from React Context
-let getToken = () => null;
-let setAuth = () => {};
+let getToken: () => string | null = () => null;
+let setAuth: React.Dispatch<React.SetStateAction<AuthState>> = () => {};
 
-export function injectAuthHelpers({ getToken: getTokenFn, setAuth: setAuthFn }) {
+export function injectAuthHelpers({ getToken: getTokenFn, setAuth: setAuthFn }: AuthHelpers): void {
   getToken = getTokenFn;
   setAuth = setAuthFn;
 }
@@ -16,10 +22,10 @@ const axiosInstance = axios.create({
 
 // Request interceptor to add Authorization header from React Context
 axiosInstance.interceptors.request.use(
-  (config) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = getToken();
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -28,7 +34,7 @@ axiosInstance.interceptors.request.use(
 
 // Response interceptor to handle token refresh using setAuth from React Context
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response: AxiosResponse) => response,
   async (error) => {
     const originalRequest = error.config;
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -36,7 +42,7 @@ axiosInstance.interceptors.response.use(
       try {
         const refreshResponse = await axiosInstance.get('/auth/refresh');
         if (refreshResponse.data) {
-          setAuth((prev) => ({ ...prev, ...refreshResponse.data }));
+          setAuth((prev: AuthState) => ({ ...prev, ...refreshResponse.data }));
           // Retry original request with new token
           return axiosInstance(originalRequest);
         }
