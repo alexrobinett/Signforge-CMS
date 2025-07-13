@@ -3,5 +3,5 @@ import { createFileRoute } from '@tanstack/react-router';
 import { DemoPage } from '../../components/DemoPage';
 
 export const Route = createFileRoute('/dashboard/demo')({
-  component: () => <DemoPage />,
+  component: (): JSX.Element => <DemoPage />,
 });

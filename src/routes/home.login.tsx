@@ -3,5 +3,5 @@ import { createFileRoute } from '@tanstack/react-router';
 import { LoginPage } from '../../components/LoginPage2';
 
 export const Route = createFileRoute('/home/login')({
-  component: () => <LoginPage />,
+  component: (): JSX.Element => <LoginPage />,
 });

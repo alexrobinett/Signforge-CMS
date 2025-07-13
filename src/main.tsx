@@ -5,8 +5,13 @@ import { router } from './router';
 import './index.css';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-if(process.env.NODE_ENV === 'production') disableReactDevTools();
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Failed to find the root element');
+}
+
+ReactDOM.createRoot(rootElement).render(
   <RouterProvider router={router} />
 );

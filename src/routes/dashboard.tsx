@@ -5,7 +5,7 @@ import PersistLogin from '../../components/AUTH/PersistLogin';
 import { Prefetch } from '../../components/AUTH/Prefetch';
 
 export const Route = createFileRoute('/dashboard')({
-  component: () => (
+  component: (): JSX.Element => (
     <PersistLogin>
       <Prefetch>
         <DashboardLayout>

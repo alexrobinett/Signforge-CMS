@@ -7,7 +7,7 @@ import queryClient from '../../app/queryClient';
 import { AuthProvider } from '../../app/context/AuthContext';
 
 export const Route = createRootRoute({
-  component: () => (
+  component: (): JSX.Element => (
     <QueryClientProvider client={queryClient}>
       {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
       <AuthProvider>
