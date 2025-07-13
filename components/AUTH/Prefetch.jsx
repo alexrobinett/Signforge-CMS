@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from '@tanstack/react-router';
 import useAuth from '../../hooks/useAuth';
 import { useQueryClient } from '@tanstack/react-query';
 import { fetchImages } from '../../app/features/images/imagesApi';

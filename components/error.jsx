@@ -1,9 +1,12 @@
-import React from 'react';
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from '@tanstack/react-router';
 
-function Error() {
+export default function ErrorPage() {
   const error = useRouteError();
-  return <h1>{error.message}</h1>;
-}
 
-export { Error };
+  return (
+    <div>
+      <h1>Something went wrong!</h1>
+      <p>{error?.message || 'An unexpected error occurred'}</p>
+    </div>
+  );
+}
